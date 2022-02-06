@@ -1,0 +1,34 @@
+{
+    "idea": [
+        {
+            "id": "2",
+            "title": "idea title 5",
+            "user": "huy",
+            "content": "content5",
+            "thumbs_up": "5",
+            "thumbs_down": "100",
+            "document": "img,content url",
+            "academic_year": "2022",
+            "category": [
+                {
+                    "id": "2",
+                    "tag": "red"
+                }
+            ],
+            "comment": [
+                {
+                    "id": "4",
+                    "content": "your idea sucks 1"
+                },
+                {
+                    "id": "5",
+                    "content": "your idea sucks 2"
+                },
+                {
+                    "id": "6",
+                    "content": "your idea sucks 3"
+                }
+            ]
+        }
+    ]
+}
