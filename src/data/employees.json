@@ -83,6 +83,90 @@
                     ]
                 }
             ]
+        },
+        {
+            "id": "3",
+            "first_name": "vy",
+            "last_name": "pham",
+            "username": "vyuser",
+            "password": "vypassword",
+            "email": "vy@mail.com",
+            "role": "admin",
+            "department": "Biology",
+            "idea": [
+                {
+                    "id": "1",
+                    "title": "idea title 1",
+                    "user": "vy",
+                    "content": "content1",
+                    "thumbs_up": "5",
+                    "thumbs_down": "100",
+                    "document": "img,content url",
+                    "academic_year": "2022",
+                    "category": [
+                        {
+                            "id": "1",
+                            "tag": "green"
+                        }
+                    ],
+                    "comment": [
+                        {
+                            "id": "1",
+                            "content": "your idea sucks 1"
+                        },
+                        {
+                            "id": "2",
+                            "content": "your idea sucks 2"
+                        },
+                        {
+                            "id": "3",
+                            "content": "your idea sucks 3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "first_name": "vy",
+            "last_name": "pham",
+            "username": "vyuser",
+            "password": "vypassword",
+            "email": "vy@mail.com",
+            "role": "admin",
+            "department": "Biology",
+            "idea": [
+                {
+                    "id": "1",
+                    "title": "idea title 1",
+                    "user": "vy",
+                    "content": "content1",
+                    "thumbs_up": "5",
+                    "thumbs_down": "100",
+                    "document": "img,content url",
+                    "academic_year": "2022",
+                    "category": [
+                        {
+                            "id": "1",
+                            "tag": "green"
+                        }
+                    ],
+                    "comment": [
+                        {
+                            "id": "1",
+                            "content": "your idea sucks 1"
+                        },
+                        {
+                            "id": "2",
+                            "content": "your idea sucks 2"
+                        },
+                        {
+                            "id": "3",
+                            "content": "your idea sucks 3"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
