@@ -19,7 +19,7 @@ const IdeaList = () => {
     academic_year: "",
     document: "",
     created_at: "",
-    updated_at: " ",
+    updated_at: "",
     closed_date: "",
     category: [
       {
