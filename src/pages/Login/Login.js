@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import LoginForm from "./LoginForm";
+import PopUp from "../../components/PopUp/PopUp";
 
 function Login() {
+  const [buttonPopup, setButtonPopup] = useState(false);
   const adminUser = {
     username: "admin",
     password: "admin123",
@@ -37,11 +39,14 @@ function Login() {
           <h2>
             Welcome, <span>{user.name}</span>
           </h2>
-          <button onClick={Logout}>Logout</button>
+          <button onClick={() => setButtonPopup(true)}>Logout</button>
         </div>
       ) : (
         <LoginForm Login={Login} error={error} />
       )}
+      <PopUp trigger={buttonPopup} setTrigger={setButtonPopup} setUser={Logout}>
+        <h3>Confirm Logout ?</h3>
+      </PopUp>
     </div>
   );
 }

@@ -6,17 +6,24 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Employees from "./pages/Employee/Employees";
 import NavBar from "./components/NavBar/NavBar";
 import "./App.css";
+import IdeaList from "./components/Idea/IdeaList";
+import IdeaCreate from "./components/Idea/IdeaCreate";
 
 function App() {
   return (
     <div className="App">
-      <NavBar></NavBar>
       <Router>
         <Routes>
+          {/* // TODO 1: when not authenticated, no NavBar */}
+          {/* // TODO 2: when authenticated, go to main page */}
+          <Route path="/" element={<Login />}></Route>{" "}
+          {/* Set main page as Login */}
           <Route path="/login" element={<Login />}></Route>
           <Route path="/idea" element={<Idea />}></Route>
           <Route path="/employees" element={<Employees />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/idea/idealist" element={<IdeaList />}></Route>
+          <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
         </Routes>
       </Router>
     </div>

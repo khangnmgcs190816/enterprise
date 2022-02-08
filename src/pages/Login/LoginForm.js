@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+// import Popup from "reactjs-popup";
+// import "reactjs-popup/dist/index.css";
 
 function LoginForm({ Login, error }) {
   const [details, setDetails] = useState({ username: "", password: "" });
@@ -37,6 +39,7 @@ function LoginForm({ Login, error }) {
         </div>
 
         <input type="submit" value="LOGIN" />
+
       </div>
     </form>
   );

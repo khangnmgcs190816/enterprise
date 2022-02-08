@@ -1,39 +1,35 @@
-import React from 'react';
-import { BrowserRouter as Link } from "react-router-dom";
+import React from "react";
+import { Navbar, Nav, Dropdown } from "rsuite";
+import "./styles.less";
 
 const NavBar = () => {
-    return <div>
-      
-        {/* 
-        
-        VYPNK 7 Feb 2022
-        Navbar template
-            
-        */}
-        
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <ul className="navbar-nav mr-auto">
-                <li>
-                    <Link to={"/dashboard"} className="nav-link">
-                    {" "}
-                    Dashboard{" "}
-                    </Link>
-                </li>
-                <li>
-                    <Link to={"/employees"} className="nav-link">
-                    {" "}
-                    Employees{" "}
-                    </Link>
-                </li>
-                <li>
-                    <Link to={"/ideas"} className="nav-link">
-                    {" "}
-                    Ideas{" "}
-                    </Link>
-                </li>
-            </ul>
-        </nav>
-    </div>;
-};
+  return (
+    <div>
+      {/*
 
+        VYPNK 8 Feb 2022
+        package: npm i rsuite --save
+
+        */}
+
+      <Navbar>
+        <Navbar.Brand href="/login">Login</Navbar.Brand>
+
+        {/* Main nav */}
+        <Nav>
+          <Nav.Item href="/dashboard">Dashboard</Nav.Item>
+          <Nav.Item href="/employees">Employees</Nav.Item>
+          <Nav.Item href="/idea">Ideas</Nav.Item>
+        </Nav>
+
+        {/* Align right dropdown */}
+        <Nav pullRight>
+          <Dropdown title="Welcome, ">
+            <Dropdown.Item href="#">Log out</Dropdown.Item>
+          </Dropdown>
+        </Nav>
+      </Navbar>
+    </div>
+  );
+};
 export default NavBar;
