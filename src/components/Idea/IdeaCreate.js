@@ -43,7 +43,10 @@ const IdeaCreate = () => {
     const {
       target: { id, checked },
     } = e;
-    setBoxes({ ...boxes, [id]: checked });
+    setBoxes({
+      ...boxes,
+      [id]: checked,
+    });
   }
 
   // var categoryHandle = (e) =>{
