@@ -1,3 +1,5 @@
+### `FRONTEND`
+
 In the project directory, you can run:
 
 ### `npm start`
@@ -10,7 +12,11 @@ You may also see any lint errors in the console.
 
 ### `npm install`
 
-Automatically install all dependencies
+Automatically installs all dependencies
+
+### `json-server --watch ~/enterprise/frontend/src/data/ideas.json --port=8080`
+
+Runs local json server
 
 ### `npm run build`
 
