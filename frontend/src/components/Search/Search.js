@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Search = () => {
-  const [searchTerm, setSearchTerm] = useState();
+
+const Search = ({ page = 'idea' }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSearchTerm(e.target.value);
+    navigate(`/${page}/?search=${searchTerm}`);
   }
 
   const handleChange = (e) => {
@@ -15,26 +18,21 @@ const Search = () => {
 
   return (
     <div>
-      <h1>Search</h1>
-
       <form onSubmit={handleSubmit}>
         <label>Search: </label>
-        <input type='text' value={searchTerm} name='search' onChange={handleChange} >
-
+        <input
+          type='text'
+          value={searchTerm}
+          name='search'
+          onChange={handleChange}
+          placeholder="Search..."
+        >
         </input>
-
-        <input type='submit'>
-
-        </input>
+        <input type="submit"></input>
       </form>
-
-      <br></br>
-
-      <h1>
-        {searchTerm}
-      </h1>
     </div>
   );
 };
 
 export default Search;
+
