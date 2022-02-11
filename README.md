@@ -16,4 +16,9 @@ Automatically installs all dependencies
 
 ### `json-server --watch ~/enterprise/frontend/src/data/ideas.json --port=8080`
 
-Runs local json server
+Runs local json server with port 8080
+
+
+### `BACKEND`
+
+...(commands to set up all necessary dependencies)
