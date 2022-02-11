@@ -8,6 +8,7 @@ import NavBar from "./components/NavBar/NavBar";
 import "./App.css";
 // import IdeaList from "./components/Idea/IdeaList";
 import IdeaCreate from "./components/Idea/IdeaCreate";
+import Search from "./components/Search/Search";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />}></Route>
           {/* <Route path="/idea/idealist" element={<IdeaList />}></Route> */}
           <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
+          <Route path="/search" element={<Search />}></Route>
         </Routes>
       </Router>
     </div>

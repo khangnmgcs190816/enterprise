@@ -12,6 +12,7 @@
       "created_at": "23:59 1-1-2022",
       "updated_at": " ",
       "closed_date": "23:59 30-4-2022",
+      "views": 255,
       "category": [
         {
           "id": "2",
@@ -50,12 +51,20 @@
       "category": [
         "blue"
       ],
-      "comment": [],
-      "id": "5qIJqDN"
+      "views": 555,
+      "comment": [
+        {
+          "id": "9",
+          "content": "your idea sucks 3",
+          "created_at": "23:59 1-1-2022",
+          "closed_date": "23:59 30-4-2023"
+        }
+      ]
     },
     {
       "title": "Test",
       "user": "thy",
+      "views": 355,
       "content": "Test Content",
       "academic_year": "2022",
       "document": {},
