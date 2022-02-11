@@ -165,6 +165,36 @@
                             "content": "your idea sucks 3"
                         }
                     ]
+                },
+                {
+                    "id": "9",
+                    "title": "idea title 9",
+                    "user": "vy",
+                    "content": "content9",
+                    "thumbs_up": "66",
+                    "thumbs_down": "100",
+                    "document": "img,content url",
+                    "academic_year": "2022",
+                    "category": [
+                        {
+                            "id": "1",
+                            "tag": "green"
+                        }
+                    ],
+                    "comment": [
+                        {
+                            "id": "1",
+                            "content": "your idea sucks 1"
+                        },
+                        {
+                            "id": "2",
+                            "content": "your idea sucks 2"
+                        },
+                        {
+                            "id": "3",
+                            "content": "your idea sucks 3"
+                        }
+                    ]
                 }
             ]
         }
