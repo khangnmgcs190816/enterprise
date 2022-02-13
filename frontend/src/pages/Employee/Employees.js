@@ -1,6 +1,6 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBar from "../../components/Header/NavBar";
 import Search from "../../components/Search/Search";
 
 const Employees = () => {
@@ -8,7 +8,6 @@ const Employees = () => {
 
   return (
     <div>
-      <NavBar />
       <Search page="employees"></Search>
       <h1>Employee</h1>
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBar from "../../components/Header/NavBar";
 import { Dropdown } from "rsuite";
 
 const Dashboard = () => {
@@ -21,7 +21,6 @@ const Dashboard = () => {
 
   return (
     <div>
-      <NavBar />
       <h1>Dashboard</h1>
       {/* View by: dropdown (Dept) */}
       <div>

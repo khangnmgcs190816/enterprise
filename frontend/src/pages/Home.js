@@ -3,10 +3,10 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import PageNotFound from '../components/errorHandling/PageNotFound';
 import LoadingIndicator from '../components/Loading';
-import NavBar from '../components/NavBar/NavBar';
+import NavBar from '../components/Header/NavBar';
 import useFetch from '../services/useFetch';
 
-const Welcome = () => {
+const Home = () => {
     const { data: ideas, loading, error } = useFetch(
         "idea"
     );
@@ -35,26 +35,9 @@ const Welcome = () => {
                 </select>
                 {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
             </section>
-            {
-                ideas.map((idea) => {
-                    return (
-                        <li >
-                            <ul key={idea.id}>
-                                {/* {idea.id}
-                {idea.title}
-                {idea.content} */}
-                                <Link to={`/idea/${idea.id}`}>
-                                    <h2 key={idea.id}>{idea.title}</h2>
-                                </Link>
-                                <h3>{idea.content}</h3>
-                            </ul>
-                        </li>);
-                }
-                )
-            }
 
         </div>
     )
 }
 
-export default Welcome;
+export default Home;

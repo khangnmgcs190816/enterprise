@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 import LoadingIndicator from "../../components/Loading";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBar from "../../components/Header/NavBar";
 import Search from "../../components/Search/Search";
 import useFetch from "../../services/useFetch";
+import { Pagination } from "@mui/material";
 
 
 const Idea = () => {
@@ -42,7 +43,6 @@ const Idea = () => {
   return (
 
     <div className="home">
-      <NavBar></NavBar>
       <Search page="idea"></Search>
       <h2>Homepage</h2>
       <section id="filters">
@@ -76,6 +76,7 @@ const Idea = () => {
         }
         )
       }
+      <Pagination count={10} variant="outlined" color="primary" />
 
     </div>
   );

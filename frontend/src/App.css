@@ -1,8 +1,46 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
-.App-logo {
+header {
+  display: flex;
+  padding-left: 20px;
+}
+
+header img {
+  max-height: 100px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+footer {
+  text-align: center;
+  color: gray;
+  padding: 20px 0 20px 0;
+  flex-shrink: 0;
+  background-color: gainsboro;
+}
+
+header ul {
+  padding-inline-start: 20px;
+}
+
+header li {
+  display: inline;
+  margin-right: 20px;
+}
+
+main {
+  /* margin-left: 100px; */
+  padding: 20px;
+}
+
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -35,4 +73,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
