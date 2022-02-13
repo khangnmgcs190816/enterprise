@@ -10,6 +10,7 @@ export default function useFetch(url) {
     useEffect(() => {
         async function init() {
             try {
+                // fetch data from input url
                 const response = await fetch(baseUrl + url);
                 if (response.ok) {
                     const json = await response.json();
@@ -20,6 +21,7 @@ export default function useFetch(url) {
             } catch (e) {
                 setError(e);
             } finally {
+                // Done loading
                 setLoading(false);
             }
         }

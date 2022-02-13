@@ -12,6 +12,7 @@ import Search from "./components/Search/Search";
 
 import Home from "./pages/Home";
 import Header from "./components/Header/Header";
+import Category from "./components/Category";
 function App() {
   return (
     <div className="App">
@@ -25,16 +26,18 @@ function App() {
             {/* // TODO 2: when authenticated, go to main page */}
             {/* <Route path="/" element={<Login />}></Route>{" "} */}
             <Route path="/" element={<Home />}></Route>
-            <Route path="/:category" element={<Idea />}></Route>
-
 
             <Route path="/idea" element={<Idea />}></Route>
+            <Route path="/idea/:filter" element={<Idea />}></Route>
+            <Route path="/idea/:category" element={<Idea />}></Route>
+
             <Route path="/employees" element={<Employees />}></Route>
             <Route path="/dashboard" element={<Dashboard />}></Route>
             {/* <Route path="/idea/idealist" element={<IdeaList />}></Route> */}
             <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
-            <Route path="/search" element={<Search />}></Route>
 
+            <Route path="/category" element={<Category />}></Route>
+            <Route path="/search" element={<Search />}></Route>
 
             <Route path="/login" element={<Login />}></Route>
           </Routes>
