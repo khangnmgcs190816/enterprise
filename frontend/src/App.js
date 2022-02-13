@@ -9,25 +9,30 @@ import "./App.css";
 // import IdeaList from "./components/Idea/IdeaList";
 import IdeaCreate from "./components/Idea/IdeaCreate";
 import Search from "./components/Search/Search";
-
+import { Header } from "rsuite";
+import Welcome from "./pages/Welcome";
 function App() {
   return (
     <div className="App">
       <Router>
-        <Routes>
-          {/* // TODO 1: when not authenticated, no NavBar */}
-          {/* // TODO 2: when authenticated, go to main page */}
-          {/* <Route path="/" element={<Login />}></Route>{" "} */}
-          <Route path="/" element={<Idea />}></Route>
-          {/* Set main page as Login */}
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/idea" element={<Idea />}></Route>
-          <Route path="/employees" element={<Employees />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-          {/* <Route path="/idea/idealist" element={<IdeaList />}></Route> */}
-          <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
-          <Route path="/search" element={<Search />}></Route>
-        </Routes>
+        <Header></Header>
+        <main>
+          <Routes>
+            {/* // TODO 1: when not authenticated, no NavBar */}
+            {/* // TODO 2: when authenticated, go to main page */}
+            {/* <Route path="/" element={<Login />}></Route>{" "} */}
+            <Route path="/" element={<Welcome />}></Route>
+            <Route path="/:category" element={<Idea />}></Route>
+
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/idea" element={<Idea />}></Route>
+            <Route path="/employees" element={<Employees />}></Route>
+            <Route path="/dashboard" element={<Dashboard />}></Route>
+            {/* <Route path="/idea/idealist" element={<IdeaList />}></Route> */}
+            <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
+            <Route path="/search" element={<Search />}></Route>
+          </Routes>
+        </main>
       </Router>
     </div>
   );
