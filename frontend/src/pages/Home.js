@@ -21,6 +21,7 @@ const Home = () => {
             <NavBar></NavBar>
             <Search page="idea"></Search>
             <h1>Welcome</h1>
+
             <section id="filters">
                 <label htmlFor="category">Filter by:</label>{" "}
                 <select
@@ -53,6 +54,10 @@ const Home = () => {
                 </select>
                 {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
             </section>
+
+            <div>
+                <h1>Spotlight Ideas</h1>
+            </div>
 
         </div>
     )
