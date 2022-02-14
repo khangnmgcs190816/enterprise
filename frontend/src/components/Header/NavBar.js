@@ -39,8 +39,10 @@ const NavBar = () => {
 
         {/* Align right dropdown */}
         <Nav pullRight>
-          <Dropdown title="Welcome, ">
-            <Dropdown.Item href="#">Log out</Dropdown.Item>
+          <Dropdown title="username">
+            <select>
+              <option href="#">Logout</option>
+            </select>
           </Dropdown>
         </Nav>
 

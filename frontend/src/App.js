@@ -13,6 +13,8 @@ import Search from "./components/Search/Search";
 import Home from "./pages/Home";
 import Header from "./components/Header/Header";
 import Category from "./components/Category";
+import Comment from "./components/Comment/Comment";
+
 function App() {
   return (
     <div className="App">
@@ -28,8 +30,8 @@ function App() {
             <Route path="/" element={<Home />}></Route>
 
             <Route path="/idea" element={<Idea />}></Route>
-            <Route path="/idea/:filter" element={<Idea />}></Route>
             <Route path="/idea/:category" element={<Idea />}></Route>
+            <Route path="/idea/:filter" element={<Idea />}></Route>
 
             <Route path="/employees" element={<Employees />}></Route>
             <Route path="/dashboard" element={<Dashboard />}></Route>
@@ -40,6 +42,7 @@ function App() {
             <Route path="/search" element={<Search />}></Route>
 
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/comment" element={<Comment />}></Route>
           </Routes>
         </main>
       </Router>

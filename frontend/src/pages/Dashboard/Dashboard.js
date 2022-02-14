@@ -1,37 +1,25 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/Header/NavBar";
-import { Dropdown } from "rsuite";
-
+import Dropdown from "./Dropdown";
+import useFetch from "../../services/useFetch";
+import LoadingIndicator from "../../components/Loading";
+import PageNotFound from "../../components/errorHandling/PageNotFound";
+import Tabs from "./Tabs";
 const Dashboard = () => {
-  const url = "http://localhost:8080/idea";
-  const [ideas, setIdeas] = useState([{ idea: 1, title: 'loading', content: 'loading' }]);
+  const { data: ideas, loading, error } = useFetch('idea')
 
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch(url);
-      const ideas = await res.json();
-      setIdeas(ideas);
-      console.log(ideas)
-    }
-    fetchData();
-  }, [url])
+  if (error) throw error;
+  if (loading) return <LoadingIndicator />;
+  if (ideas.length === 0) return <PageNotFound />;
 
-  const list1 = [1, 23, 4, 7, 8, 9, 9];
-  // list1.add(1);
 
   return (
     <div>
       <h1>Dashboard</h1>
       {/* View by: dropdown (Dept) */}
       <div>
-        <p>View By:
-          <Dropdown title="Select a department">
-            <Dropdown.Item href="#">Math</Dropdown.Item>
-            <Dropdown.Item href="#">Biology</Dropdown.Item>
-            <Dropdown.Item href="#">Chemistry</Dropdown.Item>
-            <Dropdown.Item href="#">Physics</Dropdown.Item>
-          </Dropdown>
-        </p>
+      <Tabs />
+      <Dropdown />
       </div>
       <br />
 
@@ -63,11 +51,6 @@ const Dashboard = () => {
       <div>
         <p>Total ideas: {ideas.length} </p>
         {/* Chart here */}
-      </div>
-      <div>
-        {list1.map(item =>
-          <h1>ehehe</h1>
-        )}
       </div>
     </div>
   );
