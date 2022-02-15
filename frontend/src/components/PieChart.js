@@ -1,7 +1,12 @@
 import "chart.js/auto";
 import { Pie } from "react-chartjs-2";
+// import useFetch from "../services/useFetch";
+// import PageNotFound from "./errorHandling/PageNotFound";
+// import LoadingIndicator from "./Loading";
 
 const data = {
+
+
   // take the name in department
   labels: ["Math", "Biology", "Physics", "IT", "Business"],
   datasets: [
@@ -16,6 +21,15 @@ const data = {
 };
 
 function PieChart() {
+  // const { data: ideas, loading, error } = useFetch(
+  //   "idea"
+  // );
+
+  // if (error) throw error;
+  // if (loading) return <LoadingIndicator />;
+  // if (ideas.length === 0) return <PageNotFound />;
+
+
   return (
     <div
       style={{
@@ -24,6 +38,7 @@ function PieChart() {
         border: "1px solid red",
       }}
     >
+      {/* <h1>{ideas.filter((idea) => idea.department = 'Math')}</h1> */}
       <h3 style={{ margin: "0rem 0rem 2rem 3rem" }}>
         Number of ideas per department
       </h3>

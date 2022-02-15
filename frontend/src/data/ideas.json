@@ -66,6 +66,46 @@
       "category": "green",
       "comment": [],
       "id": "n-J8klk"
+    },
+    {
+      "title": "Title",
+      "user": "thy",
+      "content": "Content",
+      "academic_year": "Academic year",
+      "created_at": "2022-02-15T14:44:47.466Z",
+      "category": [
+        "green"
+      ],
+      "comment": [],
+      "id": "D0pvJ2h"
+    },
+    {
+      "title": "Idea Title Test",
+      "user": "thy",
+      "content": "Ahahahahah",
+      "academic_year": "2022",
+      "created_at": "2022-02-15T14:44:47.466Z",
+      "closed_date": "Wed Feb 09 2023 22:30:57 GMT+0700 (Indochina Time)",
+      "category": [
+        "green",
+        "blue"
+      ],
+      "comment": [],
+      "id": "nvqhX9D"
+    },
+    {
+      "title": "Idea Title Test",
+      "user": "thy",
+      "content": "Ahahahahah",
+      "academic_year": "2022",
+      "created_at": "2022-02-15T14:44:47.466Z",
+      "closed_date": "Wed Feb 09 2023 22:30:57 GMT+0700 (Indochina Time)",
+      "category": [
+        "green",
+        "blue"
+      ],
+      "comment": [],
+      "id": "fcRkUhD"
     }
   ]
 }

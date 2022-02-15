@@ -1,6 +1,7 @@
 import { Card, Divider, Paper } from '@mui/material';
 import React from 'react'
 
+// fake list
 const listComment = [{
     id: "4",
     content: "your idea sucks 1",
@@ -34,6 +35,7 @@ const Comment = () => {
             </div>
             <Divider></Divider>
             <CommentList></CommentList>
+            <AddComment></AddComment>
         </>
     )
 }
@@ -56,6 +58,15 @@ const CommentList = ({ id }) => {
             }
 
         </h1>
+    );
+}
+
+const AddComment = () => {
+    return (
+        <form>
+            <input></input>
+        </form>
+
     );
 }
 

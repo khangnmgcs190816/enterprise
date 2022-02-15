@@ -8,7 +8,7 @@ const Search = ({ page = 'idea' }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate(`/${page}/?search=${searchTerm}`);
+    navigate(`/${page}?search=${searchTerm}`);
   }
 
   const handleChange = (e) => {

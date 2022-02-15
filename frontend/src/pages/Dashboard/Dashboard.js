@@ -31,7 +31,7 @@ const Dashboard = () => {
         <Tabs />
         <Dropdown />
         <p>
-          Closure Date: {} <button>Download (.csv)</button>
+          Closure Date: { } <button>Download (.csv)</button>
         </p>
       </div>
       <br />
