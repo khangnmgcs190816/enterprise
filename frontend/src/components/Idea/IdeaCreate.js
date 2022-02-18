@@ -1,9 +1,16 @@
 import styled from "@emotion/styled";
 import { Box, Divider } from "@mui/material";
 import { useState } from "react";
+import { shadows } from '@mui/system';
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 // import { colourOptions } from 'react-form';
 
@@ -11,24 +18,32 @@ const IdeaHeading = styled('h3')({
   textAlign: 'center',
 });
 
+const Input = styled('input')({
+  display: 'none',
+});
+
+const UploadDiv = styled('div')({
+  margin: '1rem'
+})
+
 const Terms = styled('div')({
   textAlign: 'justify',
   fontSize: 18,
   padding: '0rem 1rem 0rem 1rem'
 });
 
-const CheckBox = styled('div')({
-  fontWeight: 'bold',
-  textAlign: 'center'
-
+const CheckTerm = styled('div')({
+  textAlign: 'center',
 })
 
 const IdeaFrame = styled('div')({
   margin: '3rem',
-  border: 'solid gray 1px',
+  border: 1,
+  borderColor: 'grey.500',
+  boxShadow: 1,
   padding: '2rem',
-  borderRadius: 10,
-  width: '100%'
+  borderRadius: 25,
+  maxWidth: '100%'
 });
 
 const IdeaCreate = () => {
@@ -39,7 +54,7 @@ const IdeaCreate = () => {
 
   const [title, setTitle] = useState("Title");
   const [user, setUser] = useState("thy");
-  const [content, setContent] = useState("Content");
+  const [content, setContent] = useState("Please input your idea");
   const [thumbs_up, setThumbsUp] = useState();
   const [thumbs_down, setThumbsDown] = useState();
   const [academic_year, setAcademicyear] = useState("Academic year");
@@ -119,6 +134,10 @@ const IdeaCreate = () => {
       setIsPending(false);
     });
   };
+  const UploadDiv = styled('div')({
+    textAlign: 'left',
+    float: 'left'
+  })
 
   return (
     <IdeaFrame className="ideacreate">
@@ -133,7 +152,9 @@ const IdeaCreate = () => {
       }>
         Create idea
       </Box>
-      <Divider></Divider>
+      <Divider sx={{
+        marginBottom: '1rem'
+      }}></Divider>
       {/* {comment.map((comment) => (
                 <div className="comment-preview" key={comment.id}>
                     <h2>{comment.content}</h2>
@@ -147,11 +168,14 @@ const IdeaCreate = () => {
             variant="outlined"
             name="title"
             placeholder={title}
-            onChange={(e) => setTitle(e.target.value)} />
+            onChange={(e) => setTitle(e.target.value)}
+            sx={{
+              width: '100%',
+            }} />
         </div>
         <br />
 
-        <div>
+        {/* <div>
           <TextField id="outlined-basic"
             variant="outlined"
             disabled
@@ -161,18 +185,18 @@ const IdeaCreate = () => {
             defaultValue="thy"
             onChange={(e) => setUser(e.target.value)} />
         </div>
-        <br />
+        <br /> */}
 
         <div>
           <TextField
             id="outlined-multiline-static"
-            label="Content"
+            label="Your Idea"
             multiline
             rows={4}
-            defaultValue={content}
+            // defaultValue={content}
             onChange={(e) => setContent(e.target.value)}
             sx={{
-              width: '42rem'
+              width: '100%'
             }}
           />
         </div>
@@ -199,8 +223,14 @@ const IdeaCreate = () => {
         </div>
         <br />
 
-        <div>
-          <label>Upload</label>
+        <UploadDiv>
+          <label htmlFor="icon-button-file">
+            <Input accept="image/*" id="icon-button-file" type="file" placeholder={document} onChange={(e) => setSelectedFile(e.target.files[0])} />
+            <IconButton color="primary" startIcon={<PhotoCamera />} aria-label="upload picture" component="span">
+              Upload Photo
+            </IconButton>
+          </label>
+          <label>Attach a file: </label>
           <input
             type="file"
             accept="file/*"
@@ -208,8 +238,10 @@ const IdeaCreate = () => {
             placeholder={document}
             onChange={(e) => setSelectedFile(e.target.files[0])}
           ></input>
-        </div>
-        {isFilePicked ? (
+        </UploadDiv>
+
+
+        {/* {isFilePicked ? (
           <div>
             <p>Filename: {category.name}</p>
             <p>Filetype: {category.type}</p>
@@ -220,7 +252,7 @@ const IdeaCreate = () => {
           </div>
         ) : (
           <p>Select a file to show details</p>
-        )}
+        )} */}
 
         <div>
           {/* Ẩn luôn, chỉ hiện trên BE */}
@@ -291,14 +323,26 @@ const IdeaCreate = () => {
           </Terms>
         </div>
         <br />
-        <CheckBox>
-          <input
+        <CheckTerm>
+          <div>
+            <FormControlLabel
+              control={<Checkbox />}
+              label="I Agree with Terms & Conditions"
+              name="agreement"
+              onChange={handleChange}
+              sx={{
+                marginBottom: '1rem'
+              }}
+            />
+          </div>
+          {!isPending && <Button variant="contained" disabled={isDisabled()} startIcon={<SendIcon />}>Submit</Button>}
+          {isPending && <Button disabled startIcon={<SendIcon />}>Submitting...</Button>}
+        </CheckTerm>
+        {/* <input
             type="checkbox"
             name="agreement"
             onChange={handleChange}
-          ></input>
-          I Agree with Terms & Conditions
-        </CheckBox>
+          ></input> */}
         {/* <div className="agree-check" id="agree-check">
           <input
             type="checkbox"
@@ -306,9 +350,6 @@ const IdeaCreate = () => {
             onChange={handleChange}
           ></input><span>I Agree with Terms & Conditions</span>
         </div> */}
-        <br />
-        {!isPending && <button disabled={isDisabled()}>Submit</button>}
-        {isPending && <button disabled>Submitting...</button>}
       </form>
     </IdeaFrame>
   );

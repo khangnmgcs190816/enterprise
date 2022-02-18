@@ -1,10 +1,16 @@
 import { Search } from '@material-ui/icons';
-import React from 'react'
+import React, { createElement } from 'react'
 import { Link } from 'react-router-dom';
 import PageNotFound from '../components/errorHandling/PageNotFound';
 import LoadingIndicator from '../components/Loading';
 import NavBar from '../components/Header/NavBar';
 import useFetch from '../services/useFetch';
+import { Button } from '@mui/material';
+import styled from '@emotion/styled';
+
+const ProDiv = styled('div')({
+    textAlign: 'center'
+})
 
 const Home = () => {
     const { data: ideas, loading, error } = useFetch(
@@ -55,12 +61,15 @@ const Home = () => {
                 {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
             </section>
 
-            <div>
-                <h1>Spotlight Ideas</h1>
-            </div>
+            <ProDiv>
+                <Button sx={{
+                    margin: '10rem 0rem 0rem 0rem',
+                }}>Spotlight Ideas</Button>
+            </ProDiv>
 
         </div>
     )
 }
 
 export default Home;
+

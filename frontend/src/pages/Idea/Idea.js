@@ -45,6 +45,9 @@ const Idea = () => {
     <div className="home">
       <Search page="idea"></Search>
       <h2>Homepage</h2>
+      <Link to='/idea/ideacreate'>
+        <button>Create Idea</button>
+      </Link>
       <section id="filters">
         <label htmlFor="category">Filter by Category:</label>{" "}
         <select
