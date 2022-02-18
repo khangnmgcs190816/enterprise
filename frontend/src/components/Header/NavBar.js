@@ -35,6 +35,8 @@ const NavBar = () => {
             style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}>Employees</NavLink>
           <NavLink to="/dashboard"
             style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}>Dashboard</NavLink>
+          <NavLink to="/idea/ideacreate"
+            style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}>Idea Create</NavLink>
         </Nav>
 
         {/* Align right dropdown */}

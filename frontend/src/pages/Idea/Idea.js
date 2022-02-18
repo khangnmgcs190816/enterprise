@@ -7,9 +7,7 @@ import LoadingIndicator from "../../components/Loading";
 import NavBar from "../../components/Header/NavBar";
 import Search from "../../components/Search/Search";
 import useFetch from "../../services/useFetch";
-import IdeaCreate from "../../components/Idea/IdeaCreate";
 import { Pagination } from "@mui/material";
-import Comment from "../../components/Comment/Comment";
 
 
 const Idea = () => {
@@ -73,13 +71,11 @@ const Idea = () => {
                   <h2 key={idea.id}>{idea.title}</h2>
                 </Link>
                 <h3>{idea.content}</h3>
-                <Comment></Comment>
               </ul>
             </li>);
         }
         )
       }
-      <IdeaCreate></IdeaCreate>
       <Pagination count={10} variant="outlined" color="primary" />
 
     </div>
