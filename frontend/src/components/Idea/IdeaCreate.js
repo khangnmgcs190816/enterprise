@@ -1,8 +1,35 @@
+import styled from "@emotion/styled";
+import { Box, Divider } from "@mui/material";
 import { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import TextField from '@mui/material/TextField';
 
 // import { colourOptions } from 'react-form';
+
+const IdeaHeading = styled('h3')({
+  textAlign: 'center',
+});
+
+const Terms = styled('div')({
+  textAlign: 'justify',
+  fontSize: 18,
+  padding: '0rem 1rem 0rem 1rem'
+});
+
+const CheckBox = styled('div')({
+  fontWeight: 'bold',
+  textAlign: 'center'
+
+})
+
+const IdeaFrame = styled('div')({
+  margin: '3rem',
+  border: 'solid gray 1px',
+  padding: '2rem',
+  borderRadius: 10,
+  width: '100%'
+});
 
 const IdeaCreate = () => {
   //title, user, content, thumbsup thumbsdown, academic year, document, craeted at, update at,
@@ -94,8 +121,19 @@ const IdeaCreate = () => {
   };
 
   return (
-    <div className="ideacreate">
-      <h2>Create idea</h2>
+    <IdeaFrame className="ideacreate">
+      <Box sx={
+        {
+          color: 'blue',
+          textAlign: 'center',
+          fontSize: 36,
+          fontWeight: 'bold',
+          marginBottom: '1rem'
+        }
+      }>
+        Create idea
+      </Box>
+      <Divider></Divider>
       {/* {comment.map((comment) => (
                 <div className="comment-preview" key={comment.id}>
                     <h2>{comment.content}</h2>
@@ -103,38 +141,39 @@ const IdeaCreate = () => {
             ))} */}
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Title: </label>
-          <input
+          <TextField id="outlined-basic"
             type="text"
+            label="Title"
+            variant="outlined"
             name="title"
             placeholder={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+            onChange={(e) => setTitle(e.target.value)} />
         </div>
         <br />
 
         <div>
-          <label>User</label>
-          <input
+          <TextField id="outlined-basic"
+            variant="outlined"
             disabled
-            type="textarea"
+            type="text"
             name="user"
             placeholder={user}
             defaultValue="thy"
-            onChange={(e) => setUser(e.target.value)}
-          />
+            onChange={(e) => setUser(e.target.value)} />
         </div>
         <br />
 
         <div>
-          <label>Content</label>
-          <textarea
-            className="idea-content"
-            type="textarea"
-            name="content"
-            placeholder={content}
-            rows="4"
+          <TextField
+            id="outlined-multiline-static"
+            label="Content"
+            multiline
+            rows={4}
+            defaultValue={content}
             onChange={(e) => setContent(e.target.value)}
+            sx={{
+              width: '42rem'
+            }}
           />
         </div>
         <br />
@@ -147,9 +186,12 @@ const IdeaCreate = () => {
                 <br/> */}
 
         <div>
-          <label>Academic year </label>
-          <input
-            type="text"
+          {/* Chỉ hiện Year chứ không cần input */}
+          <label>Academic Year: </label>
+          <TextField id="outlined-basic"
+            disabled
+            variant="outlined"
+            type="datetime"
             name="academicyear"
             placeholder={academic_year}
             onChange={(e) => setAcademicyear(e.target.value)}
@@ -181,6 +223,7 @@ const IdeaCreate = () => {
         )}
 
         <div>
+          {/* Ẩn luôn, chỉ hiện trên BE */}
           <label>Create Date </label>
           <input
             readOnly
@@ -200,6 +243,7 @@ const IdeaCreate = () => {
                 <br/> */}
 
         <div>
+          {/* Chỉ hiện */}
           <label>Close Date </label>
           <input
             type="text"
@@ -226,42 +270,47 @@ const IdeaCreate = () => {
             }
           />
           {/* //custom add more tags */}
-          <center>
+          {/* <center>
             {" "}
             The selected tag: <h3>{category}</h3>
-          </center>
+          </center> */}
         </div>
         <br />
 
         {/* Terms and Conditions */}
         <div className="term-conditions">
-          <h3>Terms and Conditions</h3>
-          <div>
+          <IdeaHeading>
+            Terms and Conditions
+          </IdeaHeading>
+          <Terms>
             Et natus molestias et doloribus. Quis quae enim dolores dolores
             aperiam ullam eaque. Eveniet aut et qui alias consequuntur expedita
             consequatur aspernatur. Qui est ut modi aut ut. Non est dolor ipsum
             numquam doloribus deserunt molestiae et animi. Voluptatem sint fuga
             est eum.
-          </div>
+          </Terms>
         </div>
         <br />
-
-        <div className="agree-check" id="agree-check">
+        <CheckBox>
           <input
             type="checkbox"
             name="agreement"
             onChange={handleChange}
           ></input>
-
-          <div>I Agree with Terms & Conditions</div>
-        </div>
-
+          I Agree with Terms & Conditions
+        </CheckBox>
+        {/* <div className="agree-check" id="agree-check">
+          <input
+            type="checkbox"
+            name="agreement"
+            onChange={handleChange}
+          ></input><span>I Agree with Terms & Conditions</span>
+        </div> */}
         <br />
-
         {!isPending && <button disabled={isDisabled()}>Submit</button>}
         {isPending && <button disabled>Submitting...</button>}
       </form>
-    </div>
+    </IdeaFrame>
   );
 };
 
