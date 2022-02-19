@@ -1,10 +1,11 @@
 import { Search } from '@material-ui/icons';
-import React, { createElement } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import PageNotFound from '../components/errorHandling/PageNotFound';
 import LoadingIndicator from '../components/Loading';
 import NavBar from '../components/Header/NavBar';
-import useFetch from '../services/useFetch';
+// import useFetch from '../services/useFetch';
+import useAxios from "../services/useAxios";
 import { Button } from '@mui/material';
 import styled from '@emotion/styled';
 
@@ -13,10 +14,21 @@ const ProDiv = styled('div')({
 })
 
 const Home = () => {
-    const { data: ideas, loading, error } = useFetch(
-        "idea"
+    const { response, loading, error } = useAxios(
+        {
+            url: '/idea',
+            method: 'get',
+        }
     );
 
+    const [ideas, setIdeas] = useState([]);
+
+    useEffect(() => {
+        if (response != null) {
+            setIdeas(response);
+        }
+
+    }, [response])
 
     if (error) throw error;
     if (loading) return <LoadingIndicator />;

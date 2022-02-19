@@ -8,6 +8,7 @@ import NavBar from "../../components/Header/NavBar";
 import Search from "../../components/Search/Search";
 import useFetch from "../../services/useFetch";
 import { Pagination } from "@mui/material";
+import useAxios from "../../services/useAxios";
 
 
 const Idea = () => {
@@ -26,9 +27,22 @@ const Idea = () => {
 
   const { category } = useParams();
 
-  const { data: ideas, loading, error } = useFetch(
-    "idea"
+  const { response, loading, error } = useAxios(
+    {
+      url: '/idea',
+      method: 'get',
+    }
   );
+
+  const [ideas, setIdeas] = useState([]);
+
+  useEffect(() => {
+    if (response != null) {
+      setIdeas(response);
+    }
+
+  }, [response])
+
 
   // const { data: ideas, loading, error } = useFetch(
   //   "idea?category=" + category
