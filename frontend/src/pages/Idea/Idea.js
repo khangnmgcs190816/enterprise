@@ -9,6 +9,7 @@ import SearchFunction from "../../components/Search/SearchFunction";
 import useFetch from "../../services/useFetch";
 import { Pagination } from "@mui/material";
 import useAxios from "../../services/useAxios";
+import { Button } from '@mui/material';
 
 const Idea = () => {
   // const url = "http://localhost:8080/idea";
@@ -52,11 +53,11 @@ const Idea = () => {
       <SearchFunction page="idea"></SearchFunction>
       <h2>Homepage</h2>
       <Link to="/idea/ideacreate">
-        <button>Create Idea</button>
+        <Button>Create Idea</Button>
       </Link>
       <section id="filters">
         <label htmlFor="category">Filter by Category:</label>{" "}
-        <select id="size" value={category} onChange={() => {}}>
+        <select id="size" value={category} onChange={() => { }}>
           <option value="">All category</option>
           <option value="Red">Red</option>
           <option value="Green">Green</option>

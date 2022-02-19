@@ -260,8 +260,8 @@ const IdeaCreate = () => {
               placeholder={document}
               onChange={(e) => setSelectedFile(e.target.files[0])}
             />
-            <Button variant="contained" component="span">
-              <PhotoCamera /> Upload Photo
+            <Button color={"secondary"} variant="contained" component="span">
+              <PhotoCamera />Upload Photo
             </Button>
           </InputLabel>
           <InputLabel id="attach-label">
@@ -398,7 +398,7 @@ const IdeaCreate = () => {
             </Button>
           )}
         </CheckTerm>
-        
+
         {/* <input
             type="checkbox"
             name="agreement"

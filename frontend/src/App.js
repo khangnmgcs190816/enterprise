@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { grey, orange, blue, red, green } from '@mui/material/colors';
+
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Idea from "./pages/Idea/Idea";
@@ -15,38 +18,57 @@ import Header from "./components/Header/Header";
 import Category from "./components/Category";
 import Comment from "./components/Comment/Comment";
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: red[500],
+
+    },
+    secondary: {
+      main: green[500],
+    },
+    text: {
+      primary: grey[500],
+      secondary: orange[500],
+    }
+  },
+});
+
 function App() {
   return (
-    <div className="App">
-      <Router>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Router>
+          <Header></Header>
 
-        <Header></Header>
+          <main>
+            <Routes>
+              {/* // TODO 1: when not authenticated, no NavBar */}
+              {/* // TODO 2: when authenticated, go to main page */}
+              {/* <Route path="/" element={<Login />}></Route>{" "} */}
+              <Route path="/" element={<Home />}></Route>
 
-        <main>
-          <Routes>
-            {/* // TODO 1: when not authenticated, no NavBar */}
-            {/* // TODO 2: when authenticated, go to main page */}
-            {/* <Route path="/" element={<Login />}></Route>{" "} */}
-            <Route path="/" element={<Home />}></Route>
+              <Route path="/idea" element={<Idea />}></Route>
+              <Route path="/idea/:category" element={<Idea />}></Route>
+              <Route path="/idea/:filter" element={<Idea />}></Route>
 
-            <Route path="/idea" element={<Idea />}></Route>
-            <Route path="/idea/:category" element={<Idea />}></Route>
-            <Route path="/idea/:filter" element={<Idea />}></Route>
+              <Route path="/employees" element={<Employees />}></Route>
+              <Route path="/dashboard" element={<Dashboard />}></Route>
+              {/* <Route path="/idea/idealist" element={<IdeaList />}></Route> */}
 
-            <Route path="/employees" element={<Employees />}></Route>
-            <Route path="/dashboard" element={<Dashboard />}></Route>
-            {/* <Route path="/idea/idealist" element={<IdeaList />}></Route> */}
-            <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
 
-            <Route path="/category" element={<Category />}></Route>
-            <Route path="/search" element={<Search />}></Route>
+              <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
 
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/comment" element={<Comment />}></Route>
-          </Routes>
-        </main>
-      </Router>
-    </div>
+              <Route path="/category" element={<Category />}></Route>
+              <Route path="/search" element={<Search />}></Route>
+
+              <Route path="/login" element={<Login />}></Route>
+              <Route path="/comment" element={<Comment />}></Route>
+            </Routes>
+          </main>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 
