@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 import LoadingIndicator from "../../components/Loading";
-import NavBar from "../../components/Header/NavBar";
 import SearchFunction from "../../components/Search/SearchFunction";
 import useFetch from "../../services/useFetch";
 import { Pagination } from "@mui/material";
 import useAxios from "../../services/useAxios";
-import { Button } from '@mui/material';
+import { Button } from "@mui/material";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { Box, Divider } from "@mui/material";
+import FilterIdea from "../../components/Idea/FilterIdea";
 
 const Idea = () => {
   // const url = "http://localhost:8080/idea";
@@ -49,39 +51,92 @@ const Idea = () => {
   if (ideas.length === 0) return <PageNotFound />;
 
   return (
-    <div className="home">
-      <SearchFunction page="idea"></SearchFunction>
-      <h2>Homepage</h2>
-      <Link to="/idea/ideacreate">
-        <Button>Create Idea</Button>
-      </Link>
-      <section id="filters">
-        <label htmlFor="category">Filter by Category:</label>{" "}
-        <select id="size" value={category} onChange={() => { }}>
-          <option value="">All category</option>
-          <option value="Red">Red</option>
-          <option value="Green">Green</option>
-          <option value="Blue">Blue</option>
-        </select>
+    <Box
+      sx={{
+        margin: "2rem 3rem 2rem 3rem",
+        maxWidth: "100%",
+      }}
+    >
+      {/* Filter area */}
+      <Box
+        sx={{
+          display: "flex",
+          p: 1,
+          m: 1,
+          justifyContent: "space-between",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignSelf: "center",
+          }}
+        >
+          <FilterIdea />
+        </Box>
         {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
-      </section>
-      {ideas.map((idea) => {
-        return (
-          <li>
-            <ul key={idea.id}>
-              {/* {idea.id}
+
+        {/* Search + Create button area */}
+        <Box
+          sx={{
+            display: "flex",
+            p: 1,
+            m: 1,
+            justifyContent: "right",
+          }}
+        >
+          <SearchFunction page="idea"></SearchFunction>
+          <Button
+            variant="contained"
+            startIcon={<AddCircleIcon />}
+            href="/idea/ideacreate"
+          >
+            New
+          </Button>
+        </Box>
+      </Box>
+      <Divider></Divider>
+
+      {/* Idea List area */}
+      <Box
+        sx={{
+          margin: "2rem 0rem 2rem 0rem",
+          padding: "1rem 2rem 2rem 2rem",
+          border: 1,
+          borderRadius: "25px",
+          borderColor: "white",
+          listStyle: "none",
+          boxShadow: 4,
+          maxHeight: "100%",
+        }}
+      >
+        {ideas.map((idea) => {
+          return (
+            <li>
+              <ul key={idea.id}>
+                {/* {idea.id}
                 {idea.title}
                 {idea.content} */}
-              <Link to={`/idea/${idea.id}`}>
-                <h2 key={idea.id}>{idea.title}</h2>
-              </Link>
-              <h3>{idea.content}</h3>
-            </ul>
-          </li>
-        );
-      })}
-      <Pagination count={10} variant="outlined" color="primary" />
-    </div>
+                <Link to={`/idea/${idea.id}`}>
+                  <h3 key={idea.id}>{idea.title}</h3>
+                </Link>
+                <p>{idea.content}</p>
+              </ul>
+            </li>
+          );
+        })}
+
+        {/* Pagination area */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Pagination count={10} variant="outlined" color="primary" />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

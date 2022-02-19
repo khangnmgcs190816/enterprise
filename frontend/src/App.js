@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { grey, orange, blue, red, green } from '@mui/material/colors';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { grey, orange, blue, red, green } from "@mui/material/colors";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./pages/Login/Login";
@@ -21,16 +21,23 @@ import Comment from "./components/Comment/Comment";
 const theme = createTheme({
   palette: {
     primary: {
-      main: red[500],
-
+      main: blue[500],
     },
-    secondary: {
+    success: {
       main: green[500],
     },
-    text: {
-      primary: grey[500],
-      secondary: orange[500],
-    }
+    error: {
+      main: red[700],
+    },
+    // overrides: {
+    //   MuiInput: {
+    //     underline: {
+    //       "&:hover:not($disabled):before": {
+    //         backgroundColor: "rgba(0, 188, 212, 0.7)",
+    //       },
+    //     },
+    //   },
+    // },
   },
 });
 
@@ -55,7 +62,6 @@ function App() {
               <Route path="/employees" element={<Employees />}></Route>
               <Route path="/dashboard" element={<Dashboard />}></Route>
               {/* <Route path="/idea/idealist" element={<IdeaList />}></Route> */}
-
 
               <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
 

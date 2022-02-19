@@ -260,8 +260,9 @@ const IdeaCreate = () => {
               placeholder={document}
               onChange={(e) => setSelectedFile(e.target.files[0])}
             />
-            <Button color={"secondary"} variant="contained" component="span">
-              <PhotoCamera />Upload Photo
+            <Button color={"primary"} variant="text" component="span">
+              <PhotoCamera />
+              Upload Photo
             </Button>
           </InputLabel>
           <InputLabel id="attach-label">
@@ -272,7 +273,7 @@ const IdeaCreate = () => {
               placeholder={document}
               onChange={(e) => setSelectedFile(e.target.files[0])}
             ></Input>
-            <Button variant="contained" component="span">
+            <Button color={"primary"} variant="text" component="span">
               <AttachFileIcon /> Attachments
             </Button>
           </InputLabel>

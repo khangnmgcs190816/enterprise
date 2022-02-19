@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import { Box } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import SearchIcon from "@mui/icons-material/Search";
 
 const SearchFunction = ({ page = "idea" }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,19 +20,29 @@ const SearchFunction = ({ page = "idea" }) => {
   };
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: "flex",
+        alignSelf: "center",
+        width: "30rem",
+        maxWidth: "50%",
+      }}
+    >
       <form onSubmit={handleSubmit}>
-        <label>Search: </label>
-        <input
+        <TextField
           type="text"
           value={searchTerm}
           name="search"
           onChange={handleChange}
           placeholder="Search..."
-        ></input>
-        <input type="submit"></input>
+          size="small"
+          variant="outlined"
+        />
+        <IconButton color="primary" aria-label="search" component="span">
+          <SearchIcon />
+        </IconButton>
       </form>
-    </div>
+    </Box>
   );
 };
 
