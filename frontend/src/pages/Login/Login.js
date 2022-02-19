@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import LoginForm from "./LoginForm";
 import PopUp from "../../components/PopUp/PopUp";
+import { Box, Divider, TextField, Button } from "@mui/material";
 
 function Login() {
   const [buttonPopup, setButtonPopup] = useState(false);
@@ -31,7 +32,7 @@ function Login() {
   };
 
   return (
-    <div className="Login">
+    <Box component="main">
       {user.username !== "" ? (
         // show response of the request
 
@@ -47,7 +48,7 @@ function Login() {
       <PopUp trigger={buttonPopup} setTrigger={setButtonPopup} setUser={Logout}>
         <h3>Confirm Logout ?</h3>
       </PopUp>
-    </div>
+    </Box>
   );
 }
 
