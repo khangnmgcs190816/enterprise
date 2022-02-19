@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FirstTab from "./FirstTab";
 import SecondTab from "./SecondTab";
+
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState("department");
   const handleDepartment = () => {

@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Navbar, Nav, Dropdown } from "rsuite";
 // import PermanentDrawerLeft from "./PermanentDrawerLeft";
-import "./styles.less";
+// import "./styles.less";
 
 const activeStyle = {
   color: "green",
@@ -35,21 +35,14 @@ const NavBar = () => {
             style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}>Employees</NavLink>
           <NavLink to="/dashboard"
             style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}>Dashboard</NavLink>
-          <NavLink to="/idea/ideacreate"
-            style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}>Idea Create</NavLink>
         </Nav>
 
         {/* Align right dropdown */}
         <Nav pullRight>
-          <Dropdown title="username">
-            <select>
-              <option href="#">Logout</option>
-            </select>
+          <Dropdown title="Welcome, ">
+            <Dropdown.Item href="#">Log out</Dropdown.Item>
           </Dropdown>
         </Nav>
-
-
-
       </Navbar>
     </div>
   );

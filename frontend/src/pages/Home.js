@@ -33,7 +33,6 @@ const Home = () => {
 
   return (
     <div className="home">
-      <NavBar></NavBar>
       <Search page="idea"></Search>
       <h1>Welcome</h1>
 
@@ -42,7 +41,7 @@ const Home = () => {
         <select
           id="size"
           // value={category}
-          onChange={() => {}}
+          onChange={() => { }}
         >
           <option value="Latest Ideas">Latest Ideas</option>
           <option value="Latest Comments">Latest Comments</option>
@@ -59,7 +58,7 @@ const Home = () => {
         <select
           id="size"
           // value={category}
-          onChange={() => {}}
+          onChange={() => { }}
         >
           <option value="Teaching">Teaching</option>
           <option value="Office">Office</option>
