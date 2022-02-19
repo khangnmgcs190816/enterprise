@@ -8,7 +8,7 @@ import NavBar from "./components/Header/NavBar";
 import "./App.css";
 // import IdeaList from "./components/Idea/IdeaList";
 import IdeaCreate from "./components/Idea/IdeaCreate";
-import Search from "./components/Search/Search";
+import Search from "./components/Search/SearchFunction";
 
 import Home from "./pages/Home";
 import Header from "./components/Header/Header";

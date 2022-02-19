@@ -1,14 +1,14 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 import NavBar from "../../components/Header/NavBar";
-import Search from "../../components/Search/Search";
+import SearchFunction from "../../components/Search/SearchFunction";
 
 const Employees = () => {
   const searchParams = useSearchParams();
 
   return (
     <div>
-      <Search page="employees"></Search>
+      <SearchFunction page="employees"></SearchFunction>
       <h1>Employee</h1>
     </div>
   );

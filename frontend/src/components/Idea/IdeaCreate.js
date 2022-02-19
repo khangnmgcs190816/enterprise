@@ -1,49 +1,57 @@
 import styled from "@emotion/styled";
 import { Box, Divider } from "@mui/material";
 import { useState } from "react";
-import { shadows } from '@mui/system';
 import Select from "react-select";
+import { InputLabel } from "@mui/material";
 import makeAnimated from "react-select/animated";
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import { lightBlue, grey } from "@mui/material/colors";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
 
 // import { colourOptions } from 'react-form';
 
-const IdeaHeading = styled('h3')({
-  textAlign: 'center',
+const TermHeading = styled("h3")({
+  textAlign: "center",
 });
 
-const Input = styled('input')({
-  display: 'none',
+const Input = styled("input")({
+  display: "none",
 });
 
-const UploadDiv = styled('div')({
-  margin: '1rem'
-})
-
-const Terms = styled('div')({
-  textAlign: 'justify',
-  fontSize: 18,
-  padding: '0rem 1rem 0rem 1rem'
+const Terms = styled("div")({
+  textAlign: "justify",
+  fontSize: 15,
+  padding: "0rem 1rem 0rem 1rem",
+  overflow: "scroll",
+  display: "block",
+  maxHeight: "50%",
 });
 
-const CheckTerm = styled('div')({
-  textAlign: 'center',
-})
+const CheckTerm = styled("div")({
+  textAlign: "center",
+});
 
-const IdeaFrame = styled('div')({
-  margin: '3rem',
-  border: 1,
-  borderColor: 'grey.500',
-  boxShadow: 1,
-  padding: '2rem',
-  borderRadius: 25,
-  maxWidth: '100%'
+const TitleFrame = styled("div")({
+  color: lightBlue[600],
+  textAlign: "center",
+  fontSize: 30,
+  fontWeight: "bold",
+  marginBottom: "1rem",
+});
+
+const LabelStyle = styled("label")({
+  fontStyle: "oblique",
+  color: grey[500],
+  fontSize: 13,
+  display: "flex",
+  p: 1,
+  m: 1,
+  justifyContent: "space-between",
 });
 
 const IdeaCreate = () => {
@@ -134,35 +142,59 @@ const IdeaCreate = () => {
       setIsPending(false);
     });
   };
-  const UploadDiv = styled('div')({
-    textAlign: 'left',
-    float: 'left'
-  })
 
   return (
-    <IdeaFrame className="ideacreate">
-      <Box sx={
-        {
-          color: 'blue',
-          textAlign: 'center',
-          fontSize: 36,
-          fontWeight: 'bold',
-          marginBottom: '1rem'
-        }
-      }>
-        Create idea
-      </Box>
-      <Divider sx={{
-        marginBottom: '1rem'
-      }}></Divider>
+    // The whole form is put in the Box with border
+    <Box
+      className="ideacreate"
+      sx={{
+        border: 1,
+        borderColor: "white",
+        boxShadow: 4,
+        borderRadius: "25px",
+        margin: "3rem",
+        padding: "2rem",
+        maxWidth: "100%",
+      }}
+    >
+      <TitleFrame>Create idea</TitleFrame>
+      <Divider
+        sx={{
+          marginBottom: "1.5rem",
+        }}
+      ></Divider>
+
       {/* {comment.map((comment) => (
                 <div className="comment-preview" key={comment.id}>
                     <h2>{comment.content}</h2>
                 </div>
             ))} */}
+
+      {/* Mainform for input */}
       <form onSubmit={handleSubmit}>
+        {/* Label section for displaying datetime data */}
         <div>
-          <TextField id="outlined-basic"
+          <LabelStyle>
+            <span>{academic_year}</span>
+            <br />
+            <span>This thread will be close on: {closed_date}</span>
+          </LabelStyle>
+          {/* <TextField
+            id="outlined-basic"
+            disabled
+            variant="outlined"
+            type="datetime"
+            name="academicyear"
+            placeholder={academic_year}
+            onChange={(e) => setAcademicyear(e.target.value)}
+          /> */}
+        </div>
+        <br />
+
+        {/* From here is title input */}
+        <div>
+          <TextField
+            id="outlined-basic"
             type="text"
             label="Title"
             variant="outlined"
@@ -170,8 +202,9 @@ const IdeaCreate = () => {
             placeholder={title}
             onChange={(e) => setTitle(e.target.value)}
             sx={{
-              width: '100%',
-            }} />
+              width: "100%",
+            }}
+          />
         </div>
         <br />
 
@@ -187,6 +220,7 @@ const IdeaCreate = () => {
         </div>
         <br /> */}
 
+        {/* Content input */}
         <div>
           <TextField
             id="outlined-multiline-static"
@@ -196,12 +230,11 @@ const IdeaCreate = () => {
             // defaultValue={content}
             onChange={(e) => setContent(e.target.value)}
             sx={{
-              width: '100%'
+              width: "100%",
             }}
           />
         </div>
         <br />
-
         {/* <div>
                     <label>Thumbs</label>
                     <input type="textarea" name="thumbs" placeholder={thumbs_up} rows ="4" onChange={e => setThumbsUp(e.target.value)} />
@@ -209,37 +242,41 @@ const IdeaCreate = () => {
                 </div>
                 <br/> */}
 
-        <div>
-          {/* Chỉ hiện Year chứ không cần input */}
-          <label>Academic Year: </label>
-          <TextField id="outlined-basic"
-            disabled
-            variant="outlined"
-            type="datetime"
-            name="academicyear"
-            placeholder={academic_year}
-            onChange={(e) => setAcademicyear(e.target.value)}
-          />
-        </div>
-        <br />
-
-        <UploadDiv>
-          <label htmlFor="icon-button-file">
-            <Input accept="image/*" id="icon-button-file" type="file" placeholder={document} onChange={(e) => setSelectedFile(e.target.files[0])} />
-            <IconButton color="primary" startIcon={<PhotoCamera />} aria-label="upload picture" component="span">
-              Upload Photo
-            </IconButton>
-          </label>
-          <label>Attach a file: </label>
-          <input
-            type="file"
-            accept="file/*"
-            id="contained-button-file"
-            placeholder={document}
-            onChange={(e) => setSelectedFile(e.target.files[0])}
-          ></input>
-        </UploadDiv>
-
+        {/* Upload Photos and Files are put in Box and flexed */}
+        <Box
+          sx={{
+            margin: "1rem",
+            display: "flex",
+            p: 1,
+            m: 1,
+            justifyContent: "space-evenly",
+          }}
+        >
+          <InputLabel htmlFor="icon-button-file">
+            <Input
+              accept="image/*"
+              id="icon-button-file"
+              type="file"
+              placeholder={document}
+              onChange={(e) => setSelectedFile(e.target.files[0])}
+            />
+            <Button variant="contained" component="span">
+              <PhotoCamera /> Upload Photo
+            </Button>
+          </InputLabel>
+          <InputLabel id="attach-label">
+            <Input
+              type="file"
+              accept="file/*"
+              id="contained-button-file"
+              placeholder={document}
+              onChange={(e) => setSelectedFile(e.target.files[0])}
+            ></Input>
+            <Button variant="contained" component="span">
+              <AttachFileIcon /> Attachments
+            </Button>
+          </InputLabel>
+        </Box>
 
         {/* {isFilePicked ? (
           <div>
@@ -253,9 +290,7 @@ const IdeaCreate = () => {
         ) : (
           <p>Select a file to show details</p>
         )} */}
-
-        <div>
-          {/* Ẩn luôn, chỉ hiện trên BE */}
+        {/* <div>
           <label>Create Date </label>
           <input
             readOnly
@@ -267,15 +302,14 @@ const IdeaCreate = () => {
           />
         </div>
         <br />
-        {/* 
+        
                 <div>
                     <label>Update </label>
                     <input disabled type="text" name="update" placeholder={updated_at} onChange={e => setUpdateDate(e.target.value)} />
                 </div>
-                <br/> */}
+                <br/>
 
         <div>
-          {/* Chỉ hiện */}
           <label>Close Date </label>
           <input
             type="text"
@@ -284,12 +318,13 @@ const IdeaCreate = () => {
             onChange={(e) => setCloseDate(e.target.value)}
           />
         </div>
-        <br />
+        <br /> */}
 
+        {/* Tag/Category section with customed Label */}
         <div>
-          <label>Tags</label>
+          <InputLabel id="tag-label">Select or create new tags</InputLabel>
           <Select
-            class="tag"
+            labelId="tag-label"
             name="tag"
             closeMenuOnSelect={false}
             placeholder={category}
@@ -309,20 +344,33 @@ const IdeaCreate = () => {
         </div>
         <br />
 
-        {/* Terms and Conditions */}
+        {/* Terms and Conditions with overflow content not yet finished */}
         <div className="term-conditions">
-          <IdeaHeading>
-            Terms and Conditions
-          </IdeaHeading>
+          <TermHeading>Terms and Conditions</TermHeading>
           <Terms>
-            Et natus molestias et doloribus. Quis quae enim dolores dolores
-            aperiam ullam eaque. Eveniet aut et qui alias consequuntur expedita
-            consequatur aspernatur. Qui est ut modi aut ut. Non est dolor ipsum
-            numquam doloribus deserunt molestiae et animi. Voluptatem sint fuga
-            est eum.
+            <p>
+              Et natus molestias et doloribus. Quis quae enim dolores dolores
+              aperiam ullam eaque. Eveniet aut et qui alias consequuntur
+              expedita consequatur aspernatur. Qui est ut modi aut ut. Non est
+              dolor ipsum numquam doloribus deserunt molestiae et animi.
+              Voluptatem sint fuga est eum.
+            </p>
+            <p>
+              Et natus molestias et doloribus. Quis quae enim dolores dolores
+              aperiam ullam eaque. Eveniet aut et qui alias consequuntur
+              expedita consequatur aspernatur. Qui est ut modi aut ut. Non est
+              dolor ipsum numquam doloribus deserunt molestiae et animi.
+              Voluptatem sint fuga est eum. Et natus molestias et doloribus.
+              Quis quae enim dolores dolores aperiam ullam eaque. Eveniet aut et
+              qui alias consequuntur expedita consequatur aspernatur. Qui est ut
+              modi aut ut. Non est dolor ipsum numquam doloribus deserunt
+              molestiae et animi. Voluptatem sint fuga est eum.
+            </p>
           </Terms>
         </div>
         <br />
+
+        {/* Checkbox for Terms and Submit button, should change Submitting... button by using LoadingButton */}
         <CheckTerm>
           <div>
             <FormControlLabel
@@ -331,13 +379,26 @@ const IdeaCreate = () => {
               name="agreement"
               onChange={handleChange}
               sx={{
-                marginBottom: '1rem'
+                marginBottom: "1rem",
               }}
             />
           </div>
-          {!isPending && <Button variant="contained" disabled={isDisabled()} startIcon={<SendIcon />}>Submit</Button>}
-          {isPending && <Button disabled startIcon={<SendIcon />}>Submitting...</Button>}
+          {!isPending && (
+            <Button
+              variant="contained"
+              disabled={isDisabled()}
+              startIcon={<SendIcon />}
+            >
+              Submit
+            </Button>
+          )}
+          {isPending && (
+            <Button disabled startIcon={<SendIcon />} variant="outlined">
+              Submitting...
+            </Button>
+          )}
         </CheckTerm>
+        
         {/* <input
             type="checkbox"
             name="agreement"
@@ -351,7 +412,7 @@ const IdeaCreate = () => {
           ></input><span>I Agree with Terms & Conditions</span>
         </div> */}
       </form>
-    </IdeaFrame>
+    </Box>
   );
 };
 

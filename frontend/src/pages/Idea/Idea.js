@@ -5,11 +5,10 @@ import { Link, useParams } from "react-router-dom";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 import LoadingIndicator from "../../components/Loading";
 import NavBar from "../../components/Header/NavBar";
-import Search from "../../components/Search/Search";
+import SearchFunction from "../../components/Search/SearchFunction";
 import useFetch from "../../services/useFetch";
 import { Pagination } from "@mui/material";
 import useAxios from "../../services/useAxios";
-
 
 const Idea = () => {
   // const url = "http://localhost:8080/idea";
@@ -27,12 +26,10 @@ const Idea = () => {
 
   const { category } = useParams();
 
-  const { response, loading, error } = useAxios(
-    {
-      url: '/idea',
-      method: 'get',
-    }
-  );
+  const { response, loading, error } = useAxios({
+    url: "/idea",
+    method: "get",
+  });
 
   const [ideas, setIdeas] = useState([]);
 
@@ -40,35 +37,26 @@ const Idea = () => {
     if (response != null) {
       setIdeas(response);
     }
-
-  }, [response])
-
+  }, [response]);
 
   // const { data: ideas, loading, error } = useFetch(
   //   "idea?category=" + category
   // );
-
-
 
   if (error) throw error;
   if (loading) return <LoadingIndicator />;
   if (ideas.length === 0) return <PageNotFound />;
 
   return (
-
     <div className="home">
-      <Search page="idea"></Search>
+      <SearchFunction page="idea"></SearchFunction>
       <h2>Homepage</h2>
-      <Link to='/idea/ideacreate'>
+      <Link to="/idea/ideacreate">
         <button>Create Idea</button>
       </Link>
       <section id="filters">
         <label htmlFor="category">Filter by Category:</label>{" "}
-        <select
-          id="size"
-          value={category}
-          onChange={() => { }}
-        >
+        <select id="size" value={category} onChange={() => {}}>
           <option value="">All category</option>
           <option value="Red">Red</option>
           <option value="Green">Green</option>
@@ -76,27 +64,24 @@ const Idea = () => {
         </select>
         {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
       </section>
-      {
-        ideas.map((idea) => {
-          return (
-            <li >
-              <ul key={idea.id}>
-                {/* {idea.id}
+      {ideas.map((idea) => {
+        return (
+          <li>
+            <ul key={idea.id}>
+              {/* {idea.id}
                 {idea.title}
                 {idea.content} */}
-                <Link to={`/idea/${idea.id}`}>
-                  <h2 key={idea.id}>{idea.title}</h2>
-                </Link>
-                <h3>{idea.content}</h3>
-              </ul>
-            </li>);
-        }
-        )
-      }
+              <Link to={`/idea/${idea.id}`}>
+                <h2 key={idea.id}>{idea.title}</h2>
+              </Link>
+              <h3>{idea.content}</h3>
+            </ul>
+          </li>
+        );
+      })}
       <Pagination count={10} variant="outlined" color="primary" />
-
     </div>
   );
-}
+};
 
 export default Idea;
