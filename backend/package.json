@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "start": "nodemon --inspect src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web-enterprise"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
