@@ -1,5 +1,8 @@
 import "chart.js/auto";
 import { Pie } from "react-chartjs-2";
+import { Box, Divider } from "@mui/material";
+import Typography from "@mui/material/Typography";
+
 // import useFetch from "../services/useFetch";
 // import PageNotFound from "./errorHandling/PageNotFound";
 // import LoadingIndicator from "./Loading";
@@ -28,23 +31,26 @@ function PieChart() {
   // if (ideas.length === 0) return <PageNotFound />;
 
   return (
-    <div
-      style={{
-        float: "right",
-        padding: "0rem 10rem 0rem",
-        border: "1px solid red",
-      }}
-    >
+    <Box>
       {/* <h1>{ideas.filter((idea) => idea.department = 'Math')}</h1> */}
-      <h3 style={{ margin: "0rem 0rem 2rem 3rem" }}>
-        Number of ideas per department
-      </h3>
 
       {/* Chart area: labels+color and chart */}
-      <div style={{ width: "400px" }}>
+      <Box
+        sx={{
+          width: "60%",
+        }}
+      >
+        <Typography
+          variant="h6"
+          gutterBottom
+          textAlign="center"
+          fontWeight="bold"
+        >
+          Number of ideas per department
+        </Typography>
         <Pie data={data} />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

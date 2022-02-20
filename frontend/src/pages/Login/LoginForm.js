@@ -39,7 +39,7 @@ function LoginForm({ Login, error }) {
         fontWeight="bold"
         alignItems="center"
       >
-        Login
+        Welcome to FPT Greenwich!
       </Typography>
       <Divider sx={{ margin: "1rem 0rem 1rem 0rem" }}></Divider>
       {error !== "" ? <div className="error">{error}</div> : ""}{" "}

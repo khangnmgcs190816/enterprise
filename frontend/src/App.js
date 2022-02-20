@@ -7,7 +7,6 @@ import Login from "./pages/Login/Login";
 import Idea from "./pages/Idea/Idea";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Employees from "./pages/Employee/Employees";
-import NavBar from "./components/Header/NavBar";
 import "./App.css";
 // import IdeaList from "./components/Idea/IdeaList";
 import IdeaCreate from "./components/Idea/IdeaCreate";
@@ -21,13 +20,20 @@ import Comment from "./components/Comment/Comment";
 const theme = createTheme({
   palette: {
     primary: {
-      main: blue[500],
+      main: "#42a5f5",
+      contrastText: "#FFFFFF",
     },
     success: {
-      main: green[500],
+      main: "#66bb6a",
+      contrastText: "#e3f2fd",
     },
     error: {
-      main: red[700],
+      main: "#f44336",
+      contrastText: "#e3f2fd",
+    },
+    secondary: {
+      main: grey[400],
+      contrastText: "grey[600]",
     },
     // overrides: {
     //   MuiInput: {

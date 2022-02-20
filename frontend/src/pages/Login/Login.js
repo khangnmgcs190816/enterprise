@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LoginForm from "./LoginForm";
 import PopUp from "../../components/PopUp/PopUp";
-import { Box, Divider, TextField, Button } from "@mui/material";
+import { Box } from "@mui/material";
 
 function Login() {
   const [buttonPopup, setButtonPopup] = useState(false);

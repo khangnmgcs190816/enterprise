@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
-// import IdeaList from "../../pages/Idea/Idea.js";
-// import useFetch from "../../components/Idea/useFetch";
 import { Link, useParams } from "react-router-dom";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 import LoadingIndicator from "../../components/Loading";
 import SearchFunction from "../../components/Search/SearchFunction";
-import useFetch from "../../services/useFetch";
+// import useFetch from "../../services/useFetch";
 import { Pagination } from "@mui/material";
 import useAxios from "../../services/useAxios";
-import { Button } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Box, Divider } from "@mui/material";
 import FilterIdea from "../../components/Idea/FilterIdea";
+import NewIdeaBtn from "../../components/Idea/IdeaButtons";
 
 const Idea = () => {
   // const url = "http://localhost:8080/idea";
@@ -53,7 +50,7 @@ const Idea = () => {
   return (
     <Box
       sx={{
-        margin: "2rem 3rem 2rem 3rem",
+        margin: "0rem 3rem",
         maxWidth: "100%",
       }}
     >
@@ -62,7 +59,7 @@ const Idea = () => {
         sx={{
           display: "flex",
           p: 1,
-          m: 1,
+          m: 2,
           justifyContent: "space-between",
         }}
       >
@@ -80,19 +77,11 @@ const Idea = () => {
         <Box
           sx={{
             display: "flex",
-            p: 1,
-            m: 1,
             justifyContent: "right",
           }}
         >
           <SearchFunction page="idea"></SearchFunction>
-          <Button
-            variant="contained"
-            startIcon={<AddCircleIcon />}
-            href="/idea/ideacreate"
-          >
-            New
-          </Button>
+          <NewIdeaBtn />
         </Box>
       </Box>
       <Divider></Divider>

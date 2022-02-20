@@ -12,8 +12,11 @@ import SendIcon from "@mui/icons-material/Send";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { lightBlue, grey } from "@mui/material/colors";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-
-// import { colourOptions } from 'react-form';
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+// Mới tạo IdeaButtons.js trong Idea(components), chứa 3 function một cái là dạng link Back, cái thứ 2 là nút Cancel, 3 là nút Create Idea
+import { ReturnLink, CancelBtn } from "./IdeaButtons";
 
 const TermHeading = styled("h3")({
   textAlign: "center",
@@ -152,12 +155,37 @@ const IdeaCreate = () => {
         borderColor: "white",
         boxShadow: 4,
         borderRadius: "25px",
-        margin: "3rem",
+        margin: "2rem 3rem",
         padding: "2rem",
         maxWidth: "100%",
       }}
     >
-      <TitleFrame>Create idea</TitleFrame>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <ReturnLink />
+        <TitleFrame>Create idea</TitleFrame>
+        <Box sx={{ alignSelf: "center" }}>
+          {/* Label section for displaying datetime data */}
+          <LabelStyle>
+            Closure date:
+            {closed_date != null ? " " + { closed_date } : " No data"}
+          </LabelStyle>
+          {/* <TextField
+            id="outlined-basic"
+            disabled
+            variant="outlined"
+            type="datetime"
+            name="academicyear"
+            placeholder={academic_year}
+            onChange={(e) => setAcademicyear(e.target.value)}
+          /> */}
+        </Box>
+      </Box>
+
       <Divider
         sx={{
           marginBottom: "1.5rem",
@@ -172,25 +200,6 @@ const IdeaCreate = () => {
 
       {/* Mainform for input */}
       <form onSubmit={handleSubmit}>
-        {/* Label section for displaying datetime data */}
-        <div>
-          <LabelStyle>
-            <span>{academic_year}</span>
-            <br />
-            <span>This thread will be close on: {closed_date}</span>
-          </LabelStyle>
-          {/* <TextField
-            id="outlined-basic"
-            disabled
-            variant="outlined"
-            type="datetime"
-            name="academicyear"
-            placeholder={academic_year}
-            onChange={(e) => setAcademicyear(e.target.value)}
-          /> */}
-        </div>
-        <br />
-
         {/* From here is title input */}
         <div>
           <TextField
@@ -376,7 +385,7 @@ const IdeaCreate = () => {
           <div>
             <FormControlLabel
               control={<Checkbox />}
-              label="I Agree with Terms & Conditions"
+              label="I Agree to Terms & Conditions"
               name="agreement"
               onChange={handleChange}
               sx={{
@@ -389,16 +398,23 @@ const IdeaCreate = () => {
               variant="contained"
               disabled={isDisabled()}
               startIcon={<SendIcon />}
+              fullWidth
             >
               Submit
             </Button>
           )}
           {isPending && (
-            <Button disabled startIcon={<SendIcon />} variant="outlined">
+            <Button
+              disabled
+              startIcon={<SendIcon />}
+              variant="outlined"
+              fullWidth
+            >
               Submitting...
             </Button>
           )}
         </CheckTerm>
+        <CancelBtn />
 
         {/* <input
             type="checkbox"

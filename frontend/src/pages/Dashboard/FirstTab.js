@@ -1,31 +1,60 @@
 import React from "react";
 import PieChart from "../../components/PieChart";
-import Dropdown from "./Dropdown";
+import DeptDD from "./Dropdown";
+import Button from "@mui/material/Button";
+import styled from "@emotion/styled";
+import { lightBlue } from "@mui/material/colors";
+import { Box, Divider } from "@mui/material";
 
+const TitleFrame = styled("div")({
+  color: lightBlue[600],
+  textAlign: "left",
+  fontSize: 30,
+  fontWeight: "bold",
+  marginBottom: "1rem",
+});
 
 const FirstTab = () => {
   return (
-    <div className="FirstTab">
-      <div>
-        <h1>Department</h1>
-        {/* View by: dropdown (Dept) */}
-        <div>
-          <Dropdown />
-          <p>
-            Closure Date: { } <button>Download (.csv)</button>
-          </p>
-        </div>
-        <br />
-
+    <Box
+      sx={{
+        display: "flex",
+        p: 1,
+        justifyContent: "center",
+      }}
+    >
+      <Box
+        sx={{
+          width: "50%",
+          paddingLeft: "3rem",
+        }}
+      >
+        <TitleFrame>Statistical Analysis - Department</TitleFrame>
+        <Divider
+          sx={{
+            marginBottom: "2rem",
+          }}
+        ></Divider>
+        <Box>
+          <DeptDD />
+        </Box>
         {/* Dynamic detail panel */}
-        <div>
+        <Box
+          sx={{
+            boxShadow: "4",
+            borderRadius: "25px",
+            maxWidth: "60%",
+            width: "60%",
+            margin: "3rem",
+            padding: "2rem",
+            bgcolor: "lightBlue",
+          }}
+        >
           {/* Number of ideas by employees who belongs in a department */}
           {/* <span>
           Ideas:
           {ideas.length}
         </span> */}
-          <br />
-
           {/* Idea with most thumbs and comments in the department*/}
           <span>Most popular: N/A</span>
           <br />
@@ -43,17 +72,28 @@ const FirstTab = () => {
 
           {/* Newest comment in an idea of this department */}
           <span>Latest comment: N/A</span>
-          <br />
-        </div>
+        </Box>
+        <Box>
+          Closure Date: {} <button>Download (.csv)</button>
+        </Box>
+      </Box>
 
-        <div>
-          {/* <p>Total ideas: {ideas.length} </p> */}
-
-          {/* Chart here */}
-          <PieChart />
-        </div>
-      </div>
-    </div>
+      <Box
+        sx={{
+          alignSelf: "center",
+          position: "relative",
+          margin: "auto",
+          padding: "2rem 2rem 2rem 2rem",
+          width: "25rem",
+          height: "28rem",
+          boxShadow: 4,
+          borderRadius: "25px",
+        }}
+      >
+        {/* <p>Total ideas: {ideas.length} </p> */}
+        <PieChart />
+      </Box>
+    </Box>
   );
 };
 
