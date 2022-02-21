@@ -1,13 +1,13 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import NavBar from './NavBar'
-import Navbar from './NavBarTest';
-import NavMUI from './NavMUI';
+import React from "react";
+// import { Link } from "react-router-dom";
+// import NavBar from "./NavBar";
+// import Navbar from "./NavBarTest";
+import NavMUI from "./NavMUI";
 
 const Header = () => {
-    return (
-        <div id="header-nav">
-            {/* <Link to="/">
+  return (
+    <div id="header-nav">
+      {/* <Link to="/">
                 <img
                     src='images/Logo-Greenwich.png'
                     alt='FPTGreenwich'
@@ -16,10 +16,10 @@ const Header = () => {
             </Link>
             <br />
             <NavBar /> */}
-            {/* <br /> */}
-            <Navbar />
-        </div>
-    )
-}
+      {/* <br /> */}
+      <NavMUI />
+    </div>
+  );
+};
 
 export default Header;
