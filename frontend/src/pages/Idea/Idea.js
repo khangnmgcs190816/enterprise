@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
+import queryString from 'query-string';
 import { Link, useParams } from "react-router-dom";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 import LoadingIndicator from "../../components/Loading";
 import SearchFunction from "../../components/Search/SearchFunction";
 // import useFetch from "../../services/useFetch";
 import { Pagination } from "@mui/material";
+import Paging from "../../components/Pagination/Paging";
 import useAxios from "../../services/useAxios";
 import { Box, Divider } from "@mui/material";
 import FilterIdea from "../../components/Idea/FilterIdea";
 import NewIdeaBtn from "../../components/Idea/IdeaButtons";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
+import SearchIcon from "@mui/icons-material/Search";
 
 const Idea = () => {
   // const url = "http://localhost:8080/idea";
@@ -31,8 +36,24 @@ const Idea = () => {
     method: "get",
   });
 
+  const [ideaList, setIdeaList] = useState([]);
   const [ideas, setIdeas] = useState([]);
+  const [filter, setFilter] = useState("");
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // navigate(`/${page}/?search=${searchTerm}`);
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setFilter(value);
+  };
+  let dataSearch = ideas.filter(item => {
+    return Object.keys(item).some(key=>
+      item[key].toString().toLowerCase().includes(filter.toString().toLowerCase()))
+  });
   useEffect(() => {
     if (response != null) {
       setIdeas(response);
@@ -53,7 +74,8 @@ const Idea = () => {
         margin: "0rem 3rem",
         maxWidth: "100%",
       }}
-    >
+    > 
+    
       {/* Filter area */}
       <Box
         sx={{
@@ -80,7 +102,30 @@ const Idea = () => {
             justifyContent: "right",
           }}
         >
-          <SearchFunction page="idea"></SearchFunction>
+          {/* <SearchFunction page="idea"></SearchFunction> */}
+          <Box
+            sx={{
+              display: "flex",
+              alignSelf: "center",
+              width: "30rem",
+              maxWidth: "50%",
+            }}
+          >
+            <form>
+              <TextField
+                type="text"
+                value={filter}
+                name="search"
+                onChange={handleChange.bind(this)}
+                placeholder="Search..."
+                size="small"
+                variant="outlined"
+              />
+              <IconButton color="primary" aria-label="search" component="span">
+                <SearchIcon />
+              </IconButton>
+            </form>
+          </Box>
           <NewIdeaBtn />
         </Box>
       </Box>
@@ -99,13 +144,10 @@ const Idea = () => {
           maxHeight: "100%",
         }}
       >
-        {ideas.map((idea) => {
+        {dataSearch.map((idea) => {
           return (
             <li>
               <ul key={idea.id}>
-                {/* {idea.id}
-                {idea.title}
-                {idea.content} */}
                 <Link to={`/idea/${idea.id}`}>
                   <h3 key={idea.id}>{idea.title}</h3>
                 </Link>
@@ -123,6 +165,7 @@ const Idea = () => {
           }}
         >
           <Pagination count={10} variant="outlined" color="primary" />
+          {/* <Paging pagination={pagination} onPageChange={handlePageChange} /> */}
         </Box>
       </Box>
     </Box>
