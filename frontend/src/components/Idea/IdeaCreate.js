@@ -198,7 +198,7 @@ const IdeaCreate = () => {
                 </div>
             ))} */}
 
-      {/* Mainform for input */}
+      {/* Main form for input */}
       <form onSubmit={handleSubmit}>
         {/* From here is title input */}
         <div>

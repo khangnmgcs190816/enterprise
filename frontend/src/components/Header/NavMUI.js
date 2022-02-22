@@ -1,6 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
+import { Box, Divider } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -11,15 +11,20 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-const pages = ["Home", "Idea", "Employee", "Dashboard"];
-const settings = ["Logout"];
+const pages = ["Idea", "Employee", "Dashboard"];
+const userTitle = ["Hi, Username!"]
+const settings = ["Category (Coord)", "Your Ideas (All)"];
+const logout = "Log Out";
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const navigate = useNavigate();
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,18 +41,37 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+  function notificationsLabel(count) {
+    if (count === 0) {
+      return 'no notifications';
+    }
+    if (count > 99) {
+      return 'more than 99 notifications';
+    }
+    return `${count} notifications`;
+  }
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
             LOGO
-          </Typography>
+          </Typography> */}
+          <Link to="/">
+            <img
+              src='images/Logo-Greenwich.png'
+              alt='FPTGreenwich'
+              style={{ maxHeight: '3rem', marginRight: "2rem", display: { xs: "none", md: "flex" } }}
+            ></img>
+          </Link>
+
+
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -79,39 +103,60 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+
+                < MenuItem key={page} onClick={handleCloseNavMenu} >
+                  {/* <Typography textAlign="center">{page}</Typography> */}
+                  <Button
+                    component={Link}
+                    sx={{ my: 1, color: "primary", display: "block" }}
+                    to={page === "Idea" ? "/Idea" : `/${page}`}
+
+                  >
+                    {page}
+                  </Button>
                 </MenuItem>
+
               ))}
             </Menu>
           </Box>
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
             LOGO
-          </Typography>
+          </Typography> */}
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Link to={page === "Home" ? "/" : `/${page}`} sx={{}}>
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {/* {page} */}
-                  {page}
-                </Button>
-              </Link>
+              // <Link to={page === "Home" ? "/" : `/${page}`} sx={{}}>
+              // <NavLink>
+              <Button
+                component={Link}
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ marginRight: "2rem", color: "white", display: "block", textAlign: "center" }}
+                to={page === "Idea" ? "/Idea" : `/${page}`}
+              >
+                {page}
+              </Button>
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+
+
+
+          <Box sx={{ flexGrow: 0, marginRight: "1rem" }}>
+            <IconButton color="whiteIcon" aria-label={notificationsLabel(100)} sx={{ marginRight: "2rem" }}>
+              <Badge badgeContent={0} color="badge">
+                <MailIcon />
+              </Badge>
+            </IconButton>
+
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -130,16 +175,22 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              <MenuItem key={userTitle} onClick={handleCloseUserMenu} divider={true}>
+                <Typography textAlign="center">{userTitle}</Typography>
+              </MenuItem>
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting} onClick={handleCloseUserMenu} divider={true}>
+                  <Typography textAlign="center" >{setting}</Typography>
                 </MenuItem>
               ))}
+              <MenuItem key={logout} onClick={handleCloseUserMenu}>
+                <Typography textAlign="center"><LogoutIcon fontSize="small" color="error" /> {logout}</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
       </Container>
-    </AppBar>
+    </AppBar >
   );
 };
 export default ResponsiveAppBar;
