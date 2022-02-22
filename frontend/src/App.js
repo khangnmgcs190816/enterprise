@@ -43,12 +43,12 @@ const theme = createTheme({
     },
     typography: {
       logout: {
-        color: '#f44336'
+        color: "#f44336",
       },
       button: {
-        color: green[500]
-      }
-    }
+        color: green[500],
+      },
+    },
     // overrides: {
     //   MuiInput: {
     //     underline: {
@@ -86,6 +86,7 @@ function App() {
               <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
 
               <Route path="/category" element={<Category />}></Route>
+              {/* <Route path="/your-ideas" element={}></Route> */}
               <Route path="/search" element={<Search />}></Route>
 
               <Route path="/login" element={<Login />}></Route>

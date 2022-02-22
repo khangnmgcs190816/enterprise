@@ -12,19 +12,17 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link, NavLink } from "react-router-dom";
-import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
-import LogoutIcon from '@mui/icons-material/Logout';
+import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const pages = ["Idea", "Employee", "Dashboard"];
-const userTitle = ["Hi, Username!"]
-const settings = ["Category (Coord)", "Your Ideas (All)"];
-const logout = "Log Out";
+const userTitle = ["Hi, Username!"];
+const settings = ["Category", "Your Ideas"];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -43,10 +41,10 @@ const ResponsiveAppBar = () => {
 
   function notificationsLabel(count) {
     if (count === 0) {
-      return 'no notifications';
+      return "no notifications";
     }
     if (count > 99) {
-      return 'more than 99 notifications';
+      return "more than 99 notifications";
     }
     return `${count} notifications`;
   }
@@ -65,13 +63,15 @@ const ResponsiveAppBar = () => {
           </Typography> */}
           <Link to="/">
             <img
-              src='images/Logo-Greenwich.png'
-              alt='FPTGreenwich'
-              style={{ maxHeight: '3rem', marginRight: "2rem", display: { xs: "none", md: "flex" } }}
+              src="images/Logo-Greenwich.png"
+              alt="FPTGreenwich"
+              style={{
+                maxHeight: "3rem",
+                marginRight: "2rem",
+                display: { xs: "none", md: "flex" },
+              }}
             ></img>
           </Link>
-
-
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -103,19 +103,16 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
-
-                < MenuItem key={page} onClick={handleCloseNavMenu} >
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
                   {/* <Typography textAlign="center">{page}</Typography> */}
                   <Button
                     component={Link}
                     sx={{ my: 1, color: "primary", display: "block" }}
                     to={page === "Idea" ? "/Idea" : `/${page}`}
-
                   >
                     {page}
                   </Button>
                 </MenuItem>
-
               ))}
             </Menu>
           </Box>
@@ -136,7 +133,12 @@ const ResponsiveAppBar = () => {
                 component={Link}
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ marginRight: "2rem", color: "white", display: "block", textAlign: "center" }}
+                sx={{
+                  marginRight: "2rem",
+                  color: "white",
+                  display: "block",
+                  textAlign: "center",
+                }}
                 to={page === "Idea" ? "/Idea" : `/${page}`}
               >
                 {page}
@@ -144,11 +146,12 @@ const ResponsiveAppBar = () => {
             ))}
           </Box>
 
-
-
-
           <Box sx={{ flexGrow: 0, marginRight: "1rem" }}>
-            <IconButton color="whiteIcon" aria-label={notificationsLabel(100)} sx={{ marginRight: "2rem" }}>
+            <IconButton
+              color="whiteIcon"
+              aria-label={notificationsLabel(100)}
+              sx={{ marginRight: "2rem" }}
+            >
               <Badge badgeContent={0} color="badge">
                 <MailIcon />
               </Badge>
@@ -175,22 +178,38 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem key={userTitle} onClick={handleCloseUserMenu} divider={true}>
+              <MenuItem
+                key={userTitle}
+                onClick={handleCloseUserMenu}
+                divider={true}
+              >
                 <Typography textAlign="center">{userTitle}</Typography>
               </MenuItem>
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu} divider={true}>
-                  <Typography textAlign="center" >{setting}</Typography>
+                <MenuItem
+                  key={setting}
+                  onClick={handleCloseUserMenu}
+                  divider={true}
+                >
+                  <Button
+                    component={Link}
+                    textAlign="center"
+                    to={setting === "Category" ? "/category" : `/${setting}`}
+                  >
+                    {setting}
+                  </Button>
                 </MenuItem>
               ))}
-              <MenuItem key={logout} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center"><LogoutIcon fontSize="small" color="error" /> {logout}</Typography>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center" color="error">
+                  <LogoutIcon fontSize="small" /> Log Out
+                </Typography>
               </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
       </Container>
-    </AppBar >
+    </AppBar>
   );
 };
 export default ResponsiveAppBar;
