@@ -59,9 +59,9 @@ function App() {
               {/* // TODO 1: when not authenticated, no NavBar */}
               {/* // TODO 2: when authenticated, go to main page */}
               {/* <Route path="/" element={<Login />}></Route>{" "} */}
-              <Route path="/" element={<Home />}></Route>
+              <Route path="/" element={<Home/>}/>
 
-              <Route path="/idea" element={<Idea />}></Route>
+              <Route path="/idea" element={<Idea/>}/>
               <Route path="/idea/:category" element={<Idea />}></Route>
               <Route path="/idea/:filter" element={<Idea />}></Route>
 
