@@ -1,23 +1,34 @@
 import { useState } from "react";
+import Comments from './Comments';
 
 const CommentForm = ({handleSubmit, submitLabel, hasCancelButton = false, initialText = "", handleCancel}) => {
+    var date = new Date();
+    var parId = Comment.parentId;
     const [content,setContent]= useState(initialText);
+    const [username, setUsername] = useState('');
+    const [userId, setUserId] = useState("");
+    const [parentId, setParentId]=useState(null);
+    const [createdAt, setCreateDate] = useState(date);
+    const [closedDate, setCloseDate] = useState();
     const isTextareaDisable = content.length === 0;
     const [isPending, setIsPending] = useState(false);
+
     const onSubmit = event => {
         
         event.preventDefault();
-        const comment = {content};
+        const comment = {content, username, userId, parentId, createdAt, closedDate};
         handleSubmit(content);
         setContent("");
 
+        console.log(parentId)
         setIsPending(true);
-        fetch("http://localhost:8080/comment", {
+        fetch("http://localhost:8081/comment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(comment),
         }).then(() => {
-        console.log(comment);
+        // console.log(comment);
+        // console.log(Comment.parentId);
         console.log("new comment added");
         setIsPending(false);
         });

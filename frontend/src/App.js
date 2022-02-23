@@ -14,7 +14,8 @@ import Search from "./components/Search/SearchFunction";
 import Home from "./pages/Home";
 import Header from "./components/Header/Header";
 import Category from "./components/Category";
-import Comment from "./components/Comment/Comment";
+import Comments from "./components/Comment/Comments";
+import IdeaDetails from "./components/Idea/IdeaDetails";
 
 const theme = createTheme({
   palette: {
@@ -76,6 +77,7 @@ function App() {
               <Route path="/" element={<Home/>}/>
 
               <Route path="/idea" element={<Idea/>}/>
+              <Route path="/idea/:id" element={<IdeaDetails/>}/>
               <Route path="/idea/:category" element={<Idea />}></Route>
               <Route path="/idea/:filter" element={<Idea />}></Route>
 
@@ -90,7 +92,7 @@ function App() {
               <Route path="/search" element={<Search />}></Route>
 
               <Route path="/login" element={<Login />}></Route>
-              <Route path="/comment" element={<Comment />}></Route>
+              <Route path="/comments" element={<Comments />}></Route>
             </Routes>
           </main>
         </Router>

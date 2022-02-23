@@ -1,7 +1,9 @@
-import { updateComment } from "./api";
 import CommentForm from "./CommentForm";
-import useFetch from "../Idea/useFetch";
-import { useParams } from "react-router-dom";
+import { useParams} from "react-router-dom";
+import {useState, useEffect} from 'react';
+import "./styles.css";
+import Avatar from "@mui/material/Avatar";
+
 
 // const listComment = [{
 //     id: "4",
@@ -63,29 +65,34 @@ import { useParams } from "react-router-dom";
 
 
 
-const Comment = ({comment, replies, currentUserId, deleteComment, updateComment, activeComment, addComment, setActiveComment, parentId = null}) => {
-    const { commentId } = useParams();
-    const data = useFetch("http://localhost:8080/comment/");
 
-    const fiveMinutes = 300000;
-    const timePassed = new Date() - new Date(comment.created_at) >fiveMinutes;
+const Comment = ({comment,
+    replies,
+    setActiveComment,
+    activeComment,
+    updateComment,
+    deleteComment,
+    createComment,
+    parentId,
+    currentUserId,}) => {
+        
+   
+    const canDelete = currentUserId === comment.userId && replies.length === 0;
     const canReply = Boolean(currentUserId);
-    const canEdit = currentUserId === comment.userId && !timePassed;
-    const canDelete = currentUserId === comment.userId && replies.length === 0 && !timePassed;
-    const created_at = new Date(comment.created_at).toLocaleDateString();
+    const canEdit = currentUserId === comment.userId;
     const isReplying = activeComment && activeComment.type === 'replying' && activeComment.id === comment.id;
     const isEditing = activeComment && activeComment.type === 'editing' && activeComment.id === comment.id;
     const replyId = parentId ? parentId : comment.id;
 
     return ( 
-        <div className="comment">
+        <div key={comment.id} className="comment">
             <div className="comment-image-container">
-                <img/>
+            <Avatar alt="" src="/static/images/avatar/2.jpg" />
             </div>
             <div className="comment-right-part">
                 <div className="comment-content">
                     <div className="comment-author">{comment.id}</div>
-                    <div>{created_at}</div>
+                    <div>{comment.createdAt}</div>
                 </div>
                 {!isEditing && <div className="comment-text">{comment.content}</div>}
                 {isEditing &&(
@@ -98,23 +105,58 @@ const Comment = ({comment, replies, currentUserId, deleteComment, updateComment,
                     />
                 )}
                 <div className="comment-actions">
-                    {canReply && <div className="comment-action" onClick={() => setActiveComment({id: comment.id, type:'replying'})}>Reply</div>}
-                    {canEdit && <div className="comment-action" onClick={() => setActiveComment({id: comment.id, type:'editing'})}>Edit</div>}
-                    {canDelete && <div className="comment-action" onClick={() => deleteComment(comment.id)}>Delete</div>}
+                    
+                    <div
+                        className="comment-action"
+                        onClick={() =>
+                            setActiveComment({ id: comment.id, type: "replying" })
+                        }
+                        >
+                        Reply
+                    </div>
+                    
+                    
+                    <div
+                        className="comment-action"
+                        onClick={() =>
+                            setActiveComment({ id: comment.id, type: "editing" })
+                        }
+                        >
+                        Edit
+                    </div>
+                    
+                    
+                    <div
+                        className="comment-action"
+                        onClick={() => deleteComment(comment.id)}
+                        >
+                        Delete
+                    </div>
+                    
                 </div>
                 {isReplying && (
                     <CommentForm 
                     submitLabel="Reply" 
-                    handleSubmit={(text) => addComment(text, replyId)}/>
+                    handleSubmit={(text) => createComment(text, replyId)}/>
                 )}
                 {replies.length > 0 && (
                     <div className="replies">
-                        {replies.map(reply => (<Comment comment={reply} key={reply.id} replies={[]} currentUserId={currentUserId} deleteComment={deleteComment} updateComment={updateComment} addComment={addComment} activeComment={activeComment} setActiveComment={setActiveComment} parentId={comment.id}/>))}
+                        {replies.map(reply => (<Comment comment={reply}
+                                                        key={reply.id}
+                                                        setActiveComment={setActiveComment}
+                                                        activeComment={activeComment}
+                                                        updateComment={updateComment}
+                                                        deleteComment={deleteComment}
+                                                        createComment={createComment}
+                                                        parentId={comment.id}
+                                                        replies={[]}
+                                                        currentUserId={currentUserId}/>))}
                     </div>
                 )}
             </div>
         </div>
      );
+              
 }
  
 export default Comment;
