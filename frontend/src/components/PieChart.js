@@ -37,7 +37,7 @@ function PieChart() {
       {/* Chart area: labels+color and chart */}
       <Box
         sx={{
-          width: "60%",
+          width: "100%",
         }}
       >
         <Typography

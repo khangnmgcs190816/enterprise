@@ -16,18 +16,7 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Idea = () => {
-  // const url = "http://localhost:8080/idea";
-  // const [ideas, setIdeas] = useState([{ idea: 1, title: 'loading', content: 'loading' }]);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const res = await fetch(url);
-  //     const ideas = await res.json();
-  //     setIdeas(ideas);
-  //     console.log(ideas)
-  //   }
-  //   fetchData();
-  // }, [url])
 
   const { category } = useParams();
 
