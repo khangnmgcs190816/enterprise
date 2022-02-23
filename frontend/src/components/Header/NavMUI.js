@@ -183,7 +183,18 @@ const ResponsiveAppBar = () => {
                 onClick={handleCloseUserMenu}
                 divider={true}
               >
-                <Typography textAlign="center">{userTitle}</Typography>
+                {/* <Typography textAlign="center">{userTitle}</Typography> */}
+                <Button
+                  component={Link}
+                  sx={{ my: 1, color: "primary", display: "block" }}
+                  to={
+                    userTitle === "Hi, Username!"
+                      ? "/Hi, Username!"
+                      : `/${userTitle}`
+                  }
+                >
+                  {userTitle}
+                </Button>
               </MenuItem>
               {settings.map((setting) => (
                 <MenuItem
