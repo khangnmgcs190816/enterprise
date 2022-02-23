@@ -4,10 +4,12 @@ import chalk from 'chalk';
 import bcrypt from "bcrypt";
 import {User} from "./user.js";
 
-const connectionURL = 'mongodb://127.0.0.1:27017';
-const databaseName = 'task-app';
+const url = "mongodb+srv://trongkami:Trongvip123!@cluster0.zee12.mongodb.net/web_enterprise?retryWrites=true&w=majority";
 
-await mongoose.connect(`${connectionURL}/${databaseName}`, {useNewUrlParser: true});
+const connectionParams={
+    useNewUrlParser: true
+}
+await mongoose.connect(url,connectionParams)
 
 
 const TaskSchema = new mongoose.Schema({

@@ -4,11 +4,22 @@ import validator, * as otherValidator from 'validator';
 import chalk from 'chalk';
 import jwt from "jsonwebtoken";
 import {Task} from "./task.js";
+import {MongoClient, ServerApiVersion} from "mongodb";
 
-const connectionURL = 'mongodb://127.0.0.1:27017';
-const databaseName = 'task-app';
+// const connectionURL = 'mongodb+srv://trongkami:Trongvip123!@cluster0.zee12.mongodb.net/web_enterprise?retryWrites=true&w=majority';
+// const databaseName = 'web_enterprise';
+//
+//
+//
+// await mongoose.connect(`${connectionURL}/${databaseName}`, {useNewUrlParser: true});
 
-await mongoose.connect(`${connectionURL}/${databaseName}`, {useNewUrlParser: true});
+const url = "mongodb+srv://trongkami:Trongvip123!@cluster0.zee12.mongodb.net/web_enterprise?retryWrites=true&w=majority";
+
+const connectionParams={
+    useNewUrlParser: true
+}
+await mongoose.connect(url,connectionParams)
+
 
 
 const UserSchema = new mongoose.Schema({

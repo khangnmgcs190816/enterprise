@@ -1,11 +1,16 @@
 import {MongoClient, ObjectId} from 'mongodb'
 import chalk from "chalk";
+import mongoose from "mongoose";
 
 
-const connectionURL = 'mongodb://127.0.0.1:27017';
-const databaseName = 'task-app';
+const url = "mongodb+srv://trongkami:Trongvip123!@cluster0.zee12.mongodb.net/web_enterprise?retryWrites=true&w=majority";
 
-const client = new MongoClient(connectionURL);
+const connectionParams={
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+}
+await mongoose.connect(url,connectionParams)
 
 
 // MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
