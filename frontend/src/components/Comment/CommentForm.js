@@ -20,7 +20,6 @@ const CommentForm = ({handleSubmit, submitLabel, hasCancelButton = false, initia
         handleSubmit(content);
         setContent("");
 
-        console.log(parentId)
         setIsPending(true);
         fetch("http://localhost:8081/comment", {
         method: "POST",

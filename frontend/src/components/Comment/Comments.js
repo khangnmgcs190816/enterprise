@@ -9,10 +9,10 @@ import useFetch from './useFetch';
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 import LoadingIndicator from "../../components/Loading";
 import useAxios from "../../services/useAxios";
-import { useNavigate } from "react-router-dom";
+
 import "./styles.css";
 
-const Comments = ({currentUserId}) => {
+const Comments = ({commentsUrl, currentUserId}) => {
     // const {data: comments, isPending, error} = useFetch('http://localhost:8081/comment');
     const { response, loading, error } = useAxios({
         url: "http://localhost:8081/comment",
@@ -24,14 +24,9 @@ const Comments = ({currentUserId}) => {
     const rootComments = Comments.filter(
         (Comment) => Comment.parentId === null);
     // console.log("comments", Comments);
-    const navigate = useNavigate();
-    const deleteComment = async () => {
-        fetch('http://localhost:8000/comment/' + Comments.id, {
-          method: 'DELETE'
-        }).then(() => {
-          navigate.push('/');
-        }) 
-      };
+    
+
+    
     
     const getReplies = commentId => {
         return Comments.filter(Comment => Comment.parentId === commentId).sort((a,b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
@@ -90,11 +85,9 @@ const Comments = ({currentUserId}) => {
                     key={rootComment.id} 
                     comment={rootComment} 
                     replies={getReplies(rootComment.id)}
-                    deleteComment={deleteComment}
                     updateComment={updateComment}
                     activeComment={activeComment}
                     setActiveComment={setActiveComment}
-                    createComment={createComment}
                     currentUserId={currentUserId}
                     />
                 ))}

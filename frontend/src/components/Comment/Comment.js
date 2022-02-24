@@ -3,6 +3,7 @@ import { useParams} from "react-router-dom";
 import {useState, useEffect} from 'react';
 import "./styles.css";
 import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router-dom";
 
 
 // const listComment = [{
@@ -71,7 +72,6 @@ const Comment = ({comment,
     setActiveComment,
     activeComment,
     updateComment,
-    deleteComment,
     createComment,
     parentId,
     currentUserId,}) => {
@@ -83,6 +83,14 @@ const Comment = ({comment,
     const isReplying = activeComment && activeComment.type === 'replying' && activeComment.id === comment.id;
     const isEditing = activeComment && activeComment.type === 'editing' && activeComment.id === comment.id;
     const replyId = parentId ? parentId : comment.id;
+    const navigate = useNavigate();
+    const deleteComment = async () => {
+        fetch('http://localhost:8081/comment/' + comment.id, {
+          method: 'DELETE'
+        }).then(() => {
+          navigate('/idea');
+        }) 
+      };
 
     return ( 
         <div key={comment.id} className="comment">
@@ -146,8 +154,6 @@ const Comment = ({comment,
                                                         setActiveComment={setActiveComment}
                                                         activeComment={activeComment}
                                                         updateComment={updateComment}
-                                                        deleteComment={deleteComment}
-                                                        createComment={createComment}
                                                         parentId={comment.id}
                                                         replies={[]}
                                                         currentUserId={currentUserId}/>))}
