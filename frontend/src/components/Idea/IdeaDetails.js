@@ -8,12 +8,12 @@ const IdeaDetails = () => {
     data: idea,
     error,
     isPending,
-  } = useFetch("http://localhost:8080/idea/" + id);
+  } = useFetch("http://localhost:8000/ideas/" + id);
   const navigate = useNavigate();
 
 
   const handleClick = () => {
-    fetch('http://localhost:8080/idea/' + idea.id, {
+    fetch('http://localhost:8000/ideas/' + id, {
       method: 'DELETE'
     }).then(() => {
       navigate('/idea');
@@ -28,7 +28,7 @@ const IdeaDetails = () => {
         <article>
           Title: <h2>{idea.title}</h2>
           Content: <h2>{idea.content}</h2>
-          ID: <div>{idea.id}</div>
+          ID: <div>{idea._id}</div>
           <button onClick={handleClick}>delete</button>
         </article>
       )}

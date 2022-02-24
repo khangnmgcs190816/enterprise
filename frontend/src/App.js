@@ -69,8 +69,8 @@ function App() {
 
               <Route path="/idea" element={<Idea />} />
               <Route path="/idea/:id" element={<IdeaDetails />} />
-              <Route path="/idea/:category" element={<Idea />}></Route>
-              <Route path="/idea/:filter" element={<Idea />}></Route>
+              <Route path="/idea/:category" element={<Idea/>}/>
+              <Route path="/idea/:filter" element={<Idea/>}/>
 
               <Route path="/employees" element={<Employees />}></Route>
               <Route path="/dashboard" element={<Dashboard />}></Route>
