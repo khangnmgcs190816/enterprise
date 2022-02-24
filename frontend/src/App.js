@@ -14,7 +14,7 @@ import Search from "./components/Search/SearchFunction";
 import Home from "./pages/Home";
 import Header from "./components/Header/Header";
 import CategoryCreate from "./components/CategoryCreate";
-import Comment from "./components/Comment/Comment";
+import Comments from "./components/Comment/Comments";
 
 const theme = createTheme({
   palette: {
@@ -73,9 +73,9 @@ function App() {
               {/* // TODO 1: when not authenticated, no NavBar */}
               {/* // TODO 2: when authenticated, go to main page */}
               {/* <Route path="/" element={<Login />}></Route>{" "} */}
-              <Route path="/" element={<Home/>}/>
+              <Route path="/" element={<Home />} />
 
-              <Route path="/idea" element={<Idea/>}/>
+              <Route path="/idea" element={<Idea />} />
               <Route path="/idea/:category" element={<Idea />}></Route>
               <Route path="/idea/:filter" element={<Idea />}></Route>
 
@@ -90,7 +90,7 @@ function App() {
               <Route path="/search" element={<Search />}></Route>
 
               <Route path="/login" element={<Login />}></Route>
-              <Route path="/comment" element={<Comment />}></Route>
+              <Route path="/comment" element={<Comments />}></Route>
             </Routes>
           </main>
         </Router>
