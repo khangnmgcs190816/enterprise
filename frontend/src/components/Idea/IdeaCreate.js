@@ -91,19 +91,12 @@ const IdeaCreate = () => {
     const [isBusy, setBusy] = useState(true)
 
 
-    const [options, setOptions] = useState([]);
+    const options = [
+        {value: "0", label: "A"},
+        {value: "1", label: "A"}
+    ]
 
-    useEffect(() => {
-        async function fetchData() {
-            axios.get('http://localhost:8000/categories').then((response) => {
-                setBusy(false);
-                setOptions(response.data);
-                console.log(options);
-            });
-        }
 
-        fetchData();
-    }, [])
 
     const animatedComponents = makeAnimated();
 
@@ -373,10 +366,8 @@ const IdeaCreate = () => {
                         options={options}
                         onChange={(e) => {
 
-                            console.log(e);
-
                             setSelectedTag(Array.isArray(e) ? e.map((x) => {
-                                return {category: x.categoryName}
+                                return {category: x.label}
                             }) : [])
                         }
                         }

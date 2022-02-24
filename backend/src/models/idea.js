@@ -4,12 +4,6 @@ import chalk from 'chalk';
 import bcrypt from "bcrypt";
 import {User} from "./user.js";
 
-const url = "mongodb+srv://trongkami:Trongvip123!@cluster0.zee12.mongodb.net/web_enterprise?retryWrites=true&w=majority";
-
-const connectionParams={
-    useNewUrlParser: true
-}
-await mongoose.connect(url,connectionParams)
 
 
 const IdeaSchema = new mongoose.Schema({

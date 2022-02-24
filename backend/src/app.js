@@ -8,6 +8,7 @@ import {router as userRouter} from "./routes/user-router.js";
 import {router as taskRouter} from "./routes/task-router.js";
 import {router as ideaRouter} from "./routes/idea-router.js";
 import {router as categoryRouter} from "./routes/category-router.js";
+import {connection} from "./database/config.js";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import multerS3 from "multer-s3";
@@ -31,6 +32,7 @@ app.use((request, response, next)=>{
 app.use(cors());
 app.use(express.json());
 
+await connection;
 app.use(userRouter);
 app.use(taskRouter);
 app.use(ideaRouter);
