@@ -32,8 +32,11 @@ const IdeaDetails = () => {
           <button onClick={handleClick}>delete</button>
         </article>
       )}
-      <Comments commentsUrl="http://localhost:8081/comment"
-        currentUserId="1" />
+      <Comments
+          commentsUrl = "http://localhost:8081/comment"
+          ideaId = {id}
+        currentUserId="1"
+      />
     </div>
   );
 };
