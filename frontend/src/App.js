@@ -13,7 +13,7 @@ import Search from "./components/Search/SearchFunction";
 
 import Home from "./pages/Home";
 import Header from "./components/Header/Header";
-import Category from "./components/Category";
+import CategoryCreate from "./components/CategoryCreate";
 import Comment from "./components/Comment/Comment";
 
 const theme = createTheme({
@@ -85,7 +85,7 @@ function App() {
 
               <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
 
-              <Route path="/category" element={<Category />}></Route>
+              <Route path="/category" element={<CategoryCreate />}></Route>
               {/* <Route path="/your-ideas" element={}></Route> */}
               <Route path="/search" element={<Search />}></Route>
 

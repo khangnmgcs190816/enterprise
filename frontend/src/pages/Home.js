@@ -49,12 +49,12 @@ const Home = () => {
           <option value="Most Viewed">Most Viewed</option>
           <option value="Most Recent">Most Recent</option>
           <option value="Most Comments">Most Comments</option>
-          <option value="Category">Category</option>
+          <option value="CategoryCreate">CategoryCreate</option>
         </select>
         {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
       </section>
       <section id="filters">
-        <label htmlFor="category">Category:</label>{" "}
+        <label htmlFor="category">CategoryCreate:</label>{" "}
         <select
           id="size"
           // value={category}

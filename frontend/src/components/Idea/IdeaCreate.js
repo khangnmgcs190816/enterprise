@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import {Box, Divider} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Select from "react-select";
 import {InputLabel} from "@mui/material";
 import makeAnimated from "react-select/animated";
@@ -58,12 +58,19 @@ const LabelStyle = styled("label")({
     justifyContent: "space-between",
 });
 
-const IdeaCreate = () => {
-    //title, user, content, thumbsup thumbsdown, academic year, document, craeted at, update at,
-    // close date,category, comment
-    var date = new Date();
-    // const [title, setTitle] = useState({ title: "Title", user: "Thy", etc.});
+// const getAllCategories = async () => {
+//     const response = await axios.get(`http://localhost:8000/categories`, {
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Accept': 'application/json'
+//             }
+//         }
+//     );
+//     console.log(response);
+// };
 
+const IdeaCreate = () => {
+    var date = new Date();
     const [title, setTitle] = useState("Title");
     const [owner, setUser] = useState("thy");
     const [anonymous, setAnonymous] = useState(false);
@@ -77,17 +84,30 @@ const IdeaCreate = () => {
     const [createdAt, setCreateDate] = useState(date);
     const [updatedAt, setUpdateDate] = useState();
     const [closedDate, setCloseDate] = useState();
-    var [categories, setSelectedTag] = useState([]);
+    const [categories, setSelectedTag] = useState([]);
     const [isTagPicked, setIsTagPicked] = useState(false);
     const [comments, setComment] = useState([]);
     const [isPending, setIsPending] = useState(false);
+    const [isBusy, setBusy] = useState(true)
+
+
+    const [options, setOptions] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            axios.get('http://localhost:8000/categories').then((response) => {
+                setBusy(false);
+                setOptions(response.data);
+                console.log(options);
+            });
+        }
+
+        fetchData();
+    }, [])
 
     const animatedComponents = makeAnimated();
-    const options = [
-        {value: "0", label: "M Iu"},
-        {value: "1", label: "M Iu"},
-        {value: "2", label: "Yêu"},
-    ];
+
+
 
     const changeHandler = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -203,15 +223,7 @@ const IdeaCreate = () => {
                         Closure date:
                         {closedDate != null ? " " + {closedDate} : " No data"}
                     </LabelStyle>
-                    {/* <TextField
-            id="outlined-basic"
-            disabled
-            variant="outlined"
-            type="datetime"
-            name="academicyear"
-            placeholder={academic_year}
-            onChange={(e) => setAcademicyear(e.target.value)}
-          /> */}
+
                 </Box>
             </Box>
 
@@ -221,13 +233,8 @@ const IdeaCreate = () => {
                 }}
             />
 
-            {/* {comment.map((comment) => (
-                <div className="comment-preview" key={comment.id}>
-                    <h2>{comment.content}</h2>
-                </div>
-            ))} */}
 
-            {/* Mainform for input */}
+
             <form onSubmit={handleSubmit}>
                 {/* From here is title input */}
                 <div>
@@ -246,17 +253,6 @@ const IdeaCreate = () => {
                 </div>
                 <br/>
 
-                {/* <div>
-          <TextField id="outlined-basic"
-            variant="outlined"
-            disabled
-            type="text"
-            name="user"
-            placeholder={user}
-            defaultValue="thy"
-            onChange={(e) => setUser(e.target.value)} />
-        </div>
-        <br /> */}
 
                 {/* Content input */}
                 <div>
@@ -363,7 +359,7 @@ const IdeaCreate = () => {
         </div>
         <br /> */}
 
-                {/* Tag/Category section with customed Label */}
+                {/* Tag/CategoryCreate section with customed Label */}
                 <div>
                     <InputLabel id="tag-label">Select or create new tags</InputLabel>
                     <Select
@@ -375,10 +371,14 @@ const IdeaCreate = () => {
                         components={animatedComponents}
                         isMulti
                         options={options}
-                        onChange={(e) =>
+                        onChange={(e) => {
+
+                            console.log(e);
+
                             setSelectedTag(Array.isArray(e) ? e.map((x) => {
-                                return {category: x.label}
+                                return {category: x.categoryName}
                             }) : [])
+                        }
                         }
                     />
                     {/* //custom add more tags */}

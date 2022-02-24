@@ -68,7 +68,7 @@ const Comment = ({comment, replies, currentUserId, deleteComment, updateComment,
     const data = useFetch("http://localhost:8080/comment/");
 
     const fiveMinutes = 300000;
-    const timePassed = new Date() - new Date(comment.created_at) >fiveMinutes;
+    const timePassed = new Date() - new Date(comment.created_at ) >fiveMinutes;
     const canReply = Boolean(currentUserId);
     const canEdit = currentUserId === comment.userId && !timePassed;
     const canDelete = currentUserId === comment.userId && replies.length === 0 && !timePassed;

@@ -4,9 +4,10 @@ import express, {request, response} from 'express';
 import chalk from "chalk";
 import {Task} from "./models/task.js";
 import mongoose from "mongoose";
-import {router as userRouter} from "./routers/user-router.js";
-import {router as taskRouter} from "./routers/task-router.js";
-import {router as ideaRouter} from "./routers/idea-router.js";
+import {router as userRouter} from "./routes/user-router.js";
+import {router as taskRouter} from "./routes/task-router.js";
+import {router as ideaRouter} from "./routes/idea-router.js";
+import {router as categoryRouter} from "./routes/category-router.js";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import multerS3 from "multer-s3";
@@ -19,17 +20,21 @@ const port = 8000;
 
 
 app.use((request, response, next)=>{
-    console.log(`REQUEST PATH: ${request.path}`);
-    console.log(`REQUEST METHOD: ${request.method}`);
+    console.log(chalk.bgWhiteBright.green(` --------------------------------- REQUEST --------------------------------- `));
+    console.log(`PATH: ${request.path}`);
+    console.log(`METHOD: ${request.method}`);
+    console.log(`PARAMS: ${request.query}`);
+    console.log(chalk.bgWhiteBright.green(` --------------------------------------------------------------------------- `));
     next();
 });
 
 app.use(cors());
 app.use(express.json());
+
 app.use(userRouter);
 app.use(taskRouter);
 app.use(ideaRouter);
-
+app.use(categoryRouter);
 
 
 

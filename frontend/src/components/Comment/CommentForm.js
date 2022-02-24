@@ -5,7 +5,6 @@ const CommentForm = ({handleSubmit, submitLabel, hasCancelButton = false, initia
     const isTextareaDisable = content.length === 0;
     const [isPending, setIsPending] = useState(false);
     const onSubmit = event => {
-        
         event.preventDefault();
         const comment = {content};
         handleSubmit(content);
