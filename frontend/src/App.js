@@ -15,6 +15,7 @@ import Home from "./pages/Home";
 import Header from "./components/Header/Header";
 import CategoryCreate from "./components/CategoryCreate";
 import Comments from "./components/Comment/Comments";
+import IdeaDetails from "./components/Idea/IdeaDetails";
 
 const theme = createTheme({
   palette: {
@@ -49,15 +50,6 @@ const theme = createTheme({
         color: green[500],
       },
     },
-    // overrides: {
-    //   MuiInput: {
-    //     underline: {
-    //       "&:hover:not($disabled):before": {
-    //         backgroundColor: "rgba(0, 188, 212, 0.7)",
-    //       },
-    //     },
-    //   },
-    // },
   },
 });
 
@@ -76,6 +68,7 @@ function App() {
               <Route path="/" element={<Home />} />
 
               <Route path="/idea" element={<Idea />} />
+              <Route path="/idea/:id" element={<IdeaDetails />} />
               <Route path="/idea/:category" element={<Idea />}></Route>
               <Route path="/idea/:filter" element={<Idea />}></Route>
 
@@ -90,7 +83,7 @@ function App() {
               <Route path="/search" element={<Search />}></Route>
 
               <Route path="/login" element={<Login />}></Route>
-              <Route path="/comment" element={<Comments />}></Route>
+              <Route path="/comments" element={<Comments />}></Route>
             </Routes>
           </main>
         </Router>

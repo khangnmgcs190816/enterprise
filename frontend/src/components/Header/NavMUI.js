@@ -16,7 +16,7 @@ import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-const pages = ["Idea", "Employee", "Dashboard"];
+const pages = ["Idea", "Employee", "Dashboard", "Comments"];
 const userTitle = ["Hi, Username!"];
 const settings = ["Category", "Your Ideas"];
 

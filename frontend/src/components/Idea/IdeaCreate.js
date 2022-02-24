@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-import {Box, Divider} from "@mui/material";
-import {useEffect, useState} from "react";
+import { Box, Divider } from "@mui/material";
+import { useEffect, useState } from "react";
 import Select from "react-select";
-import {InputLabel} from "@mui/material";
+import { InputLabel } from "@mui/material";
 import makeAnimated from "react-select/animated";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -10,14 +10,15 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import {lightBlue, grey} from "@mui/material/colors";
+import { lightBlue, grey } from "@mui/material/colors";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import Switch from '@mui/material/Switch';
 import axios from "axios";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 // Mới tạo IdeaButtons.js trong Idea(components), chứa 3 function một cái là dạng link Back, cái thứ 2 là nút Cancel, 3 là nút Create Idea
-import {ReturnLink, CancelBtn} from "./IdeaButtons";
+import { ReturnLink, CancelBtn } from "./IdeaButtons";
 
 const TermHeading = styled("h3")({
     textAlign: "center",
@@ -92,8 +93,8 @@ const IdeaCreate = () => {
 
 
     const options = [
-        {value: "0", label: "A"},
-        {value: "1", label: "A"}
+        { value: "0", label: "A" },
+        { value: "1", label: "A" }
     ]
 
 
@@ -111,7 +112,7 @@ const IdeaCreate = () => {
 
     function handleChange(e) {
         const {
-            target: {id, checked},
+            target: { id, checked },
         } = e;
         setBoxes({
             ...boxes,
@@ -124,7 +125,7 @@ const IdeaCreate = () => {
     // }
 
     function isDisabled() {
-        const {length} = Object.values(boxes).filter(Boolean);
+        const { length } = Object.values(boxes).filter(Boolean);
         return length !== 1;
     }
 
@@ -208,19 +209,19 @@ const IdeaCreate = () => {
                     justifyContent: "space-between",
                 }}
             >
-                <ReturnLink/>
+                <ReturnLink />
                 <TitleFrame>Create idea</TitleFrame>
-                <Box sx={{alignSelf: "center"}}>
+                <Box sx={{ alignSelf: "center" }}>
                     {/* Label section for displaying datetime data */}
                     <LabelStyle>
                         Closure date:
-                        {closedDate != null ? " " + {closedDate} : " No data"}
+                        {closedDate != null ? " " + { closedDate } : " No data"}
                     </LabelStyle>
 
                 </Box>
             </Box>
 
-            <divider
+            <Divider
                 sx={{
                     marginBottom: "1.5rem",
                 }}
@@ -231,6 +232,7 @@ const IdeaCreate = () => {
             <form onSubmit={handleSubmit}>
                 {/* From here is title input */}
                 <div>
+                    <FormControlLabel control={<Switch />} label="Post as Anonymous" />
                     <TextField
                         id="outlined-basic"
                         type="text"
@@ -244,7 +246,7 @@ const IdeaCreate = () => {
                         }}
                     />
                 </div>
-                <br/>
+                <br />
 
 
                 {/* Content input */}
@@ -261,7 +263,7 @@ const IdeaCreate = () => {
                         }}
                     />
                 </div>
-                <br/>
+                <br />
                 {/* <div>
                     <label>Thumbs</label>
                     <input type="textarea" name="thumbs" placeholder={thumbs_up} rows ="4" onChange={e => setThumbsUp(e.target.value)} />
@@ -288,7 +290,7 @@ const IdeaCreate = () => {
                             onChange={(e) => setSelectedFile(e.target.files[0])}
                         />
                         <Button color={"primary"} variant="text" component="span">
-                            <PhotoCamera/>
+                            <PhotoCamera />
                             Upload Photo
                         </Button>
                     </InputLabel>
@@ -305,7 +307,7 @@ const IdeaCreate = () => {
                                     setDocument(file);
                                 }}
                             />
-                            <AttachFileIcon/> Attachments
+                            <AttachFileIcon /> Attachments
                         </Button>
                     </InputLabel>
                 </Box>
@@ -367,7 +369,7 @@ const IdeaCreate = () => {
                         onChange={(e) => {
 
                             setSelectedTag(Array.isArray(e) ? e.map((x) => {
-                                return {category: x.label}
+                                return { category: x.label }
                             }) : [])
                         }
                         }
@@ -378,7 +380,7 @@ const IdeaCreate = () => {
             The selected tag: <h3>{category}</h3>
           </center> */}
                 </div>
-                <br/>
+                <br />
 
                 {/* Terms and Conditions with overflow content not yet finished */}
                 <div className="term-conditions">
@@ -396,13 +398,13 @@ const IdeaCreate = () => {
                         </p>
                     </Terms>
                 </div>
-                <br/>
+                <br />
 
                 {/* Checkbox for Terms and Submit button, should change Submitting... button by using LoadingButton */}
                 <CheckTerm>
                     <div>
                         <FormControlLabel
-                            control={<Checkbox/>}
+                            control={<Checkbox />}
                             label="I Agree to Terms & Conditions"
                             name="agreement"
                             onChange={handleChange}
@@ -415,7 +417,7 @@ const IdeaCreate = () => {
                         <Button
                             variant="contained"
                             disabled={isDisabled()}
-                            startIcon={<SendIcon/>}
+                            startIcon={<SendIcon />}
                             fullWidth
                             type='submit'>
                             Submit
@@ -424,7 +426,7 @@ const IdeaCreate = () => {
                     {isPending && (
                         <Button
                             disabled
-                            startIcon={<SendIcon/>}
+                            startIcon={<SendIcon />}
                             variant="outlined"
                             fullWidth
                         >
@@ -432,7 +434,7 @@ const IdeaCreate = () => {
                         </Button>
                     )}
                 </CheckTerm>
-                <CancelBtn/>
+                <CancelBtn />
 
                 {/* <input
             type="checkbox"

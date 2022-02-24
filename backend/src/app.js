@@ -1,14 +1,14 @@
-import {MongoClient, ObjectId} from 'mongodb';
-import {User} from './models/user.js';
-import express, {request, response} from 'express';
+import { MongoClient, ObjectId } from 'mongodb';
+import { User } from './models/user.js';
+import express, { request, response } from 'express';
 import chalk from "chalk";
-import {Task} from "./models/task.js";
+import { Task } from "./models/task.js";
 import mongoose from "mongoose";
-import {router as userRouter} from "./routes/user-router.js";
-import {router as taskRouter} from "./routes/task-router.js";
-import {router as ideaRouter} from "./routes/idea-router.js";
-import {router as categoryRouter} from "./routes/category-router.js";
-import {connection} from "./database/config.js";
+import { router as userRouter } from "./routes/user-router.js";
+import { router as taskRouter } from "./routes/task-router.js";
+import { router as ideaRouter } from "./routes/idea-router.js";
+import { router as categoryRouter } from "./routes/category-router.js";
+import { connection } from "./database/config.js";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import multerS3 from "multer-s3";
@@ -20,7 +20,7 @@ const app = express();
 const port = 8000;
 
 
-app.use((request, response, next)=>{
+app.use((request, response, next) => {
     console.log(chalk.bgWhiteBright.green(` --------------------------------- REQUEST --------------------------------- `));
     console.log(`PATH: ${request.path}`);
     console.log(`METHOD: ${request.method}`);
@@ -30,6 +30,11 @@ app.use((request, response, next)=>{
 });
 
 app.use(cors());
+
+app.use(
+    express.urlencoded({
+        extended: true,
+    }));
 app.use(express.json());
 
 await connection;

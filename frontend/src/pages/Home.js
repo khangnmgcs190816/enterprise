@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PageNotFound from "../components/errorHandling/PageNotFound";
 import LoadingIndicator from "../components/Loading";
-import NavBar from "../components/Header/NavBar";
+// import NavBar from "../components/Header/NavBar";
 // import useFetch from '../services/useFetch';
 import useAxios from "../services/useAxios";
 import { Button } from "@mui/material";
