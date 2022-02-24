@@ -8,14 +8,14 @@ import Idea from "./pages/Idea/Idea";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Employees from "./pages/Employee/Employees";
 import "./App.css";
-// import IdeaList from "./components/Idea/IdeaList";
 import IdeaCreate from "./components/Idea/IdeaCreate";
 import Search from "./components/Search/SearchFunction";
 
 import Home from "./pages/Home";
 import Header from "./components/Header/Header";
-import Category from "./components/Category";
-import Comment from "./components/Comment/Comment";
+import Category from "./components/CategoryCreate";
+import Comments from "./components/Comment/Comments";
+import IdeaDetails from "./components/Idea/IdeaDetails";
 
 const theme = createTheme({
   palette: {
@@ -25,15 +25,30 @@ const theme = createTheme({
     },
     success: {
       main: "#66bb6a",
-      contrastText: "#e3f2fd",
+      contrastText: "#FFFFFF",
     },
     error: {
       main: "#f44336",
-      contrastText: "#e3f2fd",
+      contrastText: "#FFFFFF",
+    },
+    badge: {
+      main: "#f44336",
+      contrastText: "#FFFFFF",
+    },
+    whiteIcon: {
+      main: "#FFFFFF",
     },
     secondary: {
       main: grey[400],
       contrastText: "grey[600]",
+    },
+    typography: {
+      logout: {
+        color: "#f44336",
+      },
+      button: {
+        color: green[500],
+      },
     },
     // overrides: {
     //   MuiInput: {
@@ -59,9 +74,10 @@ function App() {
               {/* // TODO 1: when not authenticated, no NavBar */}
               {/* // TODO 2: when authenticated, go to main page */}
               {/* <Route path="/" element={<Login />}></Route>{" "} */}
-              <Route path="/" element={<Home />}></Route>
+              <Route path="/" element={<Home/>}/>
 
-              <Route path="/idea" element={<Idea />}></Route>
+              <Route path="/idea" element={<Idea/>}/>
+              <Route path="/idea/:id" element={<IdeaDetails/>}/>
               <Route path="/idea/:category" element={<Idea />}></Route>
               <Route path="/idea/:filter" element={<Idea />}></Route>
 
@@ -72,10 +88,11 @@ function App() {
               <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
 
               <Route path="/category" element={<Category />}></Route>
+              {/* <Route path="/your-ideas" element={}></Route> */}
               <Route path="/search" element={<Search />}></Route>
 
               <Route path="/login" element={<Login />}></Route>
-              <Route path="/comment" element={<Comment />}></Route>
+              <Route path="/comments" element={<Comments />}></Route>
             </Routes>
           </main>
         </Router>
