@@ -87,9 +87,7 @@ const Comment = ({comment,
     const deleteComment = async () => {
         fetch('http://localhost:8081/comment/' + comment.id, {
           method: 'DELETE'
-        }).then(() => {
-          navigate('/idea');
-        }) 
+        })
       };
 
     return ( 
