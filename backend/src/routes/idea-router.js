@@ -139,4 +139,73 @@ router.post('/users/me/avatar', imageUpload.single("upload"), (request, response
 
 /* ======================================================= READ ======================================================= */
 
+
+router.get('/ideas', async (request, response) => {
+    const filter = {}
+    const sort = {}
+    let skip;
+    let limit;
+
+    if (request.query.isAnonymous) {
+        filter.isAnonymous = (request.query.isAnonymous === 'true');
+    }
+    if (request.query.title) {
+        filter.title = request.query.title;
+    }
+
+    if (request.query.skip) {
+        skip = parseInt(request.query.skip);
+    }
+    if (request.query.limit) {
+        limit = parseInt(request.query.limit);
+    }
+    if (request.query.sortBy) {
+        const parts = request.query.sortBy.split('_');
+        if(parts[1] === 'desc' ){
+            sort[parts[0]] = -1;
+        } else {
+            sort[parts[0]] = 1;
+        }
+    }
+
+    try {
+
+        const foundIdeas = await Idea.find(filter)
+            .skip(skip)
+            .limit(limit)
+            .sort(sort);
+        if (foundIdeas == null) {
+            response.status(404).send(`IDEAS NOT FOUND`);
+        } else {
+            console.log(typeof foundIdeas);
+
+            response.status(200).send(foundIdeas);
+        }
+
+    } catch (error) {
+        response.status(500).send(`${error}`);
+    }
+});
+
+
+
+
+router.get('/ideas/:id', async (request, response) => {
+    const _idParam = request.params.id;
+
+    try {
+        const foundIdea = await Idea.findOne({_id: new ObjectId(_idParam)});
+
+        if (foundIdea == null) {
+            response.status(404).send(`TASK NOT FOUND`);
+        } else {
+            response.status(200).send(foundIdea);
+        }
+    } catch (error) {
+        response.status(500).send(`${error}`);
+    }
+});
+
+
+
 /* ======================================================= DELETE ======================================================= */

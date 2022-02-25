@@ -11,14 +11,14 @@ const CommentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    anonymous: {
-        type: Boolean,
-        default: false
-    },
-    idea: {
+    ideaId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'comments'
+        ref: 'ideas'
+    },
+    parentId:{
+        type: mongoose.Schema.Types.ObjectId,
+        default: null,
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,

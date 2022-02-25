@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Box, Divider } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import { InputLabel } from "@mui/material";
 import makeAnimated from "react-select/animated";
@@ -12,6 +12,8 @@ import SendIcon from "@mui/icons-material/Send";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { lightBlue, grey } from "@mui/material/colors";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import Switch from '@mui/material/Switch';
+import axios from "axios";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -19,276 +21,311 @@ import ListItemText from "@mui/material/ListItemText";
 import { ReturnLink, CancelBtn } from "./IdeaButtons";
 
 const TermHeading = styled("h3")({
-  textAlign: "center",
+    textAlign: "center",
 });
 
 const Input = styled("input")({
-  display: "none",
+    display: "none",
 });
 
 const Terms = styled("div")({
-  textAlign: "justify",
-  fontSize: 15,
-  padding: "0rem 1rem 0rem 1rem",
-  overflow: "scroll",
-  display: "block",
-  maxHeight: "50%",
+    textAlign: "justify",
+    fontSize: 15,
+    padding: "0rem 1rem 0rem 1rem",
+    overflow: "scroll",
+    display: "block",
+    maxHeight: "50%",
 });
 
 const CheckTerm = styled("div")({
-  textAlign: "center",
+    textAlign: "center",
 });
 
 const TitleFrame = styled("div")({
-  color: lightBlue[600],
-  textAlign: "center",
-  fontSize: 30,
-  fontWeight: "bold",
-  marginBottom: "1rem",
+    color: lightBlue[600],
+    textAlign: "center",
+    fontSize: 30,
+    fontWeight: "bold",
+    marginBottom: "1rem",
 });
 
 const LabelStyle = styled("label")({
-  fontStyle: "oblique",
-  color: grey[500],
-  fontSize: 13,
-  display: "flex",
-  p: 1,
-  m: 1,
-  justifyContent: "space-between",
+    fontStyle: "oblique",
+    color: grey[500],
+    fontSize: 13,
+    display: "flex",
+    p: 1,
+    m: 1,
+    justifyContent: "space-between",
 });
 
+// const getAllCategories = async () => {
+//     const response = await axios.get(`http://localhost:8000/categories`, {
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Accept': 'application/json'
+//             }
+//         }
+//     );
+//     console.log(response);
+// };
+
 const IdeaCreate = () => {
-  //title, user, content, thumbsup thumbsdown, academic year, document, craeted at, update at,
-  // close date,category, comment
-  var date = new Date();
-  // const [title, setTitle] = useState({ title: "Title", user: "Thy", etc.});
+    var date = new Date();
+    const [title, setTitle] = useState("Title");
+    const [owner, setUser] = useState("thy");
+    const [anonymous, setAnonymous] = useState(false);
+    const [content, setContent] = useState("Please input your idea");
+    const [thumbsUp, setThumbsUp] = useState();
+    const [thumbsDown, setThumbsDown] = useState();
+    const [academicYear, setAcademicyear] = useState("Academic year");
+    const [documents, setSelectedFile] = useState([]);
+    const [document, setDocument] = useState(null);
+    const [isFilePicked, setIsFilePicked] = useState(false);
+    const [isAnonymous, setIsAnonymous] = useState(false);
+    const [createdAt, setCreateDate] = useState(date);
+    const [updatedAt, setUpdateDate] = useState();
+    const [closedDate, setCloseDate] = useState();
+    const [categories, setSelectedTag] = useState([]);
+    const [isTagPicked, setIsTagPicked] = useState(false);
+    const [comments, setComment] = useState([]);
+    const [isPending, setIsPending] = useState(false);
+    const [isBusy, setBusy] = useState(true)
 
-  const [title, setTitle] = useState("Title");
-  const [user, setUser] = useState("thy");
-  const [content, setContent] = useState("Please input your idea");
-  const [thumbs_up, setThumbsUp] = useState();
-  const [thumbs_down, setThumbsDown] = useState();
-  const [academic_year, setAcademicyear] = useState("Academic year");
-  const [document, setSelectedFile] = useState();
-  const [isFilePicked, setIsFilePicked] = useState(false);
-  const [created_at, setCreateDate] = useState(date);
-  const [updated_at, setUpdateDate] = useState();
-  const [closed_date, setCloseDate] = useState();
-  var [category, setSelectedTag] = useState([]);
-  const [isTagPicked, setIsTagPicked] = useState(false);
-  const [comment, setComment] = useState([]);
-  const [isPending, setIsPending] = useState(false);
 
-  const animatedComponents = makeAnimated();
-  const options = [
-    { value: "0", label: "red" },
-    { value: "1", label: "green" },
-    { value: "2", label: "blue" },
-  ];
+    const options = [
+        { value: "0", label: "A" },
+        { value: "1", label: "A" }
+    ]
 
-  const changeHandler = (event) => {
-    setSelectedFile(event.target.files[0]);
-    setIsFilePicked(true);
-  };
 
-  const [boxes, setBoxes] = useState({});
-  function handleChange(e) {
-    const {
-      target: { id, checked },
-    } = e;
-    setBoxes({
-      ...boxes,
-      [id]: checked,
-    });
-  }
 
-  // var categoryHandle = (e) =>{
-  //     getSelectedTag(Array.isArray(e)?e.map(x=>x.label):[]);
-  // }
+    const animatedComponents = makeAnimated();
 
-  function isDisabled() {
-    const { length } = Object.values(boxes).filter(Boolean);
-    return length !== 1;
-  }
 
-  // const selectHandler = (event) =>{
-  //     setSelectedTag(event.target.value[0]);
-  //     setIsTagPicked(true);
-  // }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const idea = {
-      title,
-      user,
-      content,
-      thumbs_up,
-      thumbs_down,
-      academic_year,
-      document,
-      created_at,
-      updated_at,
-      closed_date,
-      category,
-      comment,
+    const changeHandler = (event) => {
+        setSelectedFile(event.target.files[0]);
+        setIsFilePicked(true);
     };
 
-    setIsPending(true);
+    const [boxes, setBoxes] = useState({});
 
-    fetch("http://localhost:8080/idea", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(idea),
-    }).then(() => {
-      console.log(idea);
-      console.log("new idea added");
-      setIsPending(false);
-    });
-  };
+    function handleChange(e) {
+        const {
+            target: { id, checked },
+        } = e;
+        setBoxes({
+            ...boxes,
+            [id]: checked,
+        });
+    }
 
-  return (
-    // The whole form is put in the Box with border
-    <Box
-      className="ideacreate"
-      sx={{
-        border: 1,
-        borderColor: "white",
-        boxShadow: 4,
-        borderRadius: "25px",
-        margin: "2rem 3rem",
-        padding: "2rem",
-        maxWidth: "100%",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <ReturnLink />
-        <TitleFrame>Create idea</TitleFrame>
-        <Box sx={{ alignSelf: "center" }}>
-          {/* Label section for displaying datetime data */}
-          <LabelStyle>
-            Closure date:
-            {closed_date != null ? " " + { closed_date } : " No data"}
-          </LabelStyle>
-          {/* <TextField
-            id="outlined-basic"
-            disabled
-            variant="outlined"
-            type="datetime"
-            name="academicyear"
-            placeholder={academic_year}
-            onChange={(e) => setAcademicyear(e.target.value)}
-          /> */}
-        </Box>
-      </Box>
+    // var categoryHandle = (e) =>{
+    //     getSelectedTag(Array.isArray(e)?e.map(x=>x.label):[]);
+    // }
 
-      <Divider
-        sx={{
-          marginBottom: "1.5rem",
-        }}
-      ></Divider>
+    function isDisabled() {
+        const { length } = Object.values(boxes).filter(Boolean);
+        return length !== 1;
+    }
 
-      {/* {comment.map((comment) => (
-                <div className="comment-preview" key={comment.id}>
-                    <h2>{comment.content}</h2>
+    // const selectHandler = (event) =>{
+    //     setSelectedTag(event.target.value[0]);
+    //     setIsTagPicked(true);
+    // }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const idea = {
+            title,
+            content,
+            anonymous,
+            thumbsUp,
+            thumbsDown,
+            academicYear,
+            documents,
+            closedDate,
+            categories,
+            comments,
+            owner,
+        };
+
+        setIsPending(true);
+
+
+        await axios.post("http://localhost:8000/ideas", JSON.stringify(idea), {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjE4NGFhZDgxNTBlNjJlNDI1MWExNGQiLCJpYXQiOjE2NDU3NTkxNzMsImV4cCI6MTY0NjM2Mzk3M30.ZF6LfiA9Pq25VHK2eGM9ogEdWNO8oBNW3kTrHHouE5k"
+            }
+        }).then(async (response) => {
+
+            console.log(`${JSON.stringify(response.data._id)}`);
+            if (document != null) {
+                console.log(document);
+                const url = await sendDocument(response.data._id, document.name);
+                console.log(`Document URL: ${url}`);
+            }
+
+            console.log("Idea added");
+            setIsPending(false);
+        });
+    };
+
+    const handleAnonymousChange = e => {
+        const { checked } = e.target;
+        // console.log(checked);
+        if (checked==true){
+          setIsAnonymous(false);
+        }
+        else{
+          setIsAnonymous(true);
+        }
+        console.log(isAnonymous);
+    }
+
+
+    const sendDocument = async (ideaId, fileName) => {
+        const data = new FormData();
+        data.append("document", document);
+
+        try {
+            const response = await axios.post(`http://localhost:8000/uploadS3?ideaId=${ideaId}&fileName=${fileName}`, data)
+
+            if (response.status >= 200 && response.status <= 300) {
+                return response.data;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+
+    return (
+        // The whole form is put in the Box with border
+        <Box
+            className="ideacreate"
+            sx={{
+                border: 1,
+                borderColor: "white",
+                boxShadow: 4,
+                borderRadius: "25px",
+                margin: "2rem 3rem",
+                padding: "2rem",
+                maxWidth: "100%",
+            }}
+        >
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                }}
+            >
+                <ReturnLink />
+                <TitleFrame>Create idea</TitleFrame>
+                <Box sx={{ alignSelf: "center" }}>
+                    {/* Label section for displaying datetime data */}
+                    <LabelStyle>
+                        Closure date:
+                        {closedDate != null ? " " + { closedDate } : " No data"}
+                    </LabelStyle>
+
+                </Box>
+            </Box>
+
+            <Divider
+                sx={{
+                    marginBottom: "1.5rem",
+                }}
+            />
+
+
+
+            <form onSubmit={handleSubmit}>
+                {/* From here is title input */}
+                <div>
+                    <FormControlLabel control={<Switch />} label="Post as Anonymous" />
+                    <TextField
+                        id="outlined-basic"
+                        type="text"
+                        label="Title"
+                        variant="outlined"
+                        name="title"
+                        placeholder={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        sx={{
+                            width: "100%",
+                        }}
+                    />
                 </div>
-            ))} */}
+                <br />
 
-      {/* Mainform for input */}
-      <form onSubmit={handleSubmit}>
-        {/* From here is title input */}
-        <div>
-          <TextField
-            id="outlined-basic"
-            type="text"
-            label="Title"
-            variant="outlined"
-            name="title"
-            placeholder={title}
-            onChange={(e) => setTitle(e.target.value)}
-            sx={{
-              width: "100%",
-            }}
-          />
-        </div>
-        <br />
 
-        {/* <div>
-          <TextField id="outlined-basic"
-            variant="outlined"
-            disabled
-            type="text"
-            name="user"
-            placeholder={user}
-            defaultValue="thy"
-            onChange={(e) => setUser(e.target.value)} />
-        </div>
-        <br /> */}
-
-        {/* Content input */}
-        <div>
-          <TextField
-            id="outlined-multiline-static"
-            label="Your Idea"
-            multiline
-            rows={4}
-            // defaultValue={content}
-            onChange={(e) => setContent(e.target.value)}
-            sx={{
-              width: "100%",
-            }}
-          />
-        </div>
-        <br />
-        {/* <div>
+                {/* Content input */}
+                <div>
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Your Idea"
+                        multiline
+                        rows={4}
+                        // defaultValue={content}
+                        onChange={(e) => setContent(e.target.value)}
+                        sx={{
+                            width: "100%",
+                        }}
+                    />
+                </div>
+                <br />
+                {/* <div>
                     <label>Thumbs</label>
                     <input type="textarea" name="thumbs" placeholder={thumbs_up} rows ="4" onChange={e => setThumbsUp(e.target.value)} />
                     <input type="textarea" name="thumbs" placeholder={thumbs_down} rows ="4" onChange={e => setThumbsDown(e.target.value)} />
                 </div>
                 <br/> */}
 
-        {/* Upload Photos and Files are put in Box and flexed */}
-        <Box
-          sx={{
-            margin: "1rem",
-            display: "flex",
-            p: 1,
-            m: 1,
-            justifyContent: "space-evenly",
-          }}
-        >
-          <InputLabel htmlFor="icon-button-file">
-            <Input
-              accept="image/*"
-              id="icon-button-file"
-              type="file"
-              placeholder={document}
-              onChange={(e) => setSelectedFile(e.target.files[0])}
-            />
-            <Button color={"primary"} variant="text" component="span">
-              <PhotoCamera />
-              Upload Photo
-            </Button>
-          </InputLabel>
-          <InputLabel id="attach-label">
-            <Input
-              type="file"
-              accept="file/*"
-              id="contained-button-file"
-              placeholder={document}
-              onChange={(e) => setSelectedFile(e.target.files[0])}
-            ></Input>
-            <Button color={"primary"} variant="text" component="span">
-              <AttachFileIcon /> Attachments
-            </Button>
-          </InputLabel>
-        </Box>
+                {/* Upload Photos and Files are put in Box and flexed */}
+                <Box
+                    sx={{
+                        margin: "1rem",
+                        display: "flex",
+                        p: 1,
+                        m: 1,
+                        justifyContent: "space-evenly",
+                    }}
+                >
+                    <InputLabel htmlFor="icon-button-file">
+                        <Input
+                            accept="image/*"
+                            id="icon-button-file"
+                            type="file"
+                            placeholder={documents}
+                            onChange={(e) => setSelectedFile(e.target.files[0])}
+                        />
+                        <Button color={"primary"} variant="text" component="span">
+                            <PhotoCamera />
+                            Upload Photo
+                        </Button>
+                    </InputLabel>
+                    <InputLabel id="attach-label">
+                        <Button color={"primary"} variant="text" component="span">
+                            <input
+                                type="file"
+                                accept="file/*"
+                                id="contained-button-file"
+                                color={"primary"}
+                                placeholder={documents}
+                                onChange={event => {
+                                    const file = event.target.files[0];
+                                    setDocument(file);
+                                }}
+                            />
+                            <AttachFileIcon /> Attachments
+                        </Button>
+                    </InputLabel>
+                </Box>
 
-        {/* {isFilePicked ? (
+                {/* {isFilePicked ? (
           <div>
             <p>Filename: {category.name}</p>
             <p>Filetype: {category.type}</p>
@@ -300,7 +337,7 @@ const IdeaCreate = () => {
         ) : (
           <p>Select a file to show details</p>
         )} */}
-        {/* <div>
+                {/* <div>
           <label>Create Date </label>
           <input
             readOnly
@@ -330,107 +367,117 @@ const IdeaCreate = () => {
         </div>
         <br /> */}
 
-        {/* Tag/Category section with customed Label */}
-        <div>
-          <InputLabel id="tag-label">Select or create new tags</InputLabel>
-          <Select
-            labelId="tag-label"
-            name="tag"
-            closeMenuOnSelect={false}
-            placeholder={category}
-            isClearable
-            components={animatedComponents}
-            isMulti
-            options={options}
-            onChange={(e) =>
-              setSelectedTag(Array.isArray(e) ? e.map((x) => x.label) : [])
-            }
-          />
-          {/* //custom add more tags */}
-          {/* <center>
+                {/* Tag/CategoryCreate section with customed Label */}
+                <div>
+                    <InputLabel id="tag-label">Select or create new tags</InputLabel>
+                    <Select
+                        labelId="tag-label"
+                        name="tag"
+                        closeMenuOnSelect={false}
+                        placeholder={categories}
+                        isClearable
+                        components={animatedComponents}
+                        isMulti
+                        options={options}
+                        onChange={(e) => {
+
+                            setSelectedTag(Array.isArray(e) ? e.map((x) => {
+                                return { category: x.label }
+                            }) : [])
+                        }
+                        }
+                    />
+                    {/* //custom add more tags */}
+                    {/* <center>
             {" "}
             The selected tag: <h3>{category}</h3>
           </center> */}
-        </div>
-        <br />
+                </div>
+                <br />
 
-        {/* Terms and Conditions with overflow content not yet finished */}
-        <div className="term-conditions">
-          <TermHeading>Terms and Conditions</TermHeading>
-          <Terms>
-            <p>
-              Et natus molestias et doloribus. Quis quae enim dolores dolores
-              aperiam ullam eaque. Eveniet aut et qui alias consequuntur
-              expedita consequatur aspernatur. Qui est ut modi aut ut. Non est
-              dolor ipsum numquam doloribus deserunt molestiae et animi.
-              Voluptatem sint fuga est eum.
-            </p>
-            <p>
-              Et natus molestias et doloribus. Quis quae enim dolores dolores
-              aperiam ullam eaque. Eveniet aut et qui alias consequuntur
-              expedita consequatur aspernatur. Qui est ut modi aut ut. Non est
-              dolor ipsum numquam doloribus deserunt molestiae et animi.
-              Voluptatem sint fuga est eum. Et natus molestias et doloribus.
-              Quis quae enim dolores dolores aperiam ullam eaque. Eveniet aut et
-              qui alias consequuntur expedita consequatur aspernatur. Qui est ut
-              modi aut ut. Non est dolor ipsum numquam doloribus deserunt
-              molestiae et animi. Voluptatem sint fuga est eum.
-            </p>
-          </Terms>
-        </div>
-        <br />
+                <CheckTerm>
+                    <div>
+                        <FormControlLabel
+                        control={<Checkbox />}
+                        label="Anonymous"
+                        name="anonymous"
+                        onChange={handleAnonymousChange} 
+                        sx={{
+                            marginBottom: "1rem",
+                        }}
+                        />
+                    </div>
+                </CheckTerm>
 
-        {/* Checkbox for Terms and Submit button, should change Submitting... button by using LoadingButton */}
-        <CheckTerm>
-          <div>
-            <FormControlLabel
-              control={<Checkbox />}
-              label="I Agree to Terms & Conditions"
-              name="agreement"
-              onChange={handleChange}
-              sx={{
-                marginBottom: "1rem",
-              }}
-            />
-          </div>
-          {!isPending && (
-            <Button
-              variant="contained"
-              disabled={isDisabled()}
-              startIcon={<SendIcon />}
-              fullWidth
-            >
-              Submit
-            </Button>
-          )}
-          {isPending && (
-            <Button
-              disabled
-              startIcon={<SendIcon />}
-              variant="outlined"
-              fullWidth
-            >
-              Submitting...
-            </Button>
-          )}
-        </CheckTerm>
-        <CancelBtn />
+                {/* Terms and Conditions with overflow content not yet finished */}
+                <div className="term-conditions">
+                    <TermHeading>Terms and Conditions</TermHeading>
+                    <Terms>
+                        <p>
+                            Et natus molestias et doloribus. Quis quae enim dolores dolores
+                            aperiam ullam eaque. Eveniet aut et qui alias consequuntur
+                            expedita consequatur aspernatur.
+                        </p>
+                        <p>
+                            Qui est ut modi aut ut. Non est
+                            dolor ipsum numquam doloribus deserunt molestiae et animi.
+                            Voluptatem sint fuga est eum.
+                        </p>
+                    </Terms>
+                </div>
+                <br />
 
-        {/* <input
+                {/* Checkbox for Terms and Submit button, should change Submitting... button by using LoadingButton */}
+                <CheckTerm>
+                    <div>
+                        <FormControlLabel
+                            control={<Checkbox />}
+                            label="I Agree to Terms & Conditions"
+                            name="agreement"
+                            onChange={handleChange}
+                            sx={{
+                                marginBottom: "1rem",
+                            }}
+                        />
+                    </div>
+                    {!isPending && (
+                        <Button
+                            variant="contained"
+                            disabled={isDisabled()}
+                            startIcon={<SendIcon />}
+                            fullWidth
+                            type='submit'>
+                            Submit
+                        </Button>
+                    )}
+                    {isPending && (
+                        <Button
+                            disabled
+                            startIcon={<SendIcon />}
+                            variant="outlined"
+                            fullWidth
+                        >
+                            Submitting...
+                        </Button>
+                    )}
+                </CheckTerm>
+                <CancelBtn />
+
+                {/* <input
             type="checkbox"
             name="agreement"
             onChange={handleChange}
           ></input> */}
-        {/* <div className="agree-check" id="agree-check">
+                {/* <div className="agree-check" id="agree-check">
           <input
             type="checkbox"
             name="agreement"
             onChange={handleChange}
           ></input><span>I Agree with Terms & Conditions</span>
         </div> */}
-      </form>
-    </Box>
-  );
+            </form>
+        </Box>
+    );
 };
 
 export default IdeaCreate;

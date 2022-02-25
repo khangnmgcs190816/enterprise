@@ -10,7 +10,7 @@ const useFetch = (url) => {
       fetch(url)
       .then(res => {
         if (!res.ok) { // error coming back from server
-          throw Error('could not fetch the data for that resource');
+          throw Error('could not fetch the data for that public');
         } 
         return res.json();
       })

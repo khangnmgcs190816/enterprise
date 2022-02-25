@@ -1,6 +1,6 @@
 import CommentForm from "./CommentForm";
-import { useParams} from "react-router-dom";
-import {useState, useEffect} from 'react';
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from 'react';
 import "./styles.css";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
@@ -67,100 +67,100 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Comment = ({comment,
+const Comment = ({ comment,
     replies,
     setActiveComment,
     activeComment,
     updateComment,
     createComment,
     parentId,
-    currentUserId,}) => {
-        
-   
+    currentUserId, }) => {
+
+
     const canDelete = currentUserId === comment.userId && replies.length === 0;
     const canReply = Boolean(currentUserId);
     const canEdit = currentUserId === comment.userId;
-    const isReplying = activeComment && activeComment.type === 'replying' && activeComment.id === comment.id;
-    const isEditing = activeComment && activeComment.type === 'editing' && activeComment.id === comment.id;
-    const replyId = parentId ? parentId : comment.id;
+    const isReplying = activeComment && activeComment.type === 'replying' && activeComment.id === comment._id;
+    const isEditing = activeComment && activeComment.type === 'editing' && activeComment.id === comment._id;
+    const replyId = parentId ? parentId : comment._id;
     const navigate = useNavigate();
     const deleteComment = async () => {
-        fetch('http://localhost:8081/comment/' + comment.id, {
-          method: 'DELETE'
+        fetch('http://localhost:8081/comment/' + comment._id, {
+            method: 'DELETE'
         })
-      };
+    };
 
-    return ( 
+    return (
         <div key={comment.id} className="comment">
             <div className="comment-image-container">
-            <Avatar alt="" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="" src="/static/images/avatar/2.jpg" />
             </div>
             <div className="comment-right-part">
                 <div className="comment-content">
-                    <div className="comment-author">{comment.id}</div>
+                    <div className="comment-author">{comment._id}</div>
                     <div>{comment.createdAt}</div>
                 </div>
                 {!isEditing && <div className="comment-text">{comment.content}</div>}
-                {isEditing &&(
+                {isEditing && (
                     <CommentForm
-                    submitLabel="Update"
-                    hasCancelButton
-                    initialText={comment.content}
-                    handleSubmit={(text) => updateComment(text, comment.id)}
-                    handleCancel={() =>setActiveComment(null)}
+                        submitLabel="Update"
+                        hasCancelButton
+                        initialText={comment.content}
+                        handleSubmit={(text) => updateComment(text, comment.id)}
+                        handleCancel={() => setActiveComment(null)}
                     />
                 )}
                 <div className="comment-actions">
-                    
+
                     <div
                         className="comment-action"
                         onClick={() =>
-                            setActiveComment({ id: comment.id, type: "replying" })
+                            setActiveComment({ id: comment._id, type: "replying" })
                         }
-                        >
+                    >
                         Reply
                     </div>
-                    
-                    
+
+
                     <div
                         className="comment-action"
                         onClick={() =>
-                            setActiveComment({ id: comment.id, type: "editing" })
+                            setActiveComment({ id: comment._id, type: "editing" })
                         }
-                        >
+                    >
                         Edit
                     </div>
-                    
-                    
+
+
                     <div
                         className="comment-action"
                         onClick={() => deleteComment(comment.id)}
-                        >
+                    >
                         Delete
                     </div>
-                    
+
                 </div>
                 {isReplying && (
-                    <CommentForm 
-                    submitLabel="Reply" 
-                    handleSubmit={(text) => createComment(text, replyId)}/>
+                    <CommentForm
+                        submitLabel="Reply"
+                        handleSubmit={(text) => createComment(text, replyId)} />
                 )}
                 {replies.length > 0 && (
                     <div className="replies">
                         {replies.map(reply => (<Comment comment={reply}
-                                                        key={reply.id}
-                                                        setActiveComment={setActiveComment}
-                                                        activeComment={activeComment}
-                                                        updateComment={updateComment}
-                                                        parentId={comment.id}
-                                                        replies={[]}
-                                                        currentUserId={currentUserId}/>))}
+                            key={reply.id}
+                            setActiveComment={setActiveComment}
+                            activeComment={activeComment}
+                            updateComment={updateComment}
+                            parentId={comment.id}
+                            replies={[]}
+                            currentUserId={currentUserId} />))}
                     </div>
                 )}
             </div>
         </div>
-     );
-              
+    );
+
 }
- 
+
 export default Comment;
