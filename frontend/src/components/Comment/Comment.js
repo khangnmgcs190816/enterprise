@@ -80,12 +80,12 @@ const Comment = ({ comment,
     const canDelete = currentUserId === comment.userId && replies.length === 0;
     const canReply = Boolean(currentUserId);
     const canEdit = currentUserId === comment.userId;
-    const isReplying = activeComment && activeComment.type === 'replying' && activeComment.id === comment.id;
-    const isEditing = activeComment && activeComment.type === 'editing' && activeComment.id === comment.id;
-    const replyId = parentId ? parentId : comment.id;
+    const isReplying = activeComment && activeComment.type === 'replying' && activeComment.id === comment._id;
+    const isEditing = activeComment && activeComment.type === 'editing' && activeComment.id === comment._id;
+    const replyId = parentId ? parentId : comment._id;
     const navigate = useNavigate();
     const deleteComment = async () => {
-        fetch('http://localhost:8081/comment/' + comment.id, {
+        fetch('http://localhost:8081/comment/' + comment._id, {
             method: 'DELETE'
         })
     };
@@ -97,7 +97,7 @@ const Comment = ({ comment,
             </div>
             <div className="comment-right-part">
                 <div className="comment-content">
-                    <div className="comment-author">{comment.id}</div>
+                    <div className="comment-author">{comment._id}</div>
                     <div>{comment.createdAt}</div>
                 </div>
                 {!isEditing && <div className="comment-text">{comment.content}</div>}
@@ -115,7 +115,7 @@ const Comment = ({ comment,
                     <div
                         className="comment-action"
                         onClick={() =>
-                            setActiveComment({ id: comment.id, type: "replying" })
+                            setActiveComment({ id: comment._id, type: "replying" })
                         }
                     >
                         Reply
@@ -125,7 +125,7 @@ const Comment = ({ comment,
                     <div
                         className="comment-action"
                         onClick={() =>
-                            setActiveComment({ id: comment.id, type: "editing" })
+                            setActiveComment({ id: comment._id, type: "editing" })
                         }
                     >
                         Edit

@@ -156,7 +156,7 @@ const IdeaCreate = () => {
         await axios.post("http://localhost:8000/ideas", JSON.stringify(idea), {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjE2M2EzZTM2ZDAxMTEyMTAxZTljZGMiLCJpYXQiOjE2NDU2MjM5MjgsImV4cCI6MTY0NjIyODcyOH0.zI2IZd9E_RHs16_bAR7vYoAfpmaf0NZzVnG2YXYPMHY"
+                "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjE4NGFhZDgxNTBlNjJlNDI1MWExNGQiLCJpYXQiOjE2NDU3NTkxNzMsImV4cCI6MTY0NjM2Mzk3M30.ZF6LfiA9Pq25VHK2eGM9ogEdWNO8oBNW3kTrHHouE5k"
             }
         }).then(async (response) => {
 

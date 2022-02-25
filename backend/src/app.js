@@ -8,6 +8,7 @@ import { router as userRouter } from "./routes/user-router.js";
 import { router as taskRouter } from "./routes/task-router.js";
 import { router as ideaRouter } from "./routes/idea-router.js";
 import { router as categoryRouter } from "./routes/category-router.js";
+import { router as commentRouter } from "./routes/comment-router.js";
 import { connection } from "./database/config.js";
 import jwt from "jsonwebtoken";
 import multer from "multer";
@@ -43,6 +44,7 @@ app.use(userRouter);
 app.use(taskRouter);
 app.use(ideaRouter);
 app.use(categoryRouter);
+app.use(commentRouter);
 
 
 

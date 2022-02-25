@@ -20,7 +20,7 @@ const Comments = ({commentsUrl, ideaId, currentUserId}) => {
     console.log(ideaId);
 
     const {response, loading, error} = useAxios({
-        url: "http://localhost:8081/comment",
+        url: `http://localhost:8000/comments?ideaId=${ideaId}`,
         method: "get",
     });
 
@@ -40,8 +40,8 @@ const Comments = ({commentsUrl, ideaId, currentUserId}) => {
     }
 
     const createComment = (text, parentId) => {
-        console.log("addcomment", text, parentId);
-        createCommentApi(text, parentId).then(comment => {
+        console.log("Add Comment", text, parentId);
+        createCommentApi(text, parentId, ideaId).then(comment => {
             setComments([comment, ...Comments])
         });
     }
@@ -56,7 +56,7 @@ const Comments = ({commentsUrl, ideaId, currentUserId}) => {
     const updateComment = (text, commentId) => {
         updateCommentApi(text).then(() => {
             const updatedComments = Comments.map((Comment) => {
-                if (Comment.id === commentId) {
+                if (Comment._id === commentId) {
                     return {...Comment, body: text};
                 }
                 return Comment;
@@ -89,7 +89,7 @@ const Comments = ({commentsUrl, ideaId, currentUserId}) => {
             <div className="comments-container">
                 {rootComments.map(rootComment => (
                     <Comment
-                        key={rootComment.id}
+                        key={rootComment._id}
                         comment={rootComment}
                         replies={getReplies(rootComment.id)}
                         updateComment={updateComment}
