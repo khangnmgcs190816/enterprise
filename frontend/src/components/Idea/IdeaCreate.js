@@ -14,6 +14,7 @@ import { lightBlue, grey } from "@mui/material/colors";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import Switch from '@mui/material/Switch';
 import axios from "axios";
+import useAxios from "../../services/useAxios";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -73,8 +74,7 @@ const LabelStyle = styled("label")({
 const IdeaCreate = () => {
     var date = new Date();
     const [title, setTitle] = useState("Title");
-    const [owner, setUser] = useState("thy");
-    const [anonymous, setAnonymous] = useState(false);
+    const [owner, setUser] = useState("");
     const [content, setContent] = useState("Please input your idea");
     const [thumbsUp, setThumbsUp] = useState();
     const [thumbsDown, setThumbsDown] = useState();
@@ -86,17 +86,14 @@ const IdeaCreate = () => {
     const [createdAt, setCreateDate] = useState(date);
     const [updatedAt, setUpdateDate] = useState();
     const [closedDate, setCloseDate] = useState();
-    const [categories, setSelectedTag] = useState([]);
+    const [category, setSelectedTag] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [isTagPicked, setIsTagPicked] = useState(false);
     const [comments, setComment] = useState([]);
     const [isPending, setIsPending] = useState(false);
     const [isBusy, setBusy] = useState(true)
 
 
-    const options = [
-        { value: "0", label: "A" },
-        { value: "1", label: "A" }
-    ]
 
 
 
@@ -140,13 +137,13 @@ const IdeaCreate = () => {
         const idea = {
             title,
             content,
-            anonymous,
+            isAnonymous,
             thumbsUp,
             thumbsDown,
             academicYear,
             documents,
             closedDate,
-            categories,
+            category,
             comments,
             owner,
         };
@@ -173,8 +170,22 @@ const IdeaCreate = () => {
         });
     };
 
+    const {response, loading, error} = useAxios({
+        url: "http://localhost:8000/categories",
+        method: "get",
+    });
+
+    useEffect(() => {
+        if (response != null) {
+            setCategories(response);
+            response.map(async (item) => {
+                const categories = await axios.get(`http://localhost:8000/categories`);
+            });
+        }
+    }, [response]);
+
     const handleAnonymousChange = e => {
-        const { checked } = e.target;
+        const { checked } = e.target.value;
         // console.log(checked);
         if (checked==true){
           setIsAnonymous(false);
@@ -201,6 +212,20 @@ const IdeaCreate = () => {
         }
     };
 
+    //những gì tôi có thể nghĩ ra để xuất category
+
+    const obj = JSON.parse(JSON.stringify(response));
+    console.log(obj.id);
+    // console.log(JSON.stringify(response));
+    // var categoryList = [];
+    // obj.map(function(element) {
+    //     categoryList.push({ label:element })
+    // });
+
+    const options = [
+        { value: "0", label: "a" },
+        { value: "1", label: "A" }
+    ]
 
     return (
         // The whole form is put in the Box with border
@@ -253,7 +278,7 @@ const IdeaCreate = () => {
                         variant="outlined"
                         name="title"
                         placeholder={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        onClick={() => setIsAnonymous(true)}
                         sx={{
                             width: "100%",
                         }}
@@ -369,12 +394,13 @@ const IdeaCreate = () => {
 
                 {/* Tag/CategoryCreate section with customed Label */}
                 <div>
+                    
                     <InputLabel id="tag-label">Select or create new tags</InputLabel>
                     <Select
                         labelId="tag-label"
                         name="tag"
                         closeMenuOnSelect={false}
-                        placeholder={categories}
+                        placeholder={category}
                         isClearable
                         components={animatedComponents}
                         isMulti
@@ -394,6 +420,13 @@ const IdeaCreate = () => {
           </center> */}
                 </div>
                 <br />
+                {
+                categories.map((category) => {
+                        return (
+                            <div>{category.categoryName}</div>
+                        );
+                    }
+                )}
 
                 <CheckTerm>
                     <div>
