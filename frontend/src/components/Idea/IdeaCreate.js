@@ -74,7 +74,6 @@ const IdeaCreate = () => {
     var date = new Date();
     const [title, setTitle] = useState("Title");
     const [owner, setUser] = useState("thy");
-    const [anonymous, setAnonymous] = useState(false);
     const [content, setContent] = useState("Please input your idea");
     const [thumbsUp, setThumbsUp] = useState();
     const [thumbsDown, setThumbsDown] = useState();
@@ -140,7 +139,7 @@ const IdeaCreate = () => {
         const idea = {
             title,
             content,
-            anonymous,
+            isAnonymous,
             thumbsUp,
             thumbsDown,
             academicYear,
@@ -154,6 +153,7 @@ const IdeaCreate = () => {
         setIsPending(true);
 
 
+        console.log(`Anonymous ${isAnonymous}`);
         await axios.post("http://localhost:8000/ideas", JSON.stringify(idea), {
             headers: {
                 "Content-Type": "application/json",
@@ -176,13 +176,13 @@ const IdeaCreate = () => {
     const handleAnonymousChange = e => {
         const { checked } = e.target;
         // console.log(checked);
-        if (checked==true){
-          setIsAnonymous(false);
-        }
-        else{
+        if (checked===true){
           setIsAnonymous(true);
         }
-        console.log(isAnonymous);
+        else{
+          setIsAnonymous(false);
+        }
+        console.log(`Anonymous: ${isAnonymous}`);
     }
 
 

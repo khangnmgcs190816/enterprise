@@ -72,18 +72,22 @@ function App() {
               <Route path="/idea/:category" element={<Idea/>}/>
               <Route path="/idea/:filter" element={<Idea/>}/>
 
-              <Route path="/employees" element={<Employees />}></Route>
-              <Route path="/dashboard" element={<Dashboard />}></Route>
+              <Route path="/employees" element={<Employees/>}/>
+              <Route path="/dashboard" element={<Dashboard/>}/>
               {/* <Route path="/idea/idealist" element={<IdeaList />}></Route> */}
 
-              <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
+              <Route path="/idea/ideacreate" element={<IdeaCreate/>}/>
 
-              <Route path="/category" element={<CategoryCreate />}></Route>
+              <Route path="/category" element={<CategoryCreate/>}/>
               {/* <Route path="/your-ideas" element={}></Route> */}
-              <Route path="/search" element={<Search />}></Route>
+              <Route path="/search" element={<Search/>}/>
 
-              <Route path="/login" element={<Login />}></Route>
-              <Route path="/comments" element={<Comments />}></Route>
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/comments" element={<Comments/>}/>
+
+
+
+
             </Routes>
           </main>
         </Router>
