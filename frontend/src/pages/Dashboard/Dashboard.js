@@ -43,7 +43,7 @@ const Dashboard = () => {
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} centered>
             <Tab label="Department" value="department" />
-            <Tab label="Category" value="category" />
+            <Tab label="CategoryCreate" value="category" />
           </TabList>
         </Box>
         <TabPanel value="department">

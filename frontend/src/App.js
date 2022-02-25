@@ -13,7 +13,7 @@ import Search from "./components/Search/SearchFunction";
 
 import Home from "./pages/Home";
 import Header from "./components/Header/Header";
-import Category from "./components/CategoryCreate";
+import CategoryCreate from "./components/CategoryCreate";
 import Comments from "./components/Comment/Comments";
 import IdeaDetails from "./components/Idea/IdeaDetails";
 
@@ -50,15 +50,6 @@ const theme = createTheme({
         color: green[500],
       },
     },
-    // overrides: {
-    //   MuiInput: {
-    //     underline: {
-    //       "&:hover:not($disabled):before": {
-    //         backgroundColor: "rgba(0, 188, 212, 0.7)",
-    //       },
-    //     },
-    //   },
-    // },
   },
 });
 
@@ -74,12 +65,12 @@ function App() {
               {/* // TODO 1: when not authenticated, no NavBar */}
               {/* // TODO 2: when authenticated, go to main page */}
               {/* <Route path="/" element={<Login />}></Route>{" "} */}
-              <Route path="/" element={<Home/>}/>
+              <Route path="/" element={<Home />} />
 
-              <Route path="/idea" element={<Idea/>}/>
-              <Route path="/idea/:id" element={<IdeaDetails/>}/>
-              <Route path="/idea/:category" element={<Idea />}></Route>
-              <Route path="/idea/:filter" element={<Idea />}></Route>
+              <Route path="/idea" element={<Idea />} />
+              <Route path="/idea/:id" element={<IdeaDetails />} />
+              <Route path="/idea/:category" element={<Idea/>}/>
+              <Route path="/idea/:filter" element={<Idea/>}/>
 
               <Route path="/employees" element={<Employees />}></Route>
               <Route path="/dashboard" element={<Dashboard />}></Route>
@@ -87,7 +78,7 @@ function App() {
 
               <Route path="/idea/ideacreate" element={<IdeaCreate />}></Route>
 
-              <Route path="/category" element={<Category />}></Route>
+              <Route path="/category" element={<CategoryCreate />}></Route>
               {/* <Route path="/your-ideas" element={}></Route> */}
               <Route path="/search" element={<Search />}></Route>
 

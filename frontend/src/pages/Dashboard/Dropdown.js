@@ -34,7 +34,7 @@ function DeptDD({ list }) {
   );
 }
 
-// This function get the Category list and show under dropdown
+// This function get the CategoryCreate list and show under dropdown
 function CateDD({ list }) {
   const [category, setCategory] = useState("Select");
 

@@ -31,7 +31,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-api": "json-server --port 8080 --watch ~/enterprise/frontend/src/data/ideas.json --delay 500",
+    "start-idea": "json-server --port 8080 --watch ~/Documents/Documents-Cloud/FPT/TOPUP/Web/source_code/enterprise/frontend/src/data/ideas.json --delay 500",
+    "start-comment": "json-server --port 8081 --watch ~/Documents/Documents-Cloud/FPT/TOPUP/Web/source_code/enterprise/frontend/src/data/comments.json --delay 500",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
