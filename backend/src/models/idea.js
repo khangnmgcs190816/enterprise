@@ -20,7 +20,7 @@ const IdeaSchema = new mongoose.Schema({
             type: String
         }
     }],
-    anonymous: {
+    isAnonymous: {
         type: Boolean,
         default: false
     },

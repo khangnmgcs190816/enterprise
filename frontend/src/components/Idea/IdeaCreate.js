@@ -151,6 +151,7 @@ const IdeaCreate = () => {
         setIsPending(true);
 
 
+        console.log(`Anonymous ${isAnonymous}`);
         await axios.post("http://localhost:8000/ideas", JSON.stringify(idea), {
             headers: {
                 "Content-Type": "application/json",
@@ -187,13 +188,13 @@ const IdeaCreate = () => {
     const handleAnonymousChange = e => {
         const { checked } = e.target.value;
         // console.log(checked);
-        if (checked==true){
-          setIsAnonymous(false);
-        }
-        else{
+        if (checked===true){
           setIsAnonymous(true);
         }
-        console.log(isAnonymous);
+        else{
+          setIsAnonymous(false);
+        }
+        console.log(`Anonymous: ${isAnonymous}`);
     }
 
 
