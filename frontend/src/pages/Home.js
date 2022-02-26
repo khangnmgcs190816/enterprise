@@ -9,13 +9,10 @@ import useAxios from "../services/useAxios";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
 
-const ProDiv = styled("div")({
-  textAlign: "center",
-});
 
 const Home = () => {
   const { response, loading, error } = useAxios({
-    url: "/idea",
+    url: "ideas",
     method: "get",
   });
 
@@ -69,7 +66,7 @@ const Home = () => {
         {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
       </section>
 
-      <ProDiv>
+      <div>
         <Button
           sx={{
             margin: "10rem 0rem 0rem 0rem",
@@ -77,7 +74,7 @@ const Home = () => {
         >
           Spotlight Ideas
         </Button>
-      </ProDiv>
+      </div>
     </div>
   );
 };

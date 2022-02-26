@@ -16,7 +16,7 @@ import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-const pages = ["Idea", "Employee", "Dashboard", "Comments"];
+const pages = ["Ideas", "Employees", "Dashboard", "Comments"];
 const userTitle = ["Hi, Username!"];
 const settings = ["Category", "Your Ideas"];
 
@@ -108,7 +108,7 @@ const ResponsiveAppBar = () => {
                   <Button
                     component={Link}
                     sx={{ my: 1, color: "primary", display: "block" }}
-                    to={page === "Idea" ? "/Idea" : `/${page}`}
+                    to={page === "Ideas" ? "/ideas" : `/${page.toLowerCase()}`}
                   >
                     {page}
                   </Button>
@@ -139,7 +139,7 @@ const ResponsiveAppBar = () => {
                   display: "block",
                   textAlign: "center",
                 }}
-                to={page === "Idea" ? "/Idea" : `/${page}`}
+                to={page === "Ideas" ? "/ideas" : `/${page.toLowerCase()}`}
               >
                 {page}
               </Button>
@@ -212,7 +212,9 @@ const ResponsiveAppBar = () => {
                 </MenuItem>
               ))}
               <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center" color="error">
+                <Typography
+                  // textAlign="center"
+                  color="error">
                   <LogoutIcon fontSize="small" /> Log Out
                 </Typography>
               </MenuItem>

@@ -5,7 +5,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 function ReturnLink() {
   return (
-    <Button component={RouterLink} to="/idea" variant="text" color="primary">
+    <Button component={RouterLink} to="/ideas" variant="text" color="primary">
       <ArrowBackIcon /> Back
     </Button>
   );
@@ -15,7 +15,7 @@ function CancelBtn() {
   return (
     <Button
       component={RouterLink}
-      to="/idea"
+      to="/ideas"
       variant="contained"
       color="secondary"
       sx={{ margin: "1rem 0rem" }}
@@ -32,7 +32,7 @@ function NewIdeaBtn() {
       variant="contained"
       startIcon={<AddCircleIcon />}
       component={RouterLink}
-      to="/idea/ideacreate"
+      to="/ideas/ideacreate"
     >
       New
     </Button>

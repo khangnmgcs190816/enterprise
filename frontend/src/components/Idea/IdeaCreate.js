@@ -12,39 +12,40 @@ import SendIcon from "@mui/icons-material/Send";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { lightBlue, grey } from "@mui/material/colors";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import { Typography } from '@material-ui/core';
 import Switch from '@mui/material/Switch';
 import axios from "axios";
 import useAxios from "../../services/useAxios";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
+// import List from "@mui/material/List";
+// import ListItem from "@mui/material/ListItem";
+// import ListItemText from "@mui/material/ListItemText";
 // Mới tạo IdeaButtons.js trong Idea(components), chứa 3 function một cái là dạng link Back, cái thứ 2 là nút Cancel, 3 là nút Create Idea
 import { ReturnLink, CancelBtn } from "./IdeaButtons";
 
-const TermHeading = styled("h3")({
-    textAlign: "center",
-});
+// const TermHeading = styled("h3")({
+//     textAlign: "center",
+// });
 
 const Input = styled("input")({
     display: "none",
 });
 
-const Terms = styled("div")({
-    textAlign: "justify",
-    fontSize: 15,
-    padding: "0rem 1rem 0rem 1rem",
-    overflow: "scroll",
-    display: "block",
-    maxHeight: "50%",
-});
+// const Terms = styled("div")({
+//     textAlign: "justify",
+//     fontSize: 15,
+//     padding: "0rem 1rem 0rem 1rem",
+//     overflow: "scroll",
+//     display: "block",
+//     maxHeight: "50%",
+// });
 
-const CheckTerm = styled("div")({
-    textAlign: "center",
-});
+// const CheckTerm = styled("div")({
+//     textAlign: "center",
+// });
 
 const TitleFrame = styled("div")({
     color: lightBlue[600],
-    textAlign: "center",
+    // textAlign: "center",
     fontSize: 30,
     fontWeight: "bold",
     marginBottom: "1rem",
@@ -171,7 +172,7 @@ const IdeaCreate = () => {
         });
     };
 
-    const {response, loading, error} = useAxios({
+    const { response, loading, error } = useAxios({
         url: "http://localhost:8000/categories",
         method: "get",
     });
@@ -188,11 +189,11 @@ const IdeaCreate = () => {
     const handleAnonymousChange = e => {
         const { checked } = e.target.value;
         // console.log(checked);
-        if (checked===true){
-          setIsAnonymous(true);
+        if (checked === true) {
+            setIsAnonymous(true);
         }
-        else{
-          setIsAnonymous(false);
+        else {
+            setIsAnonymous(false);
         }
         console.log(`Anonymous: ${isAnonymous}`);
     }
@@ -395,7 +396,7 @@ const IdeaCreate = () => {
 
                 {/* Tag/CategoryCreate section with customed Label */}
                 <div>
-                    
+
                     <InputLabel id="tag-label">Select or create new tags</InputLabel>
                     <Select
                         labelId="tag-label"
@@ -422,31 +423,37 @@ const IdeaCreate = () => {
                 </div>
                 <br />
                 {
-                categories.map((category) => {
+                    categories.map((category) => {
                         return (
                             <div>{category.categoryName}</div>
                         );
                     }
-                )}
+                    )}
 
-                <CheckTerm>
+                <Typography align="center">
                     <div>
                         <FormControlLabel
-                        control={<Checkbox />}
-                        label="Anonymous"
-                        name="anonymous"
-                        onChange={handleAnonymousChange} 
-                        sx={{
-                            marginBottom: "1rem",
-                        }}
+                            control={<Checkbox />}
+                            label="Anonymous"
+                            name="anonymous"
+                            onChange={handleAnonymousChange}
+                            sx={{
+                                marginBottom: "1rem",
+                            }}
                         />
                     </div>
-                </CheckTerm>
+                </Typography>
 
                 {/* Terms and Conditions with overflow content not yet finished */}
                 <div className="term-conditions">
-                    <TermHeading>Terms and Conditions</TermHeading>
-                    <Terms>
+                    <Typography align="center">Terms and Conditions</Typography>
+                    <Typography align="justify" sx={{
+                        fontSize: 15,
+                        padding: "0rem 1rem 0rem 1rem",
+                        overflow: "scroll",
+                        display: "block",
+                        maxHeight: "50%",
+                    }}>
                         <p>
                             Et natus molestias et doloribus. Quis quae enim dolores dolores
                             aperiam ullam eaque. Eveniet aut et qui alias consequuntur
@@ -457,12 +464,12 @@ const IdeaCreate = () => {
                             dolor ipsum numquam doloribus deserunt molestiae et animi.
                             Voluptatem sint fuga est eum.
                         </p>
-                    </Terms>
+                    </Typography>
                 </div>
                 <br />
 
                 {/* Checkbox for Terms and Submit button, should change Submitting... button by using LoadingButton */}
-                <CheckTerm>
+                <Typography align="center">
                     <div>
                         <FormControlLabel
                             control={<Checkbox />}
@@ -494,7 +501,7 @@ const IdeaCreate = () => {
                             Submitting...
                         </Button>
                     )}
-                </CheckTerm>
+                </Typography>
                 <CancelBtn />
 
                 {/* <input

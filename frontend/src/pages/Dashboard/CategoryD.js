@@ -8,16 +8,16 @@ import { Box, Divider } from "@mui/material";
 
 const TitleFrame = styled("div")({
   color: lightBlue[600],
-  textAlign: "left",
+  // textAlign: "left",
   fontSize: 30,
   fontWeight: "bold",
   marginBottom: "1rem",
 });
 
-const SecondTab = () => {
+const CategoryD = () => {
   return (
 
- <Box
+    <Box
       sx={{
         display: "flex",
         p: 1,
@@ -75,7 +75,7 @@ const SecondTab = () => {
           <span>Latest comment: N/A</span>
         </Box>
         <Box>
-          Closure Date: {} <button>Download (.csv)</button>
+          Closure Date: { } <button>Download (.csv)</button>
         </Box>
       </Box>
 
@@ -97,4 +97,4 @@ const SecondTab = () => {
     </Box>
   );
 };
-export default SecondTab;
+export default CategoryD;
