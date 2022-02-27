@@ -8,13 +8,13 @@ import { Box, Divider } from "@mui/material";
 
 const TitleFrame = styled("div")({
   color: lightBlue[600],
-  textAlign: "left",
+  // textAlign: "left",
   fontSize: 30,
   fontWeight: "bold",
   marginBottom: "1rem",
 });
 
-const FirstTab = () => {
+const Department = () => {
   return (
     <Box
       sx={{
@@ -97,4 +97,4 @@ const FirstTab = () => {
   );
 };
 
-export default FirstTab;
+export default Department;

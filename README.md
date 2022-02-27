@@ -19,9 +19,9 @@ Automatically installs all dependencies
 Runs local json server with port 8080
 
 ### BACKEND
-in Backend directory, run:
+in the Backend directory, run:
 
-### node app.js
+### node src/app.js
 
 Server user **PORT 8000**
 

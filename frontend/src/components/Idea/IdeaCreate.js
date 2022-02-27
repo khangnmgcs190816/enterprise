@@ -12,38 +12,40 @@ import SendIcon from "@mui/icons-material/Send";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { lightBlue, grey } from "@mui/material/colors";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import { Typography } from '@material-ui/core';
 import Switch from '@mui/material/Switch';
 import axios from "axios";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
+import useAxios from "../../services/useAxios";
+// import List from "@mui/material/List";
+// import ListItem from "@mui/material/ListItem";
+// import ListItemText from "@mui/material/ListItemText";
 // Mới tạo IdeaButtons.js trong Idea(components), chứa 3 function một cái là dạng link Back, cái thứ 2 là nút Cancel, 3 là nút Create Idea
 import { ReturnLink, CancelBtn } from "./IdeaButtons";
 
-const TermHeading = styled("h3")({
-    textAlign: "center",
-});
+// const TermHeading = styled("h3")({
+//     textAlign: "center",
+// });
 
 const Input = styled("input")({
     display: "none",
 });
 
-const Terms = styled("div")({
-    textAlign: "justify",
-    fontSize: 15,
-    padding: "0rem 1rem 0rem 1rem",
-    overflow: "scroll",
-    display: "block",
-    maxHeight: "50%",
-});
+// const Terms = styled("div")({
+//     textAlign: "justify",
+//     fontSize: 15,
+//     padding: "0rem 1rem 0rem 1rem",
+//     overflow: "scroll",
+//     display: "block",
+//     maxHeight: "50%",
+// });
 
-const CheckTerm = styled("div")({
-    textAlign: "center",
-});
+// const CheckTerm = styled("div")({
+//     textAlign: "center",
+// });
 
 const TitleFrame = styled("div")({
     color: lightBlue[600],
-    textAlign: "center",
+    // textAlign: "center",
     fontSize: 30,
     fontWeight: "bold",
     marginBottom: "1rem",
@@ -73,7 +75,7 @@ const LabelStyle = styled("label")({
 const IdeaCreate = () => {
     var date = new Date();
     const [title, setTitle] = useState("Title");
-    const [owner, setUser] = useState("thy");
+    const [owner, setUser] = useState("");
     const [content, setContent] = useState("Please input your idea");
     const [thumbsUp, setThumbsUp] = useState();
     const [thumbsDown, setThumbsDown] = useState();
@@ -85,17 +87,14 @@ const IdeaCreate = () => {
     const [createdAt, setCreateDate] = useState(date);
     const [updatedAt, setUpdateDate] = useState();
     const [closedDate, setCloseDate] = useState();
-    const [categories, setSelectedTag] = useState([]);
+    const [category, setSelectedTag] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [isTagPicked, setIsTagPicked] = useState(false);
     const [comments, setComment] = useState([]);
     const [isPending, setIsPending] = useState(false);
     const [isBusy, setBusy] = useState(true)
 
 
-    const options = [
-        { value: "0", label: "A" },
-        { value: "1", label: "A" }
-    ]
 
 
     const animatedComponents = makeAnimated();
@@ -144,7 +143,7 @@ const IdeaCreate = () => {
             academicYear,
             documents,
             closedDate,
-            categories,
+            category,
             comments,
             owner,
         };
@@ -172,14 +171,28 @@ const IdeaCreate = () => {
         });
     };
 
-    const handleAnonymousChange = e => {
-        const { checked } = e.target;
-        // console.log(checked);
-        if (checked===true){
-          setIsAnonymous(true);
+    const { response, loading, error } = useAxios({
+        url: "http://localhost:8000/categories",
+        method: "get",
+    });
+
+    useEffect(() => {
+        if (response != null) {
+            setCategories(response);
+            response.map(async (item) => {
+                const categories = await axios.get(`http://localhost:8000/categories`);
+            });
         }
-        else{
-          setIsAnonymous(false);
+    }, [response]);
+
+    const handleAnonymousChange = e => {
+        const { checked } = e.target.value;
+        // console.log(checked);
+        if (checked === true) {
+            setIsAnonymous(true);
+        }
+        else {
+            setIsAnonymous(false);
         }
         console.log(`Anonymous: ${isAnonymous}`);
     }
@@ -200,6 +213,20 @@ const IdeaCreate = () => {
         }
     };
 
+    //những gì tôi có thể nghĩ ra để xuất category
+
+    const obj = JSON.parse(JSON.stringify(response));
+    console.log(obj.id);
+    // console.log(JSON.stringify(response));
+    // var categoryList = [];
+    // obj.map(function(element) {
+    //     categoryList.push({ label:element })
+    // });
+
+    const options = [
+        { value: "0", label: "a" },
+        { value: "1", label: "A" }
+    ]
 
     return (
         // The whole form is put in the Box with border
@@ -252,7 +279,7 @@ const IdeaCreate = () => {
                         variant="outlined"
                         name="title"
                         placeholder={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        onClick={() => setIsAnonymous(true)}
                         sx={{
                             width: "100%",
                         }}
@@ -368,12 +395,13 @@ const IdeaCreate = () => {
 
                 {/* Tag/CategoryCreate section with customed Label */}
                 <div>
+
                     <InputLabel id="tag-label">Select or create new tags</InputLabel>
                     <Select
                         labelId="tag-label"
                         name="tag"
                         closeMenuOnSelect={false}
-                        placeholder={categories}
+                        placeholder={category}
                         isClearable
                         components={animatedComponents}
                         isMulti
@@ -393,25 +421,38 @@ const IdeaCreate = () => {
           </center> */}
                 </div>
                 <br />
+                {
+                    categories.map((category) => {
+                        return (
+                            <div>{category.categoryName}</div>
+                        );
+                    }
+                    )}
 
-                <CheckTerm>
+                <Typography align="center">
                     <div>
                         <FormControlLabel
-                        control={<Checkbox />}
-                        label="Anonymous"
-                        name="anonymous"
-                        onChange={handleAnonymousChange} 
-                        sx={{
-                            marginBottom: "1rem",
-                        }}
+                            control={<Checkbox />}
+                            label="Anonymous"
+                            name="anonymous"
+                            onChange={handleAnonymousChange}
+                            sx={{
+                                marginBottom: "1rem",
+                            }}
                         />
                     </div>
-                </CheckTerm>
+                </Typography>
 
                 {/* Terms and Conditions with overflow content not yet finished */}
                 <div className="term-conditions">
-                    <TermHeading>Terms and Conditions</TermHeading>
-                    <Terms>
+                    <Typography align="center">Terms and Conditions</Typography>
+                    <Typography align="justify" sx={{
+                        fontSize: 15,
+                        padding: "0rem 1rem 0rem 1rem",
+                        overflow: "scroll",
+                        display: "block",
+                        maxHeight: "50%",
+                    }}>
                         <p>
                             Et natus molestias et doloribus. Quis quae enim dolores dolores
                             aperiam ullam eaque. Eveniet aut et qui alias consequuntur
@@ -422,12 +463,12 @@ const IdeaCreate = () => {
                             dolor ipsum numquam doloribus deserunt molestiae et animi.
                             Voluptatem sint fuga est eum.
                         </p>
-                    </Terms>
+                    </Typography>
                 </div>
                 <br />
 
                 {/* Checkbox for Terms and Submit button, should change Submitting... button by using LoadingButton */}
-                <CheckTerm>
+                <Typography align="center">
                     <div>
                         <FormControlLabel
                             control={<Checkbox />}
@@ -459,7 +500,7 @@ const IdeaCreate = () => {
                             Submitting...
                         </Button>
                     )}
-                </CheckTerm>
+                </Typography>
                 <CancelBtn />
 
                 {/* <input
