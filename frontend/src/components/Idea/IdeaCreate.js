@@ -98,7 +98,6 @@ const IdeaCreate = () => {
     ]
 
 
-
     const animatedComponents = makeAnimated();
 
 

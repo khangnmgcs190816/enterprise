@@ -17,7 +17,7 @@ const Idea = () => {
     const {category} = useParams();
 
     const {response, loading, error} = useAxios({
-        url: "http://localhost:8000/ideas",
+        url: "http://localhost:8000/ideas?limit=20&skip=0",
         method: "get",
     });
 
