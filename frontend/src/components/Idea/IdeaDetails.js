@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router-dom";
-import useFetch from "../Comment/useFetch";
+import useFetch from "../../services/useFetch.js";
 import Comments from "../Comment/Comments";
 import axios from "axios";
 import useAxios from "../../services/useAxios";
@@ -14,17 +14,17 @@ const IdeaDetails = () => {
         data: idea,
         error,
         isPending,
-    } = useFetch("http://localhost:8000/ideas/" + id);
+    } = useFetch("ideas/" + id);
 
 
     const navigate = useNavigate();
 
+    useEffect(() => {
 
-    if(viewUpdated === false){
-        axios.patch(`http://localhost:8000/ideas/${id}?views=1`).then((r)=> {viewUpdated = true});
-    }
+        axios.patch(`http://localhost:8000/ideas/${id}?views=1`).then((r) => {
+        });
 
-
+    }, [])
 
 
     const handleClick = () => {
