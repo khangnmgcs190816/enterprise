@@ -1,5 +1,7 @@
-import {useState, useEffect} from "react";
-import {Link, useParams} from "react-router-dom";
+
+import * as React from 'react';
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 import LoadingIndicator from "../../components/Loading";
 import SearchFunction from "../../components/Search/SearchFunction";
@@ -11,6 +13,11 @@ import NewIdeaBtn from "../../components/Idea/IdeaButtons";
 import axios from "axios";
 import Paging from '../../components/Paging';
 import queryString from 'query-string';
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { Typography } from '@material-ui/core';
+import ThumbsCount from "../../components/Idea/Thumbs"
 
 const Idea = () => {
 
@@ -18,7 +25,7 @@ const Idea = () => {
     const {category} = useParams();
 
     const {response, loading, error} = useAxios({
-        url: "http://localhost:8000/ideas",
+        url: "http://localhost:8000/ideas?limit=20&skip=0",
         method: "get",
     });
 
@@ -71,6 +78,8 @@ const Idea = () => {
 
         fetchIdeaList();
     },[filters])
+    
+
 
     // const { data: ideas, loading, error } = useFetch(
     //   "idea?category=" + category
@@ -102,7 +111,9 @@ const Idea = () => {
                         alignSelf: "center",
                     }}
                 >
+
                     <FilterIdea/>
+
                 </Box>
                 {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
 
@@ -113,11 +124,13 @@ const Idea = () => {
                         justifyContent: "right",
                     }}
                 >
+
                     <SearchFunction page="idea"/>
                     <NewIdeaBtn/>
                 </Box>
             </Box>
             <Divider/>
+
 
             <Box
                 sx={{
@@ -133,32 +146,80 @@ const Idea = () => {
             >
                 {
                     ideas.map((idea) => {
-                            return (
-                                <li>
-                                    <ul key={idea._id}>
-                                        <Link to={`/idea/${idea._id}`}>
-                                            <h3 key={idea._id}>{idea.title}</h3>
-                                        </Link>
-                                        <p>{idea.content}</p>
-                                        <p>{idea['ownerName']}</p>
-                                    </ul>
-                                </li>
-                            );
-                        }
+                        return (
+                            <List>
+                                <ListItem alignItems="flex-start" key={idea._id}>
+                                    {/* <Link to={`/idea/${idea._id}`}> */}
+                                    {/* <h3 component={Link} to={`/idea/${idea._id}`} variant="h3" key={idea._id}>{idea.title}</h3> */}
+                                    {/* </Link> */}
+                                    {/* <Typography variant="body1">{idea.content}</Typography>
+                                    <Typography variant="subtitle1">{idea['ownerName']}</Typography> */}
+                                    <ListItemText
+                                        primary={
+                                            <>
+                                                <Typography
+                                                    sx={{ display: 'inline' }}
+                                                    component="span"
+                                                    variant="h6"
+                                                    color="text.primary"
+                                                >
+                                                    <Link to={`/ideas/${idea._id}`} underline="hover" key={idea._id}>
+                                                        {idea.title}
+                                                    </Link>
+
+                                                    - by {ownerName}
+                                                </Typography>
+                                            </>
+
+                                        }
+                                        secondary={
+                                            <>
+                                                <Typography
+                                                    sx={{ display: 'inline' }}
+                                                    component="span"
+                                                    variant="body2"
+                                                    color="text.primary"
+                                                >
+                                                    {idea.content}
+                                                </Typography>
+                                                <ThumbsCount />
+                                                <Divider variant="inset" />
+                                            </>
+                                        }
+                                        secondary={
+                                            <>
+                                                <Typography
+                                                    sx={{ display: 'inline' }}
+                                                    component="span"
+                                                    variant="body2"
+                                                    color="text.primary"
+                                                >
+                                                    Views: {idea.views}
+                                                </Typography>
+                                                <ThumbsCount />
+                                                <Divider variant="inset" />
+                                            </>
+                                        }
+                                    />
+                                </ListItem>
+                            </List>
+                        );
+                    }
                     )}
 
-                {/* Pagination area
+                {/* Pagination area */}
                 <Box
                     sx={{
                         display: "flex",
                         justifyContent: "center",
                     }}
                 >
-                    <Pagination count={10} variant="outlined" color="primary"/>
-                </Box> */}
+                    {/* <Pagination count={10} variant="outlined" color="primary"/> */}
+                </Box>
                 <Paging pagination={pagination} onPageChange={handlePageChange}/>
             </Box>
         </Box>
+
     );
 };
 

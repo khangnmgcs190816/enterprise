@@ -66,13 +66,6 @@ function LoginForm({ Login, error }) {
         required
         fullWidth
       />
-      <FormControlLabel
-        sx={{
-          alignSelf: "self-start",
-        }}
-        control={<Checkbox value="" color="primary" />}
-        label="Remember Me"
-      />
       <Divider sx={{ margin: "1rem 0rem 1rem 0rem" }}></Divider>
       <Button type="submit" variant="contained" fullWidth>
         Login

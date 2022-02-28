@@ -43,7 +43,7 @@ function PieChart() {
         <Typography
           variant="h6"
           gutterBottom
-          textAlign="center"
+          // textAlign="center"
           fontWeight="bold"
         >
           Number of ideas per department

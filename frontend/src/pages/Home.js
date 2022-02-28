@@ -3,19 +3,16 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PageNotFound from "../components/errorHandling/PageNotFound";
 import LoadingIndicator from "../components/Loading";
-import NavBar from "../components/Header/NavBar";
+// import NavBar from "../components/Header/NavBar";
 // import useFetch from '../services/useFetch';
 import useAxios from "../services/useAxios";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
 
-const ProDiv = styled("div")({
-  textAlign: "center",
-});
 
 const Home = () => {
   const { response, loading, error } = useAxios({
-    url: "/idea",
+    url: "ideas",
     method: "get",
   });
 
@@ -49,12 +46,12 @@ const Home = () => {
           <option value="Most Viewed">Most Viewed</option>
           <option value="Most Recent">Most Recent</option>
           <option value="Most Comments">Most Comments</option>
-          <option value="Category">Category</option>
+          <option value="CategoryCreate">CategoryCreate</option>
         </select>
         {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
       </section>
       <section id="filters">
-        <label htmlFor="category">Category:</label>{" "}
+        <label htmlFor="category">CategoryCreate:</label>{" "}
         <select
           id="size"
           // value={category}
@@ -69,7 +66,7 @@ const Home = () => {
         {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
       </section>
 
-      <ProDiv>
+      <div>
         <Button
           sx={{
             margin: "10rem 0rem 0rem 0rem",
@@ -77,7 +74,7 @@ const Home = () => {
         >
           Spotlight Ideas
         </Button>
-      </ProDiv>
+      </div>
     </div>
   );
 };

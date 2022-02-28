@@ -4,8 +4,8 @@ import useAxios from "../../services/useAxios";
 import LoadingIndicator from "../../components/Loading";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 // import TabsCombo from "./TabsCombo";
-import FirstTab from "./FirstTab";
-import SecondTab from "./SecondTab";
+import Department from "./Department";
+import CategoryD from "./CategoryD";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -17,7 +17,7 @@ import TabPanel from "@mui/lab/TabPanel";
 const Dashboard = () => {
   // const { data: ideas, loading, error } = useFetch("idea");
   const { response, loading, error } = useAxios({
-    url: "/idea",
+    url: "ideas",
     method: "get",
   });
 
@@ -43,14 +43,14 @@ const Dashboard = () => {
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} centered>
             <Tab label="Department" value="department" />
-            <Tab label="Category" value="category" />
+            <Tab label="CategoryCreate" value="category" />
           </TabList>
         </Box>
         <TabPanel value="department">
-          <FirstTab />
+          <Department />
         </TabPanel>
         <TabPanel value="category">
-          <SecondTab />
+          <CategoryD />
         </TabPanel>
       </TabContext>
     </Box>

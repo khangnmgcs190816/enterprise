@@ -24,7 +24,7 @@ router.post('/users', async (request, response) => {
 
 /* ============================================ READ ============================================ */
 
-router.get('/users', authMiddleware, async (request, response) => {
+router.get('/users', async (request, response) => {
     try {
         console.log(request.user);
         const foundUsers = await User.find({});
@@ -45,7 +45,7 @@ router.get('/users/me', authMiddleware, async (request, response) => {
 });
 
 
-router.get('/users/:id', authMiddleware, async (request, response) => {
+router.get('/users/:id',  async (request, response) => {
     const _idParam = request.params.id;
 
     try {
@@ -55,7 +55,7 @@ router.get('/users/:id', authMiddleware, async (request, response) => {
         if (foundUser == null) {
             response.status(404).send(`USER NOT FOUND`);
         } else {
-            response.status(200).send(`FOUND USER\n${foundUser}\nTASKS\n${tasksOfUser}`);
+            response.status(200).send(foundUser);
         }
 
     } catch (error) {
@@ -110,7 +110,6 @@ router.patch('/users/:id', authMiddleware, async (request, response) => {
 
     const _idParam = request.params.id;
 
-    console.log(_idParam);
     try {
 
         const updatedUser = await User.findOne({_id: new ObjectId(_idParam)});
@@ -133,6 +132,7 @@ router.patch('/users/:id', authMiddleware, async (request, response) => {
         response.status(400).send(`${error}`);
     }
 });
+
 
 
 
