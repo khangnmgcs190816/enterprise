@@ -4,7 +4,6 @@ import chalk from "chalk";
 import {ObjectId} from "mongodb";
 import {User} from "../models/user.js";
 import {authMiddleware} from "../middleware/auth-middleware.js";
-import e from "express";
 
 export const router = new express.Router();
 
