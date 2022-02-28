@@ -1,164 +1,165 @@
-import { useState, useEffect } from "react";
-import queryString from 'query-string';
-import { Link, useParams } from "react-router-dom";
+import {useState, useEffect} from "react";
+import {Link, useParams} from "react-router-dom";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 import LoadingIndicator from "../../components/Loading";
 import SearchFunction from "../../components/Search/SearchFunction";
 // import useFetch from "../../services/useFetch";
-import { Pagination } from "@mui/material";
-import Paging from "../../components/Pagination/Paging";
 import useAxios from "../../services/useAxios";
-import { Box, Divider } from "@mui/material";
+import {Box, Divider} from "@mui/material";
 import FilterIdea from "../../components/Idea/FilterIdea";
 import NewIdeaBtn from "../../components/Idea/IdeaButtons";
-import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
+import axios from "axios";
+import Paging from '../../components/Paging';
+import queryString from 'query-string';
 
 const Idea = () => {
 
 
-  const { category } = useParams();
+    const {category} = useParams();
 
-  const { response, loading, error } = useAxios({
-    url: "/idea",
-    method: "get",
-  });
+    const {response, loading, error} = useAxios({
+        url: "http://localhost:8000/ideas",
+        method: "get",
+    });
 
-  const [ideaList, setIdeaList] = useState([]);
-  const [ideas, setIdeas] = useState([]);
-  const [filter, setFilter] = useState("");
+    const [ideas, setIdeas] = useState([]);
+    const [ownerName, setOwnerName] = useState();
+    const [pagination, setPagination] = useState({
+        skip:1,
+        limit:5,
+        totalRows:1,
+    });
+    const [filters, setFilters] = useState({
+        skip:5,
+        limit:5,
+    });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // navigate(`/${page}/?search=${searchTerm}`);
-  };
+    useEffect(() => {
+        if (response != null) {
+            // setIdeas(response);
+            response.map(async (item) => {
+                const users = await axios.get(`http://localhost:8000/users/${item.owner}`);
+                item['ownerName'] = users.data.name;
+            });
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    const value = e.target.value;
-    setFilter(value);
-  };
-  let dataSearch = ideas.filter(item => {
-    return Object.keys(item).some(key=>
-      item[key].toString().toLowerCase().includes(filter.toString().toLowerCase()))
-  });
-  useEffect(() => {
-    if (response != null) {
-      setIdeas(response);
+        }
+    }, [response]);
+
+    function handlePageChange(newPage){
+        console.log("new idea from:", newPage);
+        setFilters({
+            ...filters,
+            skip: newPage,
+        });
     }
-  }, [response]);
 
-  // const { data: ideas, loading, error } = useFetch(
-  //   "idea?category=" + category
-  // );
+    useEffect(() => {
+        async function fetchIdeaList(){
+            try {
+                const paramsString = queryString.stringify(filters);
+                const requestUrl=`http://127.0.0.1:8000/ideas?${paramsString}`;
+                const response = await fetch(requestUrl);
+                const responseJSON = await response.json();
+                console.log({responseJSON});
+                setIdeas(responseJSON);
+                setPagination(pagination);
+            }catch (error){
+                console.log("failed to fetch post list", error.message);
+            }
+            
+        }
 
-  if (error) throw error;
-  if (loading) return <LoadingIndicator />;
-  if (ideas.length === 0) return <PageNotFound />;
+        fetchIdeaList();
+    },[filters])
 
-  return (
-    <Box
-      sx={{
-        margin: "0rem 3rem",
-        maxWidth: "100%",
-      }}
-    > 
-    
-      {/* Filter area */}
-      <Box
-        sx={{
-          display: "flex",
-          p: 1,
-          m: 2,
-          justifyContent: "space-between",
-        }}
-      >
+    // const { data: ideas, loading, error } = useFetch(
+    //   "idea?category=" + category
+    // );
+
+    if (error) throw error;
+    if (loading) return <LoadingIndicator/>;
+    if (ideas.length === 0) return <PageNotFound/>;
+
+    return (
         <Box
-          sx={{
-            display: "flex",
-            alignSelf: "center",
-          }}
-        >
-          <FilterIdea />
-        </Box>
-        {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
-
-        {/* Search + Create button area */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "right",
-          }}
-        >
-          {/* <SearchFunction page="idea"></SearchFunction> */}
-          <Box
             sx={{
-              display: "flex",
-              alignSelf: "center",
-              width: "30rem",
-              maxWidth: "50%",
+                margin: "0rem 3rem",
+                maxWidth: "100%",
             }}
-          >
-            <form>
-              <TextField
-                type="text"
-                value={filter}
-                name="search"
-                onChange={handleChange.bind(this)}
-                placeholder="Search..."
-                size="small"
-                variant="outlined"
-              />
-              <IconButton color="primary" aria-label="search" component="span">
-                <SearchIcon />
-              </IconButton>
-            </form>
-          </Box>
-          <NewIdeaBtn />
-        </Box>
-      </Box>
-      <Divider></Divider>
-
-      {/* Idea List area */}
-      <Box
-        sx={{
-          margin: "2rem 0rem 2rem 0rem",
-          padding: "1rem 2rem 2rem 2rem",
-          border: 1,
-          borderRadius: "25px",
-          borderColor: "white",
-          listStyle: "none",
-          boxShadow: 4,
-          maxHeight: "100%",
-        }}
-      >
-        {dataSearch.map((idea) => {
-          return (
-            <li>
-              <ul key={idea.id}>
-                <Link to={`/idea/${idea.id}`}>
-                  <h3 key={idea.id}>{idea.title}</h3>
-                </Link>
-                <p>{idea.content}</p>
-              </ul>
-            </li>
-          );
-        })}
-
-        {/* Pagination area */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}
         >
-          <Pagination count={10} variant="outlined" color="primary" />
-          {/* <Paging pagination={pagination} onPageChange={handlePageChange} /> */}
+            {/* Filter area */}
+            <Box
+                sx={{
+                    display: "flex",
+                    p: 1,
+                    m: 2,
+                    justifyContent: "space-between",
+                }}
+            >
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignSelf: "center",
+                    }}
+                >
+                    <FilterIdea/>
+                </Box>
+                {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
+
+                {/* Search + Create button area */}
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "right",
+                    }}
+                >
+                    <SearchFunction page="idea"/>
+                    <NewIdeaBtn/>
+                </Box>
+            </Box>
+            <Divider/>
+
+            <Box
+                sx={{
+                    margin: "2rem 0rem 2rem 0rem",
+                    padding: "1rem 2rem 2rem 2rem",
+                    border: 1,
+                    borderRadius: "25px",
+                    borderColor: "white",
+                    listStyle: "none",
+                    boxShadow: 4,
+                    maxHeight: "100%",
+                }}
+            >
+                {
+                    ideas.map((idea) => {
+                            return (
+                                <li>
+                                    <ul key={idea._id}>
+                                        <Link to={`/idea/${idea._id}`}>
+                                            <h3 key={idea._id}>{idea.title}</h3>
+                                        </Link>
+                                        <p>{idea.content}</p>
+                                        <p>{idea['ownerName']}</p>
+                                    </ul>
+                                </li>
+                            );
+                        }
+                    )}
+
+                {/* Pagination area
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                    }}
+                >
+                    <Pagination count={10} variant="outlined" color="primary"/>
+                </Box> */}
+                <Paging pagination={pagination} onPageChange={handlePageChange}/>
+            </Box>
         </Box>
-      </Box>
-    </Box>
-  );
+    );
 };
 
 export default Idea;
