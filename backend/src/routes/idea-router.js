@@ -152,12 +152,11 @@ router.get('/ideas', async (request, response) => {
     if (request.query.title) {
         filter.title = request.query.title;
     }
-
-    if (request.query.skip) {
-        skip = parseInt(request.query.skip);
-    }
     if (request.query.limit) {
         limit = parseInt(request.query.limit);
+    }
+    if (request.query.skip) {
+        skip = parseInt(request.query.skip);
     }
     if (request.query.sortBy) {
         const parts = request.query.sortBy.split('_');
@@ -171,8 +170,8 @@ router.get('/ideas', async (request, response) => {
     try {
 
         const foundIdeas = await Idea.find(filter)
-            .skip(skip)
             .limit(limit)
+            .skip(skip)
             .sort(sort);
         if (foundIdeas == null) {
             response.status(404).send(`IDEAS NOT FOUND`);
@@ -207,5 +206,70 @@ router.get('/ideas/:id', async (request, response) => {
 });
 
 
+/* ======================================================= UPDATE ======================================================= */
+
+// router.patch('/ideas/:id', async (request, response) => {
+//     const fieldsUpdated = Object.keys(request.body);
+//     const fieldAllowUpdate = ['views'];
+//
+//     const isValidField = fieldsUpdated.every(field => fieldAllowUpdate.includes(field));
+//
+//     if (!isValidField) {
+//         response.status(500).send("You must update exactly fields");
+//         return;
+//     }
+//
+//     const _idParam = request.params.id;
+//
+//     try {
+//
+//         const updatedIdea = await Idea.findOne({_id: new ObjectId(_idParam)});
+//
+//         if (updatedIdea == null) {
+//             response.status(404).send("User not found");
+//         } else {
+//             /**
+//              * Đoạn code này đã bị thay đổi thay vì dùng findByIdAnUpdate( )
+//              * vì middleware chỉ được fire khi ta dùng save( )
+//              */
+//             fieldsUpdated.forEach((field) => {
+//                 updatedIdea[field] = request.body[field];
+//             })
+//             await updatedIdea.save();
+//             response.send(`UPDATED: ${updatedIdea}`);
+//         }
+//
+//     } catch (error) {
+//         response.status(400).send(`${error}`);
+//     }
+// });
+
+
+
+router.patch('/ideas/:id', async (request, response) => {
+
+    const _idParam = request.params.id;
+
+    try {
+
+        const updatedIdea = await Idea.findOne({_id: new ObjectId(_idParam)});
+
+
+        if (updatedIdea == null) {
+            response.status(404).send("Idea not found");
+        } else {
+            if(request.query.views){
+                await Idea.findByIdAndUpdate({_id: new ObjectId(_idParam)}, {$inc: { views: 1 } },);
+                const newIdea = await Idea.findOne({_id: new ObjectId(_idParam)});
+                response.status(200).send(newIdea);
+            } else {
+                response.status(200).send('NOTHING TO UPDATE');
+            }
+        }
+
+    } catch (error) {
+        response.status(400).send(`${error}`);
+    }
+});
 
 /* ======================================================= DELETE ======================================================= */

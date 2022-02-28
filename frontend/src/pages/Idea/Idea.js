@@ -24,8 +24,9 @@ const Idea = () => {
 
     const { categories } = useParams();
 
+
     const { response, loading, error } = useAxios({
-        url: "http://localhost:8000/ideas",
+        url: "http://localhost:8000/ideas?limit=20&skip=0",
         method: "get",
     });
 
@@ -179,6 +180,20 @@ const Idea = () => {
                                                     color="text.primary"
                                                 >
                                                     {idea.content}
+                                                </Typography>
+                                                <ThumbsCount />
+                                                <Divider variant="inset" />
+                                            </>
+                                        }
+                                        secondary={
+                                            <>
+                                                <Typography
+                                                    sx={{ display: 'inline' }}
+                                                    component="span"
+                                                    variant="body2"
+                                                    color="text.primary"
+                                                >
+                                                    Views: {idea.views}
                                                 </Typography>
                                                 <ThumbsCount />
                                                 <Divider variant="inset" />

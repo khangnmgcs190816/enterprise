@@ -110,7 +110,6 @@ router.patch('/users/:id', authMiddleware, async (request, response) => {
 
     const _idParam = request.params.id;
 
-    console.log(_idParam);
     try {
 
         const updatedUser = await User.findOne({_id: new ObjectId(_idParam)});
@@ -133,6 +132,7 @@ router.patch('/users/:id', authMiddleware, async (request, response) => {
         response.status(400).send(`${error}`);
     }
 });
+
 
 
 

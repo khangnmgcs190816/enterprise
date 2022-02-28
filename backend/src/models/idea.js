@@ -20,6 +20,10 @@ const IdeaSchema = new mongoose.Schema({
             type: String
         }
     }],
+    views:{
+        type: Number,
+        default: 0,
+    },
     isAnonymous: {
         type: Boolean,
         default: false
