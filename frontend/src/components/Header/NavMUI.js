@@ -50,7 +50,7 @@ const ResponsiveAppBar = () => {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ borderRadius: "0px 0px 25px 25px" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <Typography
@@ -205,7 +205,7 @@ const ResponsiveAppBar = () => {
                   <Button
                     component={Link}
                     textAlign="center"
-                    to={setting === "Category" ? "/category" : `/${setting}`}
+                    to={setting === "Category" ? "/categories" : `/${setting}`}
                   >
                     {setting}
                   </Button>
@@ -214,7 +214,8 @@ const ResponsiveAppBar = () => {
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography
                   // textAlign="center"
-                  color="error">
+                  color="error"
+                >
                   <LogoutIcon fontSize="small" /> Log Out
                 </Typography>
               </MenuItem>

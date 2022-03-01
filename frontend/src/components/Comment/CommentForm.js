@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Comments from './Comments';
+
 const CommentForm = ({ handleSubmit, submitLabel, hasCancelButton = false, initialText = "", handleCancel }) => {
   var date = new Date();
   var parId = Comment.parentId;

@@ -1,8 +1,6 @@
 import CommentForm from "./CommentForm";
-
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
-
 import "./styles.css";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
@@ -69,7 +67,6 @@ import { useNavigate } from "react-router-dom";
 
 
 
-
 const Comment = ({ comment,
     replies,
     setActiveComment,
@@ -101,7 +98,6 @@ const Comment = ({ comment,
             <div className="comment-right-part">
                 <div className="comment-content">
                     <div className="comment-author">{comment._id}</div>
-
                     <div>{comment.createdAt}</div>
                 </div>
                 {!isEditing && <div className="comment-text">{comment.content}</div>}
@@ -164,6 +160,7 @@ const Comment = ({ comment,
             </div>
         </div>
     );
+
 }
 
 export default Comment;

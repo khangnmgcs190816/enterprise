@@ -1,18 +1,20 @@
 import PropTypes from 'prop-types';
+import {Box, Divider} from "@mui/material";
+import {Pagination} from "@mui/material";
 
-Pagination.propTypes = {
+Paging.propTypes = {
     pagination: PropTypes.object.isRequired,
     onPageChange: PropTypes.func
 };
 
-Pagination.defaultProps = {
+Paging.defaultProps = {
     onPageChange: null,
 };
 
-function Pagination(props){
+function Paging(props){
     const {pagination, onPageChange }=props;
-    const {_page, _limit, _totalRows}= pagination;
-    const totalPages = Math.ceil(_totalRows / _limit);
+    const {skip, limit, totalRows}= pagination;
+    const totalIdeas = Math.ceil(totalRows / limit);
 
     function handlePageChange(newPage){
         if (onPageChange){
@@ -23,16 +25,25 @@ function Pagination(props){
     return(
         <div>
             <button
-                disabled={_page <= 1}
-                onClick={() => handlePageChange(_page -1)}
+                disabled={skip <= 5}
+                onClick={() => handlePageChange(skip -5)}
             >Prev</button>
 
+            {/* Pagination area
+            <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                    }}
+                > */}
+                    {/* <Pagination count={10} variant="outlined" color="primary"/> */}
+                {/* </Box> */}
             <button
-                disabled={_page >= totalPages}
-                onClick={() => handlePageChange(_page +1)}
+                disabled={skip >= totalRows}
+                onClick={() => handlePageChange(skip +5)}
             >Next</button>
         </div>
     );
 }
 
-export default Pagination;
+export default Paging;

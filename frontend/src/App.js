@@ -67,7 +67,6 @@ function App() {
               {/* <Route path="/" element={<Login />}></Route>{" "} */}
               <Route path="/" element={<Home />} />
 
-
               <Route path="/ideas" element={<Idea />} />
               <Route path="/ideas/:id" element={<IdeaDetails />} />
               <Route path="/ideas/:category" element={<Idea />} />

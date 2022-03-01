@@ -1,4 +1,3 @@
-
 import {useState, useEffect} from "react";
 import {
     getComments as getCommentsApi,
@@ -35,8 +34,7 @@ const Comments = ({commentsUrl, ideaId, currentUserId}) => {
         (Comment) => Comment.parentId === null && Comment.ideaId === ideaId);
     // Trong Edited
 
-    
-    
+
     const getReplies = commentId => {
         return Comments.filter(Comment => Comment.parentId === commentId).sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
     }
