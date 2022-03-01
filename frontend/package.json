@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/preset-react": "^7.16.7",
+    "@babel/runtime": "^7.17.2",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@material-ui/icons": "^4.11.2",
@@ -38,8 +39,9 @@
     "start": "react-scripts start",
     "start-idea": "json-server --port 8080 --watch ~/Documents/Documents-Cloud/FPT/TOPUP/Web/source_code/enterprise/frontend/src/data/ideas.json --delay 500",
     "start-comment": "json-server --port 8081 --watch ~/Documents/Documents-Cloud/FPT/TOPUP/Web/source_code/enterprise/frontend/src/data/comments.json --delay 500",
+    "test": "jest",
+    "test-all": "jest --watchAll",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -61,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11"
   },
   "jest": {

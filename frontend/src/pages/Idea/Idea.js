@@ -44,10 +44,10 @@ const Idea = () => {
       response.map(async (item) => {
         // const user = await axios.get(`http://localhost:8000/users/${idea.owner}`);
         // setOwnerName(user.data.name);
-        const users = await axios.get(
+        const user = await axios.get(
           `http://localhost:8000/users/${item.owner}`
         );
-        item["ownerName"] = users.data.name;
+        setOwnerName(user.data.name);
       });
     }
   }, [response]);
@@ -156,6 +156,7 @@ const Idea = () => {
                         color="text.primary"
                       >
                         <Link
+                          data-testid="idea-title"
                           to={`/ideas/${idea._id}`}
                           underline="hover"
                           key={idea._id}
@@ -174,26 +175,28 @@ const Idea = () => {
                         variant="body2"
                         color="text.primary"
                       >
-                        {idea.content}
-                      </Typography>
-                      <ThumbsCount />
-                      <Divider variant="inset" />
-                    </>
-                  }
-                  secondary={
-                    <>
-                      <Typography
-                        sx={{ display: "inline" }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
                         Views: {idea.views}
+                        <br />
+                        Content: {idea.content}
                       </Typography>
                       <ThumbsCount />
                       <Divider variant="inset" />
                     </>
                   }
+                // secondary={
+                //   <>
+                //     <Typography
+                //       sx={{ display: "inline" }}
+                //       component="span"
+                //       variant="body2"
+                //       color="text.primary"
+                //     >
+                //       Views: {idea.views}
+                //     </Typography>
+                //     <ThumbsCount />
+                //     <Divider variant="inset" />
+                //   </>
+                // }
                 />
               </ListItem>
             </List>

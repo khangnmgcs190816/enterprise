@@ -33,10 +33,10 @@ describe('LoginForm contains required elements', () => {
         expect(loginTrigger).not.toBe(null);
     });
 
-    it('check if TextField exists', () => {
-        setup();
-        expect(screen.getByTestId('username')).toBeInTheDocument();
-    });
+    // it('check if TextField exists', () => {
+    //     setup();
+    //     expect(screen.getByTestId('username')).toBeInTheDocument();
+    // });
 
 
 
