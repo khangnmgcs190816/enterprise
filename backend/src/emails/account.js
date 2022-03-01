@@ -4,17 +4,21 @@ const sendgridAPIKey = 'SG.IocYs3OSQVSqNqUBOZe7fA.BW2okqhEnY0Om9KkWx5KkabQnCSNTb
 
 sgMail.setApiKey(sendgridAPIKey);
 
-    const msg = {
-        to: 'khanhhoanghatran@gmail.com',
-        from: 'khanhhoanghatran@gmail.com',
-        subject: '	Create a successful Idea',
-        text: `Employee successfully created new idea`
-    }
+const msg = {
+    to: 'khanhhoanghatran@gmail.com',
+    from: 'khanhhoanghatran@gmail.com',
+    subject: '	Create a successful Idea',
+    text: `Employee successfully created new idea`
+}
+const sendEmail = (data) => {
     sgMail
         .send(msg)
-        .then(() =>{
+        .then(() => {
             console.log('Email sent successfully!!!!!!!!');
+            console.log(`${data.title} has been here by sendEmail`)
         })
-        .catch((error) =>{
+        .catch((error) => {
             console.error(error);
         })
+}
+export default sendEmail;

@@ -28,7 +28,7 @@ router.get('/users', async (request, response) => {
     try {
         console.log(request.user);
         const foundUsers = await User.find({});
-        response.status(200).send(`FOUND ${foundUsers}`);
+        response.status(200).send(`${JSON.stringify(foundUsers)}`);
     } catch (error) {
         response.status(500).send(`${error}`);
     }
