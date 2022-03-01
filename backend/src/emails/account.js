@@ -1,21 +1,20 @@
-import sgMail from '@sendgrid/mail';
+import sgMail from '@sendgrid/mail'
 
-const sendgridAPIKey = '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';
+const sendgridAPIKey = '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';
 
 sgMail.setApiKey(sendgridAPIKey);
 
-const msg = {
-    to: 'khanhthhgcs190651@fpt.edu.vn',
-    from: 'khanhthhgcs190651@fpt.edu.vn',
-    subject: 'Create a successful Idea',
-    text: 'Employee successfully created new idea'
-};
-
-sgMail
-    .send(msg)
-    .then(() => {
-        console.log('Email sent Successfully!!!!');
-    })
-    .catch((error) => {
-        console.log(error);
-    })
+    const msg = {
+        to: 'khanhhoanghatran@gmail.com',
+        from: 'khanhhoanghatran@gmail.com',
+        subject: '	Create a successful Idea',
+        text: `Employee successfully created new idea`
+    }
+    sgMail
+        .send(msg)
+        .then(() =>{
+            console.log('Email sent successfully!!!!!!!!');
+        })
+        .catch((error) =>{
+            console.error(error);
+        })
