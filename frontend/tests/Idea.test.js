@@ -20,8 +20,8 @@ const setup = () => render(<Idea />);
 describe('Check Ideas Page ', () => {
     it('Check if the page has title', () => {
         setup();
-        // const title = screen.getByTestId('idea-title')
-        expect(screen.getByTestId('idea-title')).toBeVisible();
+        const title = screen.getByTestId('idea-title')
+        expect(title).toBeDefined();
     });
     // it('Check if the page has an input for Password', () => {
     //     setup();

@@ -154,9 +154,10 @@ const Idea = () => {
                         component="span"
                         variant="h6"
                         color="text.primary"
+                        data-testid="idea-title"
+
                       >
                         <Link
-                          data-testid="idea-title"
                           to={`/ideas/${idea._id}`}
                           underline="hover"
                           key={idea._id}
