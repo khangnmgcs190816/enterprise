@@ -22,7 +22,7 @@ router.post('/ideas', authMiddleware, async (request, response) => {
         await idea.save();
         console.log(chalk.green(`CREATE ${idea} into MongoDB`));
         response.status(201).send(idea);
-        sendCreateIdea(idea.title);
+        sendCreateIdea(idea.title, idea.content);
     } catch (error) {
         console.log(chalk.red(error));
     }
