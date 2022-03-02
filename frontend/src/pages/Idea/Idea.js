@@ -32,8 +32,17 @@ const Idea = () => {
 
   const limit=5;
   const startIndex = (page -1) * limit;
-  const selectedIdeas = ideas.slice(startIndex, startIndex+limit);
+  //const selectedIdeas = ideas.slice(startIndex, startIndex+limit);
+  const [pagination, setPagination] = useState({
+    limit:5,
+    skip:0
+  })
   const [totalPages,setTotalPages] = useState(0);
+  const [filters, setFilters] = useState({
+    limit:5,
+    skip:0,
+    search: '',
+  });
 
   useEffect(() => {
     if (response != null) {
@@ -52,20 +61,35 @@ const Idea = () => {
   useEffect(() => {
     const fetchIdeaList = async () => {
       try {
-        // const paramsString = queryString.stringify(filters);
-        const requestUrl = `http://127.0.0.1:8000/ideas`;
+        const paramsString = queryString.stringify(filters);
+        const requestUrl = `http://127.0.0.1:8000/ideas?${paramsString}`;
         const response = await axios.get(requestUrl);
+        const re = await axios.get(`http://127.0.0.1:8000/ideas`)
+        setTotalPages(Math.ceil(re.data.length / limit));
         setIdeas(response.data);
-        setTotalPages(Math.ceil(response.data.length / limit));
+        setPagination(response.data);
       } catch (error) {
         console.log("failed to fetch post list", error.message);
       }
     }
     fetchIdeaList();
-  }, []);
+  }, [filters]);
 
   const handlePageClick = num => {
     setPage(num);
+    setFilters({
+      ...filters,
+      skip:(num-1)*limit,
+    })
+  }
+
+  const handleFiltersChange = (newFilters) => {
+    console.log(newFilters);
+    setFilters({
+      ...filters,
+      skip:1,
+      search:newFilters.searchTerm,
+    })
   }
 
   // const { data: ideas, loading, error } = useFetch(
@@ -109,7 +133,7 @@ const Idea = () => {
             justifyContent: "right",
           }}
         >
-          <SearchFunction page="idea" />
+          <SearchFunction onSubmit={handleFiltersChange} />
           <NewIdeaBtn />
         </Box>
       </Box>
@@ -127,7 +151,7 @@ const Idea = () => {
           maxHeight: "100%",
         }}
       >
-        {selectedIdeas.map((idea) => {
+        {ideas.map((idea) => {
           return (
             <List>
               <ListItem alignItems="flex-start" key={idea._id}>
@@ -202,7 +226,7 @@ const Idea = () => {
           }}
         >
           {/* <Pagination count={10} variant="outlined" color="primary"/> */}
-          <Paging totalPages={totalPages} handlePageClick={handlePageClick} />
+          <Paging pagination={pagination} totalPages={totalPages} handlePageClick={handlePageClick} />
         </Box>
       </Box>
     </Box>
