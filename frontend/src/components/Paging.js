@@ -14,19 +14,21 @@ Paging.defaultProps = {
 function Paging(props){
     const {pagination, onPageChange }=props;
     const {skip, limit, totalRows}= pagination;
-    const totalIdeas = Math.ceil(totalRows / limit);
+    // page = Math.floor(skip/5);
+    const totalPages = Math.ceil(totalRows / limit);
 
     function handlePageChange(newPage){
         if (onPageChange){
             onPageChange(newPage);
+
         }
     }
 
     return(
         <div>
             <button
-                disabled={skip <= 5}
-                onClick={() => handlePageChange(skip -5)}
+                disabled={skip <= 0}
+                onClick={() => handlePageChange(skip-2)}
             >Prev</button>
 
             {/* Pagination area
@@ -39,8 +41,8 @@ function Paging(props){
                     {/* <Pagination count={10} variant="outlined" color="primary"/> */}
                 {/* </Box> */}
             <button
-                disabled={skip >= totalRows}
-                onClick={() => handlePageChange(skip +5)}
+                disabled={skip>= totalRows}
+                onClick={() => handlePageChange(skip+2)}
             >Next</button>
         </div>
     );

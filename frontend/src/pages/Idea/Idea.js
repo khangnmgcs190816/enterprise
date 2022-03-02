@@ -17,30 +17,33 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Typography } from "@material-ui/core";
 import ThumbsCount from "../../components/Idea/Thumbs";
+import IdeaList from "../../components/Idea/IdeaList";
+import Ideas from "./ideaspage";
 
 const Idea = () => {
   const { categories } = useParams();
 
   const { response, loading, error } = useAxios({
-    url: "http://localhost:8000/ideas?limit=20&skip=0",
+    url: "http://127.0.0.1:8000/ideas?limit=2&skip=0",
     method: "get",
   });
 
   const [ideas, setIdeas] = useState([]);
   const [ownerName, setOwnerName] = useState();
+  const [page, setPage]=useState(1);
   const [pagination, setPagination] = useState({
-    skip: 1,
-    limit: 5,
-    totalRows: 1,
+    skip: 0,
+    limit: 2,
+    totalRows:1
   });
   const [filters, setFilters] = useState({
-    skip: 5,
-    limit: 5,
+    limit: 2,
+    skip:2
   });
 
   useEffect(() => {
     if (response != null) {
-      //setIdeas(response);
+      // setIdeas(response);
       response.map(async (item) => {
         // const user = await axios.get(`http://localhost:8000/users/${idea.owner}`);
         // setOwnerName(user.data.name);
@@ -61,20 +64,21 @@ const Idea = () => {
   }
 
   useEffect(() => {
-    async function fetchIdeaList() {
+    async function fetchIdeaList(){
       try {
         const paramsString = queryString.stringify(filters);
         const requestUrl = `http://127.0.0.1:8000/ideas?${paramsString}`;
-        const response = await fetch(requestUrl);
-        const responseJSON = await response.json();
-        console.log({ responseJSON });
-        setIdeas(responseJSON);
-        setPagination(pagination);
+        const response = await axios.get(requestUrl);
+        // const responseJSON = await response.json();
+        // console.log({ responseJSON });
+
+        // const {data, pagination} = responseJSON;
+        setIdeas(response.data);
+        setPagination(response.data);
       } catch (error) {
         console.log("failed to fetch post list", error.message);
       }
     }
-
     fetchIdeaList();
   }, [filters]);
 
@@ -124,7 +128,7 @@ const Idea = () => {
         </Box>
       </Box>
       <Divider />
-
+          {/* Idea list */}
       <Box
         sx={{
           margin: "2rem 0rem 2rem 0rem",
@@ -213,6 +217,7 @@ const Idea = () => {
         >
           {/* <Pagination count={10} variant="outlined" color="primary"/> */}
         </Box>
+        <Ideas ideas={ideas} page={page}/>
         <Paging pagination={pagination} onPageChange={handlePageChange} />
       </Box>
     </Box>

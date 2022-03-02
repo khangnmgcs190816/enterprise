@@ -42,7 +42,8 @@
     "test": "jest",
     "test-all": "jest --watchAll",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -64,7 +65,8 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
-    "@babel/preset-env": "^7.16.11"
+    "@babel/preset-env": "^7.16.11",
+    "cypress": "^9.5.1"
   },
   "jest": {
     "testEnvironment": "jsdom"

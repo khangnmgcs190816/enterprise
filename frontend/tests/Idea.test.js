@@ -18,10 +18,11 @@ const setup = () => render(<Idea />);
 
 
 describe('Check Ideas Page ', () => {
-    it('Check if the page has title', () => {
+    it('Check if the page has a search button', () => {
         setup();
-        const title = screen.getByTestId('idea-title')
-        expect(title).toBeDefined();
+        const search = screen.getByText('Search', { selector: 'button' });
+        // expect(loginTrigger).toBeDefined();
+        expect(search).not.toBe(null);
     });
     // it('Check if the page has an input for Password', () => {
     //     setup();
