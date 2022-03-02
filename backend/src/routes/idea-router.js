@@ -9,7 +9,8 @@ import multer from "multer";
 import path from "path";
 import aws from "aws-sdk";
 import multerS3 from "multer-s3";
-// import sendCreateIdea from "../emails/account";
+import sendCreateIdea from '../emails/account.js';
+
 
 export const router = new express.Router();
 
@@ -19,10 +20,9 @@ router.post('/ideas', authMiddleware, async (request, response) => {
     const idea = new Idea({ ...request.body, owner: request.user._id });
     try {
         await idea.save();
-        // sendCreateIdea(idea.title);
         console.log(chalk.green(`CREATE ${idea} into MongoDB`));
         response.status(201).send(idea);
-        sendEmail(response.body.title);
+        sendCreateIdea(idea.title);
     } catch (error) {
         console.log(chalk.red(error));
     }

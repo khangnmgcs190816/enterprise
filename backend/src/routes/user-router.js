@@ -152,7 +152,7 @@ router.delete('/users/me', authMiddleware, async (request, response) => {
     try {
         const deletedUser = await User.findOne({ _id: request.user._id });
 
-        if (deletedUser == null) {
+        if (deletedUser == null) {  
             response.status(404).send("User not found");
         } else {
             await deletedUser.remove();
