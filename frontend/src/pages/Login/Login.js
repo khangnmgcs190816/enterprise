@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 import PopUp from "../../components/PopUp/PopUp";
 import {Box} from "@mui/material";
 import axios, * as others from 'axios';
-import loginedUser from '../../data/login-user.json';
+import loggedInUser from '../../data/login-user.json';
 
 function Login() {
     const [buttonPopup, setButtonPopup] = useState(false);
@@ -23,12 +23,12 @@ function Login() {
 
                 if (response.status === 200) {
 
-                    loginedUser.id = response.data.user._id;
-                    loginedUser.name = response.data.user.name;
-                    loginedUser.email = response.data.user.email;
-                    loginedUser.token = response.data.token;
+                    loggedInUser.id = response.data.user._id;
+                    loggedInUser.name = response.data.user.name;
+                    loggedInUser.email = response.data.user.email;
+                    loggedInUser.token = response.data.token;
 
-                    console.log(`USER: ${JSON.stringify(loginedUser)}`)
+                    console.log(`USER: ${JSON.stringify(loggedInUser)}`)
 
                     //console.log(`Logged in Data: ${JSON.stringify(response.data.user)}`)
 
@@ -47,14 +47,14 @@ function Login() {
     };
 
     const Logout = async () => {
-        console.log(JSON.stringify(loginedUser));
+        console.log(JSON.stringify(loggedInUser));
 
 
         axios({
             method: 'post', //you can set what request you want to be
             url: 'http://127.0.0.1:8000/users/logout',
             headers: {
-                Authorization: 'Bearer ' + `${loginedUser.token}`
+                Authorization: 'Bearer ' + `${loggedInUser.token}`
             }
         }).then(response => {
             console.log(`Status Code: ${response.status}`)
