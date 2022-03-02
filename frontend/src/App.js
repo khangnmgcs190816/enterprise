@@ -67,27 +67,23 @@ function App() {
               {/* <Route path="/" element={<Login />}></Route>{" "} */}
               <Route path="/" element={<Home />} />
 
-              <Route path="/idea" element={<Idea />} />
-              <Route path="/idea/:id" element={<IdeaDetails />} />
-              <Route path="/idea/:category" element={<Idea/>}/>
-              <Route path="/idea/:filter" element={<Idea/>}/>
+              <Route path="/ideas" element={<Idea />} />
+              <Route path="/ideas/:id" element={<IdeaDetails />} />
+              <Route path="/ideas/:category" element={<Idea />} />
+              <Route path="/ideas/:filter" element={<Idea />} />
 
-              <Route path="/employees" element={<Employees/>}/>
-              <Route path="/dashboard" element={<Dashboard/>}/>
+              <Route path="/employees" element={<Employees />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               {/* <Route path="/idea/idealist" element={<IdeaList />}></Route> */}
 
-              <Route path="/idea/ideacreate" element={<IdeaCreate/>}/>
+              <Route path="/ideas/ideacreate" element={<IdeaCreate />} />
 
-              <Route path="/category" element={<CategoryCreate/>}/>
+              <Route path="/categories" element={<CategoryCreate />} />
               {/* <Route path="/your-ideas" element={}></Route> */}
-              <Route path="/search" element={<Search/>}/>
+              <Route path="/search" element={<Search />} />
 
-              <Route path="/login" element={<Login/>}/>
-              <Route path="/comments" element={<Comments/>}/>
-
-
-
-
+              <Route path="/login" element={<Login />} />
+              <Route path="/comments" element={<Comments />} />
             </Routes>
           </main>
         </Router>

@@ -16,7 +16,7 @@ import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-const pages = ["Idea", "Employee", "Dashboard", "Comments"];
+const pages = ["Ideas", "Employees", "Dashboard", "Comments"];
 const userTitle = ["Hi, Username!"];
 const settings = ["Category", "Your Ideas"];
 
@@ -50,7 +50,7 @@ const ResponsiveAppBar = () => {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ borderRadius: "0px 0px 25px 25px" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <Typography
@@ -108,7 +108,7 @@ const ResponsiveAppBar = () => {
                   <Button
                     component={Link}
                     sx={{ my: 1, color: "primary", display: "block" }}
-                    to={page === "Idea" ? "/Idea" : `/${page}`}
+                    to={page === "Ideas" ? "/ideas" : `/${page.toLowerCase()}`}
                   >
                     {page}
                   </Button>
@@ -139,7 +139,7 @@ const ResponsiveAppBar = () => {
                   display: "block",
                   textAlign: "center",
                 }}
-                to={page === "Idea" ? "/Idea" : `/${page}`}
+                to={page === "Ideas" ? "/ideas" : `/${page.toLowerCase()}`}
               >
                 {page}
               </Button>
@@ -205,14 +205,17 @@ const ResponsiveAppBar = () => {
                   <Button
                     component={Link}
                     textAlign="center"
-                    to={setting === "Category" ? "/category" : `/${setting}`}
+                    to={setting === "Category" ? "/categories" : `/${setting}`}
                   >
                     {setting}
                   </Button>
                 </MenuItem>
               ))}
               <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center" color="error">
+                <Typography
+                  // textAlign="center"
+                  color="error"
+                >
                   <LogoutIcon fontSize="small" /> Log Out
                 </Typography>
               </MenuItem>

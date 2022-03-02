@@ -23,11 +23,13 @@ const Idea = () => {
 
   const { response, loading, error } = useAxios({
     url: "http://127.0.0.1:8000/ideas?limit=5&skip=0",
+
     method: "get",
   });
 
   const [ideas, setIdeas] = useState([]);
   const [ownerName, setOwnerName] = useState();
+
   const [page, setPage]=useState(1);
 
   const limit=5;
@@ -42,11 +44,13 @@ const Idea = () => {
     limit:5,
     skip:0,
     search: '',
+
   });
 
   useEffect(() => {
     if (response != null) {
       setIdeas(response);
+
       response.map(async (item) => {
         // const user = await axios.get(`http://localhost:8000/users/${idea.owner}`);
         // setOwnerName(user.data.name);
@@ -68,6 +72,7 @@ const Idea = () => {
         setTotalPages(Math.ceil(re.data.length / limit));
         setIdeas(response.data);
         setPagination(response.data);
+
       } catch (error) {
         console.log("failed to fetch post list", error.message);
       }
@@ -133,12 +138,16 @@ const Idea = () => {
             justifyContent: "right",
           }}
         >
+
           <SearchFunction onSubmit={handleFiltersChange} />
+
           <NewIdeaBtn />
         </Box>
       </Box>
       <Divider />
+
           {/* Idea list */}
+
       <Box
         sx={{
           margin: "2rem 0rem 2rem 0rem",
@@ -226,6 +235,7 @@ const Idea = () => {
           }}
         >
           {/* <Pagination count={10} variant="outlined" color="primary"/> */}
+
           <Paging pagination={pagination} totalPages={totalPages} handlePageClick={handlePageClick} />
         </Box>
       </Box>

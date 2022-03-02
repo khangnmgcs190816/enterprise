@@ -1,13 +1,13 @@
-header {
+/* header {
   display: flex;
   padding-left: 20px;
 }
 
 header img {
   max-height: 100px;
-}
+} */
 
-nav {
+/* nav {
   display: flex;
   align-items: center;
 }
@@ -27,12 +27,12 @@ header ul {
 header li {
   display: inline;
   margin-right: 20px;
-}
+} */
 
-main {
-  /* margin-left: 100px; */
+/* main {
+  margin-left: 100px;
   margin: "1rem 3rem";
-}
+} */
 
 /* .App-logo {
   height: 40vmin;

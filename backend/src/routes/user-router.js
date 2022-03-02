@@ -1,9 +1,9 @@
-import express, {response} from 'express';
-import {User} from "../models/user.js";
+import express, { response } from 'express';
+import { User } from "../models/user.js";
 import chalk from "chalk";
-import {ObjectId} from "mongodb";
-import {authMiddleware} from "../middleware/auth-middleware.js";
-import {Task} from "../models/task.js";
+import { ObjectId } from "mongodb";
+import { authMiddleware } from "../middleware/auth-middleware.js";
+import { Task } from "../models/task.js";
 import multer from "multer";
 
 export const router = new express.Router();
@@ -14,7 +14,7 @@ router.post('/users', async (request, response) => {
     try {
         await user.save();
         //const authToken = await user.generateAuthToken();
-        response.status(201).send({"user": user});
+        response.status(201).send({ "user": user });
     } catch (error) {
         console.log(chalk.red(error));
     }
@@ -28,7 +28,7 @@ router.get('/users', async (request, response) => {
     try {
         console.log(request.user);
         const foundUsers = await User.find({});
-        response.status(200).send(`FOUND ${foundUsers}`);
+        response.status(200).send(`${JSON.stringify(foundUsers)}`);
     } catch (error) {
         response.status(500).send(`${error}`);
     }
@@ -37,7 +37,7 @@ router.get('/users', async (request, response) => {
 
 router.get('/users/me', authMiddleware, async (request, response) => {
     try {
-        const tasksOfUser = await Task.find({owner: request.user._id});
+        const tasksOfUser = await Task.find({ owner: request.user._id });
         response.status(200).send(`YOU\n${request.user}\nTasks\n${tasksOfUser}`);
     } catch (error) {
         response.status(500).send(`${error}`);
@@ -45,11 +45,11 @@ router.get('/users/me', authMiddleware, async (request, response) => {
 });
 
 
-router.get('/users/:id',  async (request, response) => {
+router.get('/users/:id', async (request, response) => {
     const _idParam = request.params.id;
 
     try {
-        const foundUser = await User.findOne({_id: new ObjectId(_idParam)});
+        const foundUser = await User.findOne({ _id: new ObjectId(_idParam) });
         const tasksOfUser = await foundUser.getTaskOfUser(_idParam);
 
         if (foundUser == null) {
@@ -110,10 +110,9 @@ router.patch('/users/:id', authMiddleware, async (request, response) => {
 
     const _idParam = request.params.id;
 
-    console.log(_idParam);
     try {
 
-        const updatedUser = await User.findOne({_id: new ObjectId(_idParam)});
+        const updatedUser = await User.findOne({ _id: new ObjectId(_idParam) });
 
         if (updatedUser == null) {
             response.status(404).send("User not found");
@@ -136,6 +135,7 @@ router.patch('/users/:id', authMiddleware, async (request, response) => {
 
 
 
+
 /* ============================================ DELETE ============================================ */
 router.delete('/users/me', authMiddleware, async (request, response) => {
     try {
@@ -150,9 +150,9 @@ router.delete('/users/me', authMiddleware, async (request, response) => {
 router.delete('/users/me', authMiddleware, async (request, response) => {
 
     try {
-        const deletedUser = await User.findOne({_id: request.user._id});
+        const deletedUser = await User.findOne({ _id: request.user._id });
 
-        if (deletedUser == null) {
+        if (deletedUser == null) {  
             response.status(404).send("User not found");
         } else {
             await deletedUser.remove();
@@ -170,7 +170,7 @@ router.delete('/users/:id', authMiddleware, async (request, response) => {
     const _idParam = request.params.id;
 
     try {
-        const deletedUser = await User.findOne({_id: new ObjectId(_idParam)});
+        const deletedUser = await User.findOne({ _id: new ObjectId(_idParam) });
 
         if (deletedUser == null) {
             response.status(404).send("User not found");
@@ -191,7 +191,7 @@ router.post('/users/login', async (request, response) => {
     try {
         const foundUser = await User.findByCredentials(request.body.email, request.body.password);
         const authToken = await foundUser.generateAuthToken();
-        response.status(200).send(`${JSON.stringify({"user": foundUser, "token": authToken})}`);
+        response.status(200).send(`${JSON.stringify({ "user": foundUser, "token": authToken })}`);
     } catch (error) {
         response.status(400).send(`Something went wrong ${error}`);
     }
@@ -229,10 +229,10 @@ router.post('/users/logoutAll', authMiddleware, async (request, response) => {
 /* ======================================================= UPLOAD AVATARS ======================================================= */
 const upload = multer({
     limits: {
-      fileSize: 10000000,
+        fileSize: 10000000,
     },
-    fileFilter(request, file, callback){
-        if(!(file.originalname.endsWith('.jpg') || file.originalname.endsWith('.jpeg') || file.originalname.endsWith('.img') || file.originalname.endsWith('.png') || file.originalname.endsWith('.svg'))){
+    fileFilter(request, file, callback) {
+        if (!(file.originalname.endsWith('.jpg') || file.originalname.endsWith('.jpeg') || file.originalname.endsWith('.img') || file.originalname.endsWith('.png') || file.originalname.endsWith('.svg'))) {
             return callback(new Error("Format does not supported"));
         }
 
@@ -240,11 +240,11 @@ const upload = multer({
     }
 });
 
-router.post('/users/me/avatar', upload.single("upload"), (request, response)=>{
+router.post('/users/me/avatar', upload.single("upload"), (request, response) => {
     console.log(request.file);
     console.log(request.file.buffer);
     response.status(200).send(request.file);
-},(error, request, response,next)=>{
+}, (error, request, response, next) => {
 
-    response.status(400).send({error: error.message});
+    response.status(400).send({ error: error.message });
 });

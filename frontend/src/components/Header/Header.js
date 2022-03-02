@@ -7,16 +7,6 @@ import NavMUI from "./NavMUI";
 const Header = () => {
   return (
     <div id="header-nav">
-      {/* <Link to="/">
-                <img
-                    src='images/Logo-Greenwich.png'
-                    alt='FPTGreenwich'
-                    style={{ maxHeight: '5rem', }}
-                ></img>
-            </Link>
-            <br />
-            <NavBar /> */}
-      {/* <br /> */}
       <NavMUI />
     </div>
   );
