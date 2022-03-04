@@ -64,8 +64,13 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+<<<<<<< HEAD
     setIsAuthenticated(window.localStorage.getItem("isAuthenticated"));
   }, []);
+=======
+    setIsAuthenticated(window.localStorage.getItem('isAuthenticated'));
+  }, [])
+>>>>>>> 32bf3b4 (Login/Logout with Authentication2)
 
   return (
     <ThemeProvider theme={theme}>
