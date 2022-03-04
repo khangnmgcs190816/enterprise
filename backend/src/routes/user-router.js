@@ -190,8 +190,9 @@ router.delete('/users/:id', authMiddleware, async (request, response) => {
 router.post('/users/login', async (request, response) => {
     try {
         const foundUser = await User.findByCredentials(request.body.email, request.body.password);
+        console.log(foundUser);
         const authToken = await foundUser.generateAuthToken();
-        response.status(200).send(`${JSON.stringify({ "user": foundUser, "token": authToken })}`);
+        response.status(200).json({ "user": foundUser, "token": authToken });
     } catch (error) {
         response.status(400).send(`Something went wrong ${error}`);
     }

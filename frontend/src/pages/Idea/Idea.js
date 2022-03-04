@@ -22,25 +22,35 @@ const Idea = () => {
   const { categories } = useParams();
 
   const { response, loading, error } = useAxios({
-    url: "http://localhost:8000/ideas?limit=20&skip=0",
+    url: "http://127.0.0.1:8000/ideas?limit=5&skip=0",
+
     method: "get",
   });
 
   const [ideas, setIdeas] = useState([]);
   const [ownerName, setOwnerName] = useState();
+
+  const [page, setPage]=useState(1);
+
+  const limit=5;
+  const startIndex = (page -1) * limit;
+  //const selectedIdeas = ideas.slice(startIndex, startIndex+limit);
   const [pagination, setPagination] = useState({
-    skip: 1,
-    limit: 5,
-    totalRows: 1,
-  });
+    limit:5,
+    skip:0
+  })
+  const [totalPages,setTotalPages] = useState(0);
   const [filters, setFilters] = useState({
-    skip: 5,
-    limit: 5,
+    limit:5,
+    skip:0,
+    search: '',
+
   });
 
   useEffect(() => {
     if (response != null) {
-      //setIdeas(response);
+      setIdeas(response);
+
       response.map(async (item) => {
         // const user = await axios.get(`http://localhost:8000/users/${idea.owner}`);
         // setOwnerName(user.data.name);
@@ -52,31 +62,40 @@ const Idea = () => {
     }
   }, [response]);
 
-  function handlePageChange(newPage) {
-    console.log("new idea from:", newPage);
-    setFilters({
-      ...filters,
-      skip: newPage,
-    });
-  }
-
   useEffect(() => {
-    async function fetchIdeaList() {
+    const fetchIdeaList = async () => {
       try {
         const paramsString = queryString.stringify(filters);
         const requestUrl = `http://127.0.0.1:8000/ideas?${paramsString}`;
-        const response = await fetch(requestUrl);
-        const responseJSON = await response.json();
-        console.log({ responseJSON });
-        setIdeas(responseJSON);
-        setPagination(pagination);
+        const response = await axios.get(requestUrl);
+        const re = await axios.get(`http://127.0.0.1:8000/ideas`)
+        setTotalPages(Math.ceil(re.data.length / limit));
+        setIdeas(response.data);
+        setPagination(response.data);
+
       } catch (error) {
         console.log("failed to fetch post list", error.message);
       }
     }
-
     fetchIdeaList();
   }, [filters]);
+
+  const handlePageClick = num => {
+    setPage(num);
+    setFilters({
+      ...filters,
+      skip:(num-1)*limit,
+    })
+  }
+
+  const handleFiltersChange = (newFilters) => {
+    console.log(newFilters);
+    setFilters({
+      ...filters,
+      skip:1,
+      search:newFilters.searchTerm,
+    })
+  }
 
   // const { data: ideas, loading, error } = useFetch(
   //   "idea?category=" + category
@@ -119,11 +138,15 @@ const Idea = () => {
             justifyContent: "right",
           }}
         >
-          <SearchFunction page="idea" />
+
+          <SearchFunction onSubmit={handleFiltersChange} />
+
           <NewIdeaBtn />
         </Box>
       </Box>
       <Divider />
+
+          {/* Idea list */}
 
       <Box
         sx={{
@@ -212,8 +235,9 @@ const Idea = () => {
           }}
         >
           {/* <Pagination count={10} variant="outlined" color="primary"/> */}
+
+          <Paging pagination={pagination} totalPages={totalPages} handlePageClick={handlePageClick} />
         </Box>
-        <Paging pagination={pagination} onPageChange={handlePageChange} />
       </Box>
     </Box>
   );
