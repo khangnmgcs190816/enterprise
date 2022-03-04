@@ -1,16 +1,34 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import LoginForm from "./LoginForm";
 import PopUp from "../../components/PopUp/PopUp";
-import {Box} from "@mui/material";
+import { Box } from "@mui/material";
 import axios, * as others from 'axios';
 import loggedInUser from '../../data/login-user.json';
+import { Navigate } from "react-router-dom";
 
-function Login() {
+// loginUser(userData, callback) {
+//     return axios.post(`${USERS_SERVICE_URL}/users/login`, userData)
+//         .then((res) => {
+//             window.localStorage.setItem('authToken', res.data.token)
+//             window.localStorage.setItem('user', res.data.user)
+//             this.setState({ isAuthenticated: true })
+//             this.createFlashMessage('You successfully logged in! Welcome!')
+//             this.props.history.push('/')
+//             this.getMovies()
+//         })
+//         .catch((error) => {
+//             callback('Something went wrong')
+//         })
+// }
+
+function Login(props) {
     const [buttonPopup, setButtonPopup] = useState(false);
 
 
-    const [user, setUser] = useState({username: ""});
+    const [user, setUser] = useState({ username: "" });
     const [error, setError] = useState("");
+
+
     const Login = async (details) => {
 
         await axios
@@ -20,6 +38,11 @@ function Login() {
             })
             .then(response => {
                 console.log(`Status Code: ${response.status}`)
+
+                window.localStorage.setItem('authToken', response.data.token)
+                window.localStorage.setItem('firstName', response.data.user.name)
+                window.localStorage.setItem('isAuthenticated', true);
+                props.authenticate(true);
 
                 if (response.status === 200) {
 
@@ -62,7 +85,7 @@ function Login() {
 
             if (response.status === 200) {
                 console.log("Logged out");
-                //setUser({ name: "", username: "" });
+                setUser({ name: "", username: "" });
             }
 
         })
@@ -85,7 +108,7 @@ function Login() {
                     <button onClick={() => setButtonPopup(true)}>Logout</button>
                 </div>
             ) : (
-                <LoginForm Login={Login} error={error}/>
+                <LoginForm Login={Login} error={error} />
             )}
             <PopUp trigger={buttonPopup} setTrigger={setButtonPopup} setUser={Logout}>
                 <h3>Confirm Logout ?</h3>

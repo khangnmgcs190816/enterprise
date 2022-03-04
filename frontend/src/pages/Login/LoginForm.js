@@ -7,6 +7,22 @@ import Checkbox from "@mui/material/Checkbox";
 
 // TODO1: Checkbox chưa có value để remember me
 
+const boxStyle = {
+  width: "40%",
+  float: "right",
+  border: 1,
+  borderColor: "white",
+  borderRadius: "25px",
+  boxShadow: 4,
+  padding: "3rem",
+  my: 8,
+  mx: 4,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+}
+
+
 function LoginForm({ Login, error }) {
   const [details, setDetails] = useState({ username: "", password: "" });
   const submitHandler = (e) => {
@@ -17,20 +33,7 @@ function LoginForm({ Login, error }) {
     <Box
       component="form"
       onSubmit={submitHandler}
-      sx={{
-        width: "40%",
-        float: "right",
-        border: 1,
-        borderColor: "white",
-        borderRadius: "25px",
-        boxShadow: 4,
-        padding: "3rem",
-        my: 8,
-        mx: 4,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
+      sx={boxStyle}
     >
       <Typography
         variant="h6"
@@ -42,7 +45,7 @@ function LoginForm({ Login, error }) {
         Welcome to FPT Greenwich!
       </Typography>
       <Divider sx={{ margin: "1rem 0rem 1rem 0rem" }}></Divider>
-      {error !== "" ? <div className="error">{error}</div> : ""}{" "}
+      {error !== "" ? <div className="error">{error}</div> : ""}
       <TextField
         type="text"
         name="username"
