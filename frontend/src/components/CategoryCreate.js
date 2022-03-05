@@ -33,7 +33,7 @@ const CategoryCreate = () => {
   const [isPending, setIsPending] = useState(false);
   // Thêm const "used"(?)
 
-  //H chỉnh sửa
+  //H thêm
   useEffect(() => {
     axios
       .get(url)

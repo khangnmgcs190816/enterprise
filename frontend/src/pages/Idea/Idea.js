@@ -23,7 +23,6 @@ const Idea = () => {
 
   const { response, loading, error } = useAxios({
     url: "http://127.0.0.1:8000/ideas?limit=5&skip=0",
-
     method: "get",
   });
 

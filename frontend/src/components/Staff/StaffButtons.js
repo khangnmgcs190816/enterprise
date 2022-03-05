@@ -8,7 +8,7 @@ function CreateStaffBtn() {
             variant="contained"
             startIcon={<AddCircleIcon />}
             component={RouterLink}
-            to="/employees"
+            to="/employees/create"
         >
             New
         </Button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+  import React, { useState, useEffect } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { grey, orange, blue, red, green } from "@mui/material/colors";
 
@@ -14,6 +14,7 @@ import Login from "./pages/Login/Login";
 import Idea from "./pages/Idea/Idea";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Employees from "./pages/Employee/Employees";
+import EmployeeCreate from "./pages/Employee/EmployeeCreate";
 import "./App.css";
 import IdeaCreate from "./components/Idea/IdeaCreate";
 import Search from "./components/Search/SearchFunction";
@@ -64,13 +65,8 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-<<<<<<< HEAD
-    setIsAuthenticated(window.localStorage.getItem("isAuthenticated"));
-  }, []);
-=======
     setIsAuthenticated(window.localStorage.getItem('isAuthenticated'));
   }, [])
->>>>>>> 32bf3b4 (Login/Logout with Authentication2)
 
   return (
     <ThemeProvider theme={theme}>
@@ -124,6 +120,16 @@ function App() {
                 element={
                   isAuthenticated ? (
                     <Employees authenticate={setIsAuthenticated} />
+                  ) : (
+                    <Login />
+                  )
+                }
+              />
+              <Route
+                path="/employees/create"
+                element={
+                  isAuthenticated ? (
+                    <EmployeeCreate authenticate={setIsAuthenticated} />
                   ) : (
                     <Login />
                   )
