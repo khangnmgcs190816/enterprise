@@ -189,8 +189,14 @@ router.get('/ideas', async (request, response) => {
     }
 });
 
-
-
+router.get('/ideas/search', (req, res, next) => {
+    const searchTitle = req.query.title;
+    Idea.find({title:{$regex: searchTitle, $options: '$i'}})
+    .then((ideads) => {
+        res.json(ideads);
+    })
+    .catch(next);
+})
 
 router.get('/ideas/:id', async (request, response) => {
     const _idParam = request.params.id;
@@ -207,7 +213,6 @@ router.get('/ideas/:id', async (request, response) => {
         response.status(500).send(`${error}`);
     }
 });
-
 
 /* ======================================================= UPDATE ======================================================= */
 

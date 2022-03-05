@@ -1,6 +1,6 @@
 import sgMail from '@sendgrid/mail'
 
-const sendgridAPIKey = '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';
+const sendgridAPIKey = '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';
 
 sgMail.setApiKey(sendgridAPIKey);
     const sendCreateIdea = (title, content) =>{
@@ -8,7 +8,7 @@ sgMail.setApiKey(sendgridAPIKey);
             to: 'khanhhoanghatran@gmail.com',
             from: 'khanhhoanghatran@gmail.com',
             subject: `Create a successful Idea with title: ${title}`,
-            text: `Employee successfully created a new idea with the content: ${content}}`
+            text: `Employee successfully created a new idea with the content: ${content}`
         }
         sgMail
             .send(msg)
