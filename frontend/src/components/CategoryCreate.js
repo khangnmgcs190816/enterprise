@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { Box, Divider } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -8,6 +8,10 @@ import { lightBlue } from "@mui/material/colors";
 import SendIcon from "@mui/icons-material/Send";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
+import Paper from "@mui/material/Paper";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
 // import Category from "./Category/Category";
 
 // LINK CATEGORY NẰM Ở DROPDOWN USER NHÁ!!!!!!
@@ -29,6 +33,45 @@ const CategoryCreate = () => {
   const [isPending, setIsPending] = useState(false);
   // Thêm const "used"(?)
 
+  //H chỉnh sửa
+  useEffect(() => {
+    axios
+      .get(url)
+      .then((res) => {
+        // console.log(res.data);
+        setCategory(res.data);
+      })
+      .catch((err) => console.error(err));
+  });
+
+  const url = "http://localhost:8000/categories";
+  const [CategoryList, setCategory] = useState([]);
+  const display = CategoryList.map((item) => (
+    <tr key={item._id}>
+      <td>{item.categoryName}</td>
+      <td>{item.used}</td>
+      {/* <td>{item.created_at}</td>
+      <td>{item.updated_at}</td> */}
+      <td>
+        <button onClick={() => remove(item._id)} className="btn btn-danger">
+          Delete
+        </button>
+      </td>
+    </tr>
+  ));
+
+  function remove(id) {
+    // console.log(id);
+    axios
+      .delete(url + "/" + id)
+      .then((res) => {
+        console.log(res.data);
+        const myalldata = CategoryList.filter((item) => item._id !== id);
+        setCategory(myalldata);
+      })
+      .catch((err) => console.error(err));
+  }
+
   // Hàm này để bấm Submit thì nó sẽ đẩy vô json nè
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,15 +85,11 @@ const CategoryCreate = () => {
     setIsPending(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/categories",
-        JSON.stringify(category),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(url, JSON.stringify(category), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       console.log(response);
       console.log("New category added");
@@ -133,7 +172,11 @@ const CategoryCreate = () => {
         }}
       >
         <TitleFrame>Category/Tags List</TitleFrame>
-        {/* <Category /> */}
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableBody>{display}</TableBody>
+          </Table>
+        </TableContainer>
       </Box>
     </Box>
   );
