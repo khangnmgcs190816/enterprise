@@ -25,3 +25,6 @@ in the Backend directory, run:
 
 Server user **PORT 8000**
 
+### Admin Login
+username: trong@gmail.com
+password: trongvip
