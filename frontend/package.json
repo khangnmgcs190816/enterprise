@@ -48,7 +48,8 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:cypress/recommended"
     ]
   },
   "browserslist": {
@@ -66,7 +67,8 @@
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
-    "cypress": "^9.5.1"
+    "cypress": "^9.5.1",
+    "eslint-plugin-cypress": "^2.12.1"
   },
   "jest": {
     "testEnvironment": "jsdom"

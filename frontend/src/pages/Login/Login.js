@@ -32,6 +32,9 @@ function Login(props) {
                 });
                 window.localStorage.setItem('authToken', response.data.token)
                 window.localStorage.setItem('firstName', response.data.user.name)
+                window.localStorage.setItem('email', response.data.user.email)
+                window.localStorage.setItem('password', response.data.user.password)
+                window.localStorage.setItem('age', response.data.user.age)
                 window.localStorage.setItem('isAuthenticated', true);
             }
         } catch (error) {

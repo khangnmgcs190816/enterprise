@@ -95,11 +95,9 @@ const IdeaCreate = () => {
     const [isBusy, setBusy] = useState(true)
 
 
-
-
     const animatedComponents = makeAnimated();
 
-
+    const token = window.localStorage.getItem('authToken');
 
     const changeHandler = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -155,7 +153,7 @@ const IdeaCreate = () => {
         await axios.post("http://localhost:8000/ideas", JSON.stringify(idea), {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjE4NGFhZDgxNTBlNjJlNDI1MWExNGQiLCJpYXQiOjE2NDU3NTkxNzMsImV4cCI6MTY0NjM2Mzk3M30.ZF6LfiA9Pq25VHK2eGM9ogEdWNO8oBNW3kTrHHouE5k"
+                "Authorization": `Bearer ${token}`
             }
         }).then(async (response) => {
 
@@ -171,19 +169,15 @@ const IdeaCreate = () => {
         });
     };
 
-    const { response, loading, error } = useAxios({
-        url: "http://localhost:8000/categories",
-        method: "get",
-    });
-
-    useEffect(() => {
-        if (response != null) {
-            setCategories(response);
-            response.map(async (item) => {
-                const categories = await axios.get(`http://localhost:8000/categories`);
-            });
-        }
-    }, [response]);
+    // useEffect(() => {
+    //     if (response != null) {
+    //         setCategories(response);
+    //         response.map(async (item) => {
+    //             const categories = await axios.get(`http://localhost:8000/categories`);
+    //             // TODO: ?
+    //         });
+    //     }
+    // }, [response]);
 
     const handleAnonymousChange = e => {
         const { checked } = e.target.value;
@@ -215,8 +209,8 @@ const IdeaCreate = () => {
 
     //những gì tôi có thể nghĩ ra để xuất category
 
-    const obj = JSON.parse(JSON.stringify(response));
-    console.log(obj.id);
+    // const obj = JSON.parse(JSON.stringify(response));
+    // console.log(obj.id);
     // console.log(JSON.stringify(response));
     // var categoryList = [];
     // obj.map(function(element) {
