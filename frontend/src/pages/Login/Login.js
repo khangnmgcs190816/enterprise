@@ -22,21 +22,20 @@ function Login(props) {
                     email: details.username,
                     password: details.password
                 })
-            // console.log(`Status Code: ${response.status}`)
 
             if (response.status === 200) {
-                window.localStorage.setItem('authToken', response.data.token)
-                window.localStorage.setItem('firstName', response.data.user.name)
-                window.localStorage.setItem('isAuthenticated', true);
                 props.authenticate(true);
 
                 setUser({
                     name: response.data.name,
                     username: details.username,
                 });
+                window.localStorage.setItem('authToken', response.data.token)
+                window.localStorage.setItem('firstName', response.data.user.name)
+                window.localStorage.setItem('isAuthenticated', true);
             }
         } catch (error) {
-            console.error(error)
+            console.error(error);
             setError("Username or Password do not match!");
         };
     };
@@ -45,21 +44,23 @@ function Login(props) {
         let token = window.localStorage.getItem('authToken')
 
         try {
-            const response = axios({
+            const response = await axios({
                 method: 'post', //you can set what request you want to be
                 url: `${baseURL}/users/logout`,
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
+
             if (response.status === 200) {
-                console.log("Logged out");
+                props.authenticate(false);
+
                 setUser({ name: "", username: "" });
                 window.localStorage.setItem('firstName', '')
                 window.localStorage.setItem('isAuthenticated', false)
             }
         } catch (error) {
-            console.error(error)
+            console.error(error);
             setError("Username or Password do not match!");
         };
     };
@@ -78,7 +79,7 @@ function Login(props) {
                 <LoginForm Login={logIn} error={error} />
             )}
             <PopUp trigger={buttonPopup} setTrigger={setButtonPopup} setUser={logOut}>
-                <h3>Confirm Logout ?</h3>
+                <h3>Confirm Log out?</h3>
             </PopUp>
         </Box>
     );
