@@ -8,7 +8,7 @@ import { Navigate } from "react-router-dom";
 import useAxios from "../../services/useAxios";
 import LoadingIndicator from "../../components/Loading";
 
-const baseURL = 'http://127.0.0.1:8000';
+const baseURL = 'http://localhost:8000';
 
 function Login(props) {
     const [buttonPopup, setButtonPopup] = useState(false);

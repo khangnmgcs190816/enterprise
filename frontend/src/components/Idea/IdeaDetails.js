@@ -20,7 +20,7 @@ const IdeaDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.patch(`http://localhost:8000/ideas/${id}?views=1`).then((r) => {});
+    axios.patch(`http://localhost:8000/ideas/${id}?views=1`).then((r) => { });
   }, []);
 
   const handleClick = () => {
@@ -75,7 +75,7 @@ const IdeaDetails = () => {
       )}
       <Divider sx={{ m: 2 }}>Comments</Divider>
       <Comments
-        commentsUrl="http://localhost:8081/comments"
+        commentsUrl="http://localhost:8000/comments"
         ideaId={id}
         currentUserId="1"
       />

@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
     getComments as getCommentsApi,
     createComment as createCommentApi,
@@ -13,26 +13,60 @@ import LoadingIndicator from "../../components/Loading";
 import useAxios from "../../services/useAxios";
 
 import "./styles.css";
+import axios from "axios";
 
-const Comments = ({commentsUrl, ideaId, currentUserId}) => {
+
+const token = window.localStorage.getItem('authToken');
+const baseURL = 'http://localhost:8000'
+
+const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
     // const {data: comments, isPending, error} = useFetch('http://localhost:8081/comment');
-
-    console.log(ideaId);
-
-    const {response, loading, error} = useAxios({
-        url: `http://localhost:8000/comments?ideaId=${ideaId}`,
-        method: "get",
-    });
-
     const [Comments, setComments] = useState([]);
     const [activeComment, setActiveComment] = useState(null);
+    const [rootComments, setRootComments] = useState([]);
 
+    useEffect(() => {
+        (async function () {
+            try {
+                const response = await axios({
+                    url: `${baseURL}/comments?ideaId=${ideaId}`,
+                    method: "get",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
 
+                console.log(response.data)
+                if (response !== null) {
+                    setComments(response.data)
+                }
+            } catch (e) {
+                throw e;
+            } finally {
+                return <LoadingIndicator />;
+            }
+        })()
+    }, [ideaId]);
 
-    // Trong Edited
-    const rootComments = Comments.filter(
-        (Comment) => Comment.parentId === null && Comment.ideaId === ideaId);
-    // Trong Edited
+    // if (response !== null) {
+    //     setComments(response.data)
+    // }
+    // if (loading) return <LoadingIndicator />;
+    // if (error) throw error;
+    // if (Comments.length === 0) return <PageNotFound />;
+
+    // useEffect(() => {
+    //     getCommentsApi().then((data) => {
+    //         setComments(data);
+    //     });
+    //     // Trong Edited
+    // }, [ideaId]);
+
+    // useEffect(() => {
+    //     setRootComments(Comments.filter(
+    //         (Comment) => Comment.parentId === null && Comment.ideaId === ideaId));
+    //     // Trong Edited
+    // }, [Comments, ideaId])
 
 
     const getReplies = commentId => {
@@ -57,7 +91,7 @@ const Comments = ({commentsUrl, ideaId, currentUserId}) => {
         updateCommentApi(text).then(() => {
             const updatedComments = Comments.map((Comment) => {
                 if (Comment._id === commentId) {
-                    return {...Comment, body: text};
+                    return { ...Comment, body: text };
                 }
                 return Comment;
             });
@@ -66,26 +100,14 @@ const Comments = ({commentsUrl, ideaId, currentUserId}) => {
         });
     };
 
-    useEffect(() => {
-        getCommentsApi().then((data) => {
-            setComments(data);
-        });
-    }, []);
 
-    useEffect(() => {
-        if (response != null) {
-            setComments(response);
-        }
-    }, [response]);
-    if (error) throw error;
-    if (loading) return <LoadingIndicator/>;
-    if (Comments.length === 0) return <PageNotFound/>;
+
 
     return (
         <div className="comments">
             <h3 className="comments-title">Comment</h3>
             <div className="comment-form-title">Write comment</div>
-            <CommentForm submitLabel="Write" handleSubmit={createComment}/>
+            <CommentForm submitLabel="Write" handleSubmit={createComment} />
             <div className="comments-container">
                 {rootComments.map(rootComment => (
                     <Comment
@@ -99,7 +121,7 @@ const Comments = ({commentsUrl, ideaId, currentUserId}) => {
                     />
                 ))}
             </div>
-            <br/>
+            <br />
         </div>
     );
 }
