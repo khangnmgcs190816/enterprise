@@ -47,7 +47,10 @@ export default function EmployeeCreate(props) {
                     console.log(response);
                     // setResult(response);
                     navigate('/employees');
+                } else {
+                    console.log('Cannot create')
                 }
+
             });
 
             // if (response.status === 201) {
@@ -80,7 +83,7 @@ export default function EmployeeCreate(props) {
                         onChange={(e) => setUser({ ...user, name: e.target.value })}
                         size="small"
                         sx={{
-                            width: "50%",
+                            width: "20%",
                             alignSelf: "center",
                         }}
                         required />
@@ -94,7 +97,7 @@ export default function EmployeeCreate(props) {
                         onChange={(e) => setUser({ ...user, email: e.target.value })}
                         size="small"
                         sx={{
-                            width: "50%",
+                            width: "20%",
                             alignSelf: "center",
                         }}
                         required />
@@ -108,7 +111,7 @@ export default function EmployeeCreate(props) {
                         onChange={(e) => setUser({ ...user, password: e.target.value })}
                         size="small"
                         sx={{
-                            width: "50%",
+                            width: "20%",
                             alignSelf: "center",
                         }}
                         required />
@@ -122,7 +125,7 @@ export default function EmployeeCreate(props) {
                         onChange={(e) => setUser({ ...user, age: e.target.value })}
                         size="small"
                         sx={{
-                            width: "50%",
+                            width: "20%",
                             alignSelf: "center",
                         }}
                         required />
@@ -136,7 +139,7 @@ export default function EmployeeCreate(props) {
                             Create
                         </Button>
 
-                        {/* <Button
+                        <Button
                             component={RouterLink}
                             to="/employees"
                             variant="contained"
@@ -144,7 +147,7 @@ export default function EmployeeCreate(props) {
                             sx={{ margin: "1rem 0rem" }}
                         >
                             Cancel
-                        </Button> */}
+                        </Button>
                     </Box>
                     {/* <p>
                         {result !== null ? result : 'Invalid'}

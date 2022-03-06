@@ -1,4 +1,4 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -20,7 +20,7 @@ button {
   justify-content: center;
   background-color: #53565a;
 } */
-
+/* 
 form {
   display: block;
   position: relative;
@@ -125,4 +125,4 @@ form .form-inner input[type="submit"]:hover,
 .welcome h2 span {
   color: #fe4880;
   font-weight: 700;
-}
+} */

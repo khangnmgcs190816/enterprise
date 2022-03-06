@@ -1,26 +1,10 @@
 import React, { useState } from "react";
 import { Box, Divider, TextField, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-// import Popup from "reactjs-popup";
+import { loginBoxStyle } from "../../styles/boxStyles";
 
 // TODO1: Checkbox chưa có value để remember me
 
-const boxStyle = {
-  width: "40%",
-  float: "right",
-  border: 1,
-  borderColor: "white",
-  borderRadius: "25px",
-  boxShadow: 4,
-  padding: "3rem",
-  my: 8,
-  mx: 4,
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-}
 
 
 function LoginForm({ Login, error }) {
@@ -33,7 +17,7 @@ function LoginForm({ Login, error }) {
     <Box
       component="form"
       onSubmit={submitHandler}
-      sx={boxStyle}
+      sx={loginBoxStyle}
     >
       <Typography
         variant="h6"

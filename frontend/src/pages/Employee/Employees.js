@@ -9,6 +9,7 @@ import StaffDetails from "../../components/Staff/StaffDetails";
 import StaffList from "../../components/Staff/StaffList";
 import CreateStaff from "../../components/Staff/CreateStaff";
 // import EmployeeList from "./EmployeeList";
+import { employeeBoxStyle } from "../../styles/boxStyles";
 
 const Employees = () => {
   // const searchParams = useSearchParams();
@@ -16,12 +17,7 @@ const Employees = () => {
   return (
     <Box>
       <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          m: 3,
-          paddingRight: "3rem",
-        }}
+        sx={employeeBoxStyle}
       >
         <SearchFunction page="employees"></SearchFunction>
         <CreateStaffBtn />
