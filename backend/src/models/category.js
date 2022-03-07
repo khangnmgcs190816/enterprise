@@ -9,7 +9,7 @@ const CategorySchema = new mongoose.Schema(
             required: true
         },
         used: {
-            type: Number,
+            Type: mongoose.Schema.Types.ObjectId,
             default: 0
         },
     },

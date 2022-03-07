@@ -188,9 +188,9 @@ router.get('/ideas', async (request, response) => {
     }
 });
 
-router.get('/ideas/search', (req, res, next) => {
+router.get('/ideas', (req, res, next) => {
     const searchTitle = req.query.title;
-    Idea.find({title:{$regex: searchTitle, $options: '$i'}})
+    Idea.find({search:{$regex: searchTitle, $options: '$i'}})
     .then((ideads) => {
         res.json(ideads);
     })
