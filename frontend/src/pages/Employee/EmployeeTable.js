@@ -120,15 +120,32 @@ const EmployeeTable = () => {
     if (users.length === 0) return <PageNotFound />;
 
     return (
-        <Box sx={{ height: "20rem", minWidth: "40rem", width: "67rem", m: "2rem" }}>
-            <DataGrid
-                rows={users}
-                columns={columns}
-                pageSize={pageSize}
-                rowsPerPageOptions={rowsPerPageOptions}
-            // onCellEditCommit={handleUpdate}
-            // checkboxSelection
-            />
+        <Box
+            sx={{
+                height: "20rem",
+                maxWidth: "150rem",
+                alignItems: "center",
+                alignContent: "center",
+                justifyContent: "center",
+                display: "flex"
+            }}
+        >
+            <Box sx={{
+                height: "20rem",
+                minWidth: "65rem",
+                m: 2,
+                display: "flex"
+            }}>
+                <DataGrid
+                    rows={users}
+                    columns={columns}
+                    pageSize={pageSize}
+                    rowsPerPageOptions={rowsPerPageOptions}
+                // onCellEditCommit={handleUpdate}
+                // checkboxSelection
+                />
+            </Box>
+
         </Box>
     );
 }
