@@ -47,8 +47,6 @@ const EmployeeTable = () => {
                     name: user.name,
                     email: user.email,
                     age: user.age,
-                    action: <Button>Delete</Button>
-
                 };
             })
             setUsers(userList);

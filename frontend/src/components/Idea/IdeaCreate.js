@@ -414,13 +414,11 @@ const IdeaCreate = () => {
           />
         </div>
         <br />
-
                 <div>
                     <label>Update </label>
                     <input disabled type="text" name="update" placeholder={updated_at} onChange={e => setUpdateDate(e.target.value)} />
                 </div>
                 <br/>
-
         <div>
           <label>Close Date </label>
           <input
