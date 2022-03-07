@@ -152,8 +152,8 @@ router.get('/ideas', async (request, response) => {
     if (request.query.isAnonymous) {
         filter.isAnonymous = (request.query.isAnonymous === 'true');
     }
-    if (request.query.title) {
-        filter.title = request.query.title;
+    if (request.query.search) {
+        filter.title = RegExp(".*"+request.query.search+".*");
     }
     if (request.query.limit) {
         limit = parseInt(request.query.limit);
@@ -179,8 +179,7 @@ router.get('/ideas', async (request, response) => {
         if (foundIdeas == null) {
             response.status(404).send(`IDEAS NOT FOUND`);
         } else {
-            console.log(typeof foundIdeas);
-
+            console.log(foundIdeas);
             response.status(200).send(foundIdeas);
         }
 

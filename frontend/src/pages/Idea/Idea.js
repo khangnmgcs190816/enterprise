@@ -43,7 +43,6 @@ const Idea = () => {
     limit:5,
     skip:0,
     search: '',
-
   });
 
   useEffect(() => {
