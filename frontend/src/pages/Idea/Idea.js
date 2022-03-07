@@ -90,7 +90,7 @@ const Idea = () => {
     console.log(newFilters);
     setFilters({
       ...filters,
-      skip:1,
+      skip:0,
       search:newFilters.searchTerm,
     })
   }

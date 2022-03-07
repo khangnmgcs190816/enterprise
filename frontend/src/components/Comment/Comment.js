@@ -85,7 +85,7 @@ const Comment = ({ comment,
     const replyId = parentId ? parentId : comment._id;
     const navigate = useNavigate();
     const deleteComment = async () => {
-        fetch('http://localhost:8081/comment/' + comment._id, {
+        fetch('http://localhost:8000/comments/' + comment._id, {
             method: 'DELETE'
         })
     };

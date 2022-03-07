@@ -317,7 +317,7 @@ const IdeaCreate = () => {
                             variant="outlined"
                             name="title"
                             placeholder={title}
-                            onClick={() => setIsAnonymous(true)}
+                            onClick={(e) => setTitle(e.target.value)}
                             sx={{
                                 width: "100%",
                             }}
@@ -413,13 +413,11 @@ const IdeaCreate = () => {
           />
         </div>
         <br />
-
                 <div>
                     <label>Update </label>
                     <input disabled type="text" name="update" placeholder={updated_at} onChange={e => setUpdateDate(e.target.value)} />
                 </div>
                 <br/>
-
         <div>
           <label>Close Date </label>
           <input
