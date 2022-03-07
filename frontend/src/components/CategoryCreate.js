@@ -25,13 +25,13 @@ const TitleFrame = styled("div")({
 });
 
 const CategoryCreate = () => {
-  var date = new Date(); //Cái nì là chứa ngày tháng cho cái created_at nè
+  var date = new Date();
 
-  const [categoryName, setCategoryName] = useState("Unknown category"); //cái nì là cái chứa tên category(?), đang bị lú chỗ này
+  const [categoryName, setCategoryName] = useState("Unknown category"); 
   const [created_at, setCreateDate] = useState(date);
   const [updated_at, setUpdateDate] = useState();
   const [isPending, setIsPending] = useState(false);
-  // Thêm const "used"(?)
+
 
   //H thêm
   useEffect(() => {
@@ -72,7 +72,6 @@ const CategoryCreate = () => {
       .catch((err) => console.error(err));
   }
 
-  // Hàm này để bấm Submit thì nó sẽ đẩy vô json nè
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -126,9 +125,9 @@ const CategoryCreate = () => {
               type="text"
               label="New Category"
               variant="outlined"
-              name="tag" //Đổi chỗ này nếu có đổi trên const [tag...]
-              placeholder={categoryName} //Đổi chỗ này nếu có đổi trên const [tag...]
-              onChange={(e) => setCategoryName(e.target.value)} //Đổi chỗ này nếu có đổi trên const [tag...]
+              name="tag"
+              placeholder={categoryName}
+              onChange={(e) => setCategoryName(e.target.value)}
               size="small"
               sx={{
                 width: "50%",
@@ -136,7 +135,7 @@ const CategoryCreate = () => {
               }}
             />
             <Box>
-              {/* NÚT TẠO Ở ĐÂY */}
+
               <Button
                 type="submit"
                 variant="contained"
@@ -146,7 +145,6 @@ const CategoryCreate = () => {
                 Create
               </Button>
 
-              {/* NÀY NÚT RETURN HOME */}
               <Button
                 component={RouterLink}
                 to="/"

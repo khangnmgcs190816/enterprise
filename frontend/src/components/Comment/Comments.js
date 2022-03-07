@@ -79,14 +79,16 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
             setComments([comment, ...Comments])
         });
     }
-    // const deleteComment = (commentId) => {
-    //     if (window.confirm('Ae you sure')){
-    //         deleteCommentApi(commentId).then(() => {
-    //             const updatedComments = Comments.filter((Comment) => Comment.id !== commentId)
-    //             setComments(updatedComments);
-    //         });
-    //     }
-    // }
+
+    const replyId = parentId ? parentId : comment._id;
+    const navigate = useNavigate();
+
+    const deleteComment = async () => {
+        fetch('http://localhost:8000/comments/' + comment._id, {
+            method: 'DELETE'
+        })
+    };
+
     const updateComment = (text, commentId) => {
         updateCommentApi(text).then(() => {
             const updatedComments = Comments.map((Comment) => {

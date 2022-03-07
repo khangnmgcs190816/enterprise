@@ -186,12 +186,12 @@ const IdeaCreate = () => {
     // ];
 
 
-    useEffect(async () =>{
+    useEffect(async () => {
 
         const categories = await axios.get(`http://localhost:8000/categories`);
         //setCategories(categories.data);
 
-        const result = categories.data.map(category => ({value: category._id, label: category.categoryName}));
+        const result = categories.data.map(category => ({ value: category._id, label: category.categoryName }));
         console.log(result)
 
 
@@ -265,7 +265,7 @@ const IdeaCreate = () => {
     if (isBusy) {
         return <div className="App">Loading...</div>;
     }
-    if(!isBusy){
+    if (!isBusy) {
         return (
             // The whole form is put in the Box with border
             <Box
@@ -308,7 +308,7 @@ const IdeaCreate = () => {
 
                 <form onSubmit={handleSubmit}>
                     {/* From here is title input */}
-                    <div>
+                    <Box>
                         <FormControlLabel control={<Switch />} label="Post as Anonymous" />
                         <TextField
                             id="outlined-basic"
@@ -317,12 +317,12 @@ const IdeaCreate = () => {
                             variant="outlined"
                             name="title"
                             placeholder={title}
-                            onClick={() => setIsAnonymous(true)}
+                            onClick={(e) => setTitle(e.target.value)}
                             sx={{
                                 width: "100%",
                             }}
                         />
-                    </div>
+                    </Box>
                     <br />
 
 
@@ -358,7 +358,7 @@ const IdeaCreate = () => {
                             justifyContent: "space-evenly",
                         }}
                     >
-                        <InputLabel htmlFor="icon-button-file">
+                        {/* <InputLabel htmlFor="icon-button-file">
                             <Input
                                 accept="image/*"
                                 id="icon-button-file"
@@ -370,10 +370,12 @@ const IdeaCreate = () => {
                                 <PhotoCamera />
                                 Upload Photo
                             </Button>
-                        </InputLabel>
+                        </InputLabel> */}
+
                         <InputLabel id="attach-label">
+                            <AttachFileIcon /> Attachments
                             <Button color={"primary"} variant="text" component="span">
-                                <input
+                                <Input
                                     type="file"
                                     accept="file/*"
                                     id="contained-button-file"
@@ -384,7 +386,6 @@ const IdeaCreate = () => {
                                         setDocument(file);
                                     }}
                                 />
-                                <AttachFileIcon /> Attachments
                             </Button>
                         </InputLabel>
                     </Box>
@@ -443,7 +444,7 @@ const IdeaCreate = () => {
                             isClearable
                             components={animatedComponents}
                             isMulti
-                            options={ options }
+                            options={options}
                             onChange={(e) => {
                                 setSelectedTag(Array.isArray(e) ? e.map((x) => {
                                     return { categories: x.label }
@@ -461,10 +462,10 @@ const IdeaCreate = () => {
                     {
                         categories.map((category) => {
                             console.log(category);
-                                return (
-                                    <div>{category.categoryName}</div>
-                                );
-                            }
+                            return (
+                                <div>{category.categoryName}</div>
+                            );
+                        }
                         )}
 
                     <Typography align="center">
@@ -483,7 +484,7 @@ const IdeaCreate = () => {
 
                     {/* Terms and Conditions with overflow content not yet finished */}
                     <div className="term-conditions">
-                        <Typography align="center">Terms and Conditions</Typography>
+                        <Typography align="center" fontWeight="bold">Terms and Conditions</Typography>
                         <Typography align="justify" sx={{
                             fontSize: 15,
                             padding: "0rem 1rem 0rem 1rem",
@@ -540,21 +541,8 @@ const IdeaCreate = () => {
                         )}
                     </Typography>
                     <CancelBtn />
-
-                    {/* <input
-            type="checkbox"
-            name="agreement"
-            onChange={handleChange}
-          ></input> */}
-                    {/* <div className="agree-check" id="agree-check">
-          <input
-            type="checkbox"
-            name="agreement"
-            onChange={handleChange}
-          ></input><span>I Agree with Terms & Conditions</span>
-        </div> */}
                 </form>
-            </Box>
+            </Box >
         );
     }
 };

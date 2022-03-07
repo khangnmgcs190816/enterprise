@@ -3,6 +3,9 @@ import { DataGrid } from '@mui/x-data-grid';
 import useAxios from "../../services/useAxios";
 import LoadingIndicator from "../../components/Loading";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
+import Button from "@mui/material/Button";
+import { Box, Divider } from "@mui/material";
+
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -10,6 +13,18 @@ const columns = [
     { field: 'email', headerName: 'Email', width: 420 },
     { field: 'age', headerName: 'Age', type: 'number', width: 90, },
     { field: 'role', headerName: 'Role', width: 210, },
+    // {
+    //     field: 'action', headerName: 'Action', width: 210, renderCell: (params) => {
+    //         return (
+    //             <Button
+    //                 variant="contained"
+    //                 color="primary"
+    //             >
+    //                 Delete
+    //             </Button>
+    //         );
+    //     }
+    // }
 ];
 
 const pageSize = 5;
@@ -28,9 +43,12 @@ const EmployeeTable = () => {
             const userList = response.map((user, id) => {
                 return {
                     id: id + 1,
+                    // id: user.id,
                     name: user.name,
                     email: user.email,
                     age: user.age,
+                    action: <Button>Delete</Button>
+
                 };
             })
             setUsers(userList);
@@ -42,15 +60,20 @@ const EmployeeTable = () => {
     if (users.length === 0) return <PageNotFound />;
 
     return (
-        <div style={{ height: 400, width: '100%' }}>
+        <Box sx={{ height: "20rem", minWidth: "40rem", width: "67rem", m: "2rem" }}>
             <DataGrid
                 rows={users}
                 columns={columns}
                 pageSize={pageSize}
                 rowsPerPageOptions={rowsPerPageOptions}
                 checkboxSelection
+
             />
-        </div>
+
+
+
+
+        </Box>
 
     );
 }

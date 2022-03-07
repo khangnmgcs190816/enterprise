@@ -29,19 +29,19 @@ const Idea = () => {
   const [ideas, setIdeas] = useState([]);
   const [ownerName, setOwnerName] = useState();
 
-  const [page, setPage]=useState(1);
+  const [page, setPage] = useState(1);
 
-  const limit=5;
-  const startIndex = (page -1) * limit;
+  const limit = 5;
+  const startIndex = (page - 1) * limit;
   //const selectedIdeas = ideas.slice(startIndex, startIndex+limit);
   const [pagination, setPagination] = useState({
-    limit:5,
-    skip:0
+    limit: 5,
+    skip: 0
   })
-  const [totalPages,setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [filters, setFilters] = useState({
-    limit:5,
-    skip:0,
+    limit: 5,
+    skip: 0,
     search: '',
   });
 
@@ -82,7 +82,7 @@ const Idea = () => {
     setPage(num);
     setFilters({
       ...filters,
-      skip:(num-1)*limit,
+      skip: (num - 1) * limit,
     })
   }
 
@@ -90,8 +90,8 @@ const Idea = () => {
     console.log(newFilters);
     setFilters({
       ...filters,
-      skip:1,
-      search:newFilters.searchTerm,
+      skip: 0,
+      search: newFilters.searchTerm,
     })
   }
 
@@ -144,7 +144,7 @@ const Idea = () => {
       </Box>
       <Divider />
 
-          {/* Idea list */}
+      {/* Idea list */}
 
       <Box
         sx={{
