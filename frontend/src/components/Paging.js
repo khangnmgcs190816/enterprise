@@ -8,7 +8,7 @@ const Paging = ({ totalPages, handlePageClick }) => {
     return (
         <Box>
             {pages.map(num => (
-                <Button variant="outlined"
+                <Button
                     key={num}
                     onClick={() => handlePageClick(num)}
                     sx={{ m: "1rem", borderRadius: "50%" }}

@@ -1,31 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid';
-import useAxios from "../../services/useAxios";
+import axios from "axios";
 import LoadingIndicator from "../../components/Loading";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 import Button from "@mui/material/Button";
 import { Box, Divider } from "@mui/material";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import EditIcon from '@mui/icons-material/Edit';
+import useAxios from "../../services/useAxios";
 
 
-const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Name', width: 280 },
-    { field: 'email', headerName: 'Email', width: 420 },
-    { field: 'age', headerName: 'Age', type: 'number', width: 90, },
-    { field: 'role', headerName: 'Role', width: 210, },
-    // {
-    //     field: 'action', headerName: 'Action', width: 210, renderCell: (params) => {
-    //         return (
-    //             <Button
-    //                 variant="contained"
-    //                 color="primary"
-    //             >
-    //                 Delete
-    //             </Button>
-    //         );
-    //     }
-    // }
-];
+const baseURL = 'http://localhost:8000';
+
 
 const pageSize = 5;
 const rowsPerPageOptions = [5];
@@ -36,14 +22,14 @@ const EmployeeTable = () => {
         method: "get",
     });
 
-    const [users, setUsers] = useState({});
+    const token = window.localStorage.getItem('authToken');
 
     useEffect(() => {
         if (response != null) {
             const userList = response.map((user, id) => {
                 return {
                     id: id + 1,
-                    // id: user.id,
+                    userId: user._id,
                     name: user.name,
                     email: user.email,
                     age: user.age,
@@ -52,6 +38,82 @@ const EmployeeTable = () => {
             setUsers(userList);
         }
     }, [response]);
+
+    const [users, setUsers] = useState({});
+
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 70, editable: true },
+        { field: 'name', headerName: 'Name', width: 280, editable: true },
+        { field: 'email', headerName: 'Email', width: 420, editable: true },
+        { field: 'age', headerName: 'Age', type: 'number', width: 90, editable: true },
+        { field: 'role', headerName: 'Role', width: 210, editable: true },
+        {
+            field: 'action', headerName: 'Action', width: 210, renderCell: (params) => {
+                return (
+                    <Box sx={{ display: "flex", m: 1 }}>
+                        {/* <Button
+                            title="edit"
+                            variant="text"
+                            color="secondary"
+                            onClick={() => handleUpdate(params.row)}
+                            fontSize="small"
+                        >
+                            <EditIcon />
+                        </Button> */}
+
+                        <Button
+                            title="delete"
+                            variant="text"
+                            color="error"
+                            onClick={() => handleDelete(params.row.userId)}
+                            fontSize="small"
+                        >
+                            <HighlightOffIcon />
+                        </Button>
+                    </Box>
+
+                );
+            }
+        }
+
+    ];
+
+    // const handleCellEditCommit = React.useCallback(
+    //     async (params) => {
+    //         try {
+    //             // setUser(with new Params)
+    //             // axios.put('', name, email, password, age)
+    //         } catch (error) {
+    //             setUsers((prev) => [...prev]);
+    //         }
+    //     },
+    //     [userRow],
+    // );
+
+
+
+
+    const handleDelete = async (userId) => {
+        const confirm = window.confirm("Are you sure wan to delete this user ? ", userId)
+        if (confirm) {
+            const response = await axios.delete(`${baseURL}/users/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (response.status === 200) {
+                // window.location.reload(false);
+
+                const newUsers = users.filter((user) => user.userId !== userId);
+                setUsers(newUsers);
+                console.log(response.data)
+            } else if (response.status === 404) {
+                console.log(response.data)
+            }
+        }
+    }
+
+
 
     if (error) throw error;
     if (loading) return <LoadingIndicator />;
@@ -64,15 +126,10 @@ const EmployeeTable = () => {
                 columns={columns}
                 pageSize={pageSize}
                 rowsPerPageOptions={rowsPerPageOptions}
-                checkboxSelection
-
+            // onCellEditCommit={handleUpdate}
+            // checkboxSelection
             />
-
-
-
-
         </Box>
-
     );
 }
 

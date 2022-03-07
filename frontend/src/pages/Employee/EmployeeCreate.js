@@ -9,15 +9,26 @@ import useAxios from "../../services/useAxios";
 import LoadingIndicator from "../../components/Loading";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 import axios from "axios";
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import ReplayRoundedIcon from '@mui/icons-material/ReplayRounded';
 
-// const TitleFrame = styled("div")({
-//     color: lightBlue[600],
-//     // textAlign: "center",
-//     fontSize: 30,
-//     fontWeight: "bold",
-//     marginBottom: "1rem",
-// });
 axios.defaults.baseURL = "http://localhost:8000/"
+
+const boxStyle = {
+    border: 1,
+    borderRadius: "25px",
+    boxShadow: 4,
+    borderColor: "white",
+    m: 2,
+    p: 3
+};
+const boxFlex = {
+    display: "flex",
+    justifyContent: "space-between",
+    minWidth: "5rem",
+    maxWidth: "6rem",
+    minHeight: "2rem"
+}
 
 export default function EmployeeCreate(props) {
     let navigate = useNavigate();
@@ -39,12 +50,12 @@ export default function EmployeeCreate(props) {
                 data: user
             }).then((response) => {
                 if (response.status === 201) {
-                    console.log('Khang')
-                    console.log('Khang')
-                    console.log('Khang')
-                    console.log('Khang')
-                    console.log('Khang')
-                    console.log(response);
+                    // console.log('Khang')
+                    // console.log('Khang')
+                    // console.log('Khang')
+                    // console.log('Khang')
+                    // console.log('Khang')
+                    // console.log(response);
                     // setResult(response);
                     navigate('/employees');
                 } else {
@@ -70,73 +81,87 @@ export default function EmployeeCreate(props) {
 
 
     return (
-        <div className="container">
+        <Box sx={boxStyle}>
             <form onSubmit={handleSubmit}>
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                    <TextField
-                        id="outlined-basic"
-                        type="text"
-                        label="Name"
-                        variant="outlined"
-                        name="name"
-                        placeholder='Name'
-                        onChange={(e) => setUser({ ...user, name: e.target.value })}
-                        size="small"
-                        sx={{
-                            width: "20%",
-                            alignSelf: "center",
-                        }}
-                        required />
-                    <TextField
-                        id="outlined-basic"
-                        type="text"
-                        label="Email"
-                        variant="outlined"
-                        name="email"
-                        placeholder='Email'
-                        onChange={(e) => setUser({ ...user, email: e.target.value })}
-                        size="small"
-                        sx={{
-                            width: "20%",
-                            alignSelf: "center",
-                        }}
-                        required />
-                    <TextField
-                        id="outlined-basic"
-                        type="text"
-                        label="Password"
-                        variant="outlined"
-                        name="password"
-                        placeholder='Password'
-                        onChange={(e) => setUser({ ...user, password: e.target.value })}
-                        size="small"
-                        sx={{
-                            width: "20%",
-                            alignSelf: "center",
-                        }}
-                        required />
-                    <TextField
-                        id="outlined-basic"
-                        type="text"
-                        label="Age"
-                        variant="outlined"
-                        name="age"
-                        placeholder='Age'
-                        onChange={(e) => setUser({ ...user, age: e.target.value })}
-                        size="small"
-                        sx={{
-                            width: "20%",
-                            alignSelf: "center",
-                        }}
-                        required />
+                <Box sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: 'column',
+                    m: 2
+                }}>
                     <Box>
+                        <TextField
+                            id="outlined-basic"
+                            type="text"
+                            label="Name"
+                            variant="outlined"
+                            name="name"
+                            placeholder='Name'
+                            onChange={(e) => setUser({ ...user, name: e.target.value })}
+                            size="small"
+                            sx={{
+                                width: "20%",
+                                alignSelf: "center",
+                            }}
+                            required />
+                    </Box>
+                    <Box>
+                        <TextField
+                            id="outlined-basic"
+                            type="text"
+                            label="Email"
+                            variant="outlined"
+                            name="email"
+                            placeholder='Email'
+                            onChange={(e) => setUser({ ...user, email: e.target.value })}
+                            size="small"
+                            sx={{
+                                width: "20%",
+                                alignSelf: "center",
+                            }}
+                            required />
+                    </Box>
+                    <Box>
+                        <TextField
+                            id="outlined-basic"
+                            type="text"
+                            label="Password"
+                            variant="outlined"
+                            name="password"
+                            placeholder='Password'
+                            onChange={(e) => setUser({ ...user, password: e.target.value })}
+                            size="small"
+                            sx={{
+                                width: "20%",
+                                alignSelf: "center",
+                            }}
+                            required />
+                    </Box>
+                    <Box>
+                        <TextField
+                            id="outlined-basic"
+                            type="text"
+                            label="Age"
+                            variant="outlined"
+                            name="age"
+                            placeholder='Age'
+                            onChange={(e) => setUser({ ...user, age: e.target.value })}
+                            size="small"
+                            sx={{
+                                width: "20%",
+                                alignSelf: "center",
+                            }}
+                            required />
+                    </Box>
+
+                    <Box sx={boxFlex}>
                         <Button
                             type="submit"
                             variant="contained"
-                            startIcon={<SendIcon />}
-                            sx={{ marginLeft: "1rem", marginRight: "1rem" }}
+                            sx={{ marginRight: "2rem" }}
+                            size="medium"
                         >
-                            Create
+                            <PersonAddAltIcon />
                         </Button>
 
                         <Button
@@ -144,16 +169,16 @@ export default function EmployeeCreate(props) {
                             to="/employees"
                             variant="contained"
                             color="secondary"
-                            sx={{ margin: "1rem 0rem" }}
+                            size="medium"
                         >
-                            Cancel
+                            <ReplayRoundedIcon />
                         </Button>
                     </Box>
                     {/* <p>
                         {result !== null ? result : 'Invalid'}
                     </p> */}
                 </Box>
-            </form>
-        </div>
+            </form >
+        </Box >
     );
 }

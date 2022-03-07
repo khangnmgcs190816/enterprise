@@ -24,6 +24,7 @@ import Header from "./components/Header/Header";
 import CategoryCreate from "./components/CategoryCreate";
 import Comments from "./components/Comment/Comments";
 import IdeaDetails from "./components/Idea/IdeaDetails";
+import EmployeeUpdate from "./pages/Employee/EmployeeUpdate";
 
 const theme = createTheme({
   palette: {
@@ -135,7 +136,16 @@ function App() {
                   )
                 }
               />
-
+              <Route
+                path="/employees/edit"
+                element={
+                  isAuthenticated ? (
+                    <EmployeeUpdate authenticate={setIsAuthenticated} />
+                  ) : (
+                    <Login />
+                  )
+                }
+              />
               <Route
                 path="/dashboard"
                 element={

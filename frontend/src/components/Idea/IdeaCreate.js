@@ -358,7 +358,7 @@ const IdeaCreate = () => {
                             justifyContent: "space-evenly",
                         }}
                     >
-                        {/* <InputLabel htmlFor="icon-button-file">
+                        <InputLabel htmlFor="icon-button-file">
                             <Input
                                 accept="image/*"
                                 id="icon-button-file"
@@ -370,10 +370,9 @@ const IdeaCreate = () => {
                                 <PhotoCamera />
                                 Upload Photo
                             </Button>
-                        </InputLabel> */}
+                        </InputLabel>
 
                         <InputLabel id="attach-label">
-                            <AttachFileIcon /> Attachments
                             <Button color={"primary"} variant="text" component="span">
                                 <Input
                                     type="file"
@@ -386,6 +385,7 @@ const IdeaCreate = () => {
                                         setDocument(file);
                                     }}
                                 />
+                                <AttachFileIcon /> Attachments
                             </Button>
                         </InputLabel>
                     </Box>
