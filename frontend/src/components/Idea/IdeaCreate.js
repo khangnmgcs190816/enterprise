@@ -154,6 +154,8 @@ const IdeaCreate = () => {
 
 
         console.log(`Anonymous ${isAnonymous}`);
+
+
         await axios.post("http://localhost:8000/ideas", JSON.stringify(idea), {
             headers: {
                 "Content-Type": "application/json",
@@ -184,35 +186,39 @@ const IdeaCreate = () => {
     // ];
 
 
-    useEffect(() => {
-        (async function () {
+    useEffect(async () =>{
 
-            const categories = await axios.get(`http://localhost:8000/categories`);
-            //setCategories(categories.data);
+        const categories = await axios.get(`http://localhost:8000/categories`);
+        //setCategories(categories.data);
 
-            const result = categories.data.map(category => ({ value: category._id, label: category.categoryName }));
+        const result = categories.data.map(category => ({value: category._id, label: category.categoryName}));
+        console.log(result)
 
-            setOptions(result);
 
-            setBusy(false);
-            //
-            // if (response != null) {
-            //     setBusy(true);
-            //
-            //     // setCategories(response.data);
-            //
-            //     response.map(async (item) => {
-            //         const categories = await axios.get(`http://localhost:8000/categories`);
-            //         //console.log(categories.data);
-            //
-            //         //console.log(categories.data[0].categoryName);
-            //
-            //         setCategories(categories.data);
-            //
-            //         setBusy(false);
-            //     });
-            // }
-        })()
+
+        setOptions(result);
+
+
+
+
+        setBusy(false);
+        //
+        // if (response != null) {
+        //     setBusy(true);
+        //
+        //     // setCategories(response.data);
+        //
+        //     response.map(async (item) => {
+        //         const categories = await axios.get(`http://localhost:8000/categories`);
+        //         //console.log(categories.data);
+        //
+        //         //console.log(categories.data[0].categoryName);
+        //
+        //         setCategories(categories.data);
+        //
+        //         setBusy(false);
+        //     });
+        // }
     }, []);
 
 
@@ -259,7 +265,7 @@ const IdeaCreate = () => {
     if (isBusy) {
         return <div className="App">Loading...</div>;
     }
-    if (!isBusy) {
+    if(!isBusy){
         return (
             // The whole form is put in the Box with border
             <Box
@@ -437,7 +443,7 @@ const IdeaCreate = () => {
                             isClearable
                             components={animatedComponents}
                             isMulti
-                            options={options}
+                            options={ options }
                             onChange={(e) => {
                                 setSelectedTag(Array.isArray(e) ? e.map((x) => {
                                     return { categories: x.label }
@@ -455,10 +461,10 @@ const IdeaCreate = () => {
                     {
                         categories.map((category) => {
                             console.log(category);
-                            return (
-                                <div>{category.categoryName}</div>
-                            );
-                        }
+                                return (
+                                    <div>{category.categoryName}</div>
+                                );
+                            }
                         )}
 
                     <Typography align="center">

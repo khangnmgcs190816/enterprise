@@ -17,7 +17,6 @@ router.post('/categories', (req,res, next) => {
 
 /* =============================================================== READ =============================================================== */
 
-
 router.get('/categories', (req, res, next) => {
     Category.find({})
         .then(category => {
