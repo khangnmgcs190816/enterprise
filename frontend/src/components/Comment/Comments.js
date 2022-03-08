@@ -36,8 +36,8 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
                     }
                 });
 
-                console.log(response.data)
-                if (response !== null) {
+                console.log("comments of this idea:",response.data);
+                if (response != null) {
                     setComments(response.data)
                 }
             } catch (e) {
