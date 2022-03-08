@@ -21,6 +21,7 @@ const IdeaDetails = () => {
 
   useEffect(() => {
     axios.patch(`http://localhost:8000/ideas/${id}?views=1`).then((r) => { });
+
   }, []);
 
   const handleClick = () => {
@@ -74,11 +75,11 @@ const IdeaDetails = () => {
         </Box>
       )}
       <Divider sx={{ m: 2 }}>Comments</Divider>
-      <Comments
+      {<Comments
         commentsUrl="http://localhost:8000/comments"
         ideaId={id}
         currentUserId="1"
-      />
+      />}
     </Box>
   );
 };

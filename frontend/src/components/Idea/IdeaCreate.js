@@ -125,7 +125,6 @@ const IdeaCreate = () => {
     const idea = {
       title,
       content,
-      isAnonymous,
       thumbsUp,
       thumbsDown,
       academicYear,
@@ -138,7 +137,6 @@ const IdeaCreate = () => {
 
     setIsPending(true);
 
-    console.log(`Anonymous ${isAnonymous}`);
 
     await axios
       .post("http://localhost:8000/ideas", JSON.stringify(idea), {
@@ -162,15 +160,6 @@ const IdeaCreate = () => {
       });
   };
 
-  // const { response, loading, error } = useAxios({
-  //     url: "http://localhost:8000/categories",
-  //     method: "get",
-  // });
-
-  // let options = [
-  //     {value: 1, label: "A"},
-  //     {value: 2, label: "B"},
-  // ];
 
   useEffect(async () => {
     const categories = await axios.get(`http://localhost:8000/categories`);
@@ -233,16 +222,6 @@ const IdeaCreate = () => {
     }
   };
 
-  //những gì tôi có thể nghĩ ra để xuất category
-
-  //const obj = JSON.parse(JSON.stringify(response));
-
-  // console.log(JSON.stringify(response));
-  // var categoryList = [];
-  // obj.map(function(element) {
-  //     categoryList.push({ label:element })
-  // });
-
   if (isBusy) {
     return <div className="App">Loading...</div>;
   }
@@ -287,7 +266,7 @@ const IdeaCreate = () => {
         <form onSubmit={handleSubmit}>
           {/* From here is title input */}
           <Box>
-            <FormControlLabel control={<Switch />} label="Post as Anonymous" />
+            {/* <FormControlLabel control={<Switch />} label="Post as Anonymous" /> */}
             <TextField
               id="outlined-basic"
               type="text"
@@ -295,7 +274,7 @@ const IdeaCreate = () => {
               variant="outlined"
               name="title"
               placeholder={title}
-              onClick={(e) => setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.target.value)}
               sx={{
                 width: "100%",
               }}
@@ -336,35 +315,34 @@ const IdeaCreate = () => {
             }}
           >
             <InputLabel htmlFor="icon-button-file">
-              <Input
-                accept="image/*"
-                id="icon-button-file"
-                type="file"
-                placeholder={documents}
-                onChange={(e) => setSelectedFile(e.target.files[0])}
-              />
-              <Button color={"primary"} variant="text" component="span">
-                <PhotoCamera />
-                Upload Photo
-              </Button>
-            </InputLabel>
-
-            <InputLabel id="attach-label">
-              <Button color={"primary"} variant="text" component="span">
-                <Input
-                  type="file"
-                  accept="file/*"
-                  id="contained-button-file"
-                  color={"primary"}
-                  placeholder={documents}
-                  onChange={(event) => {
-                    const file = event.target.files[0];
-                    setDocument(file);
-                  }}
-                />
-                <AttachFileIcon /> Attachments
-              </Button>
-            </InputLabel>
+                        <Input
+                            accept="image/*"
+                            id="icon-button-file"
+                            type="file"
+                            placeholder={documents}
+                            onChange={(e) => setSelectedFile(e.target.files[0])}
+                        />
+                        <Button color={"primary"} variant="text" component="span">
+                            <PhotoCamera />
+                            Upload Photo
+                        </Button>
+                    </InputLabel>
+                    <InputLabel id="attach-label">
+                        <Button color={"primary"} variant="text" component="span">
+                            <Input
+                                type="file"
+                                accept="file/*"
+                                id="contained-button-file"
+                                color={"primary"}
+                                placeholder={documents}
+                                onChange={event => {
+                                    const file = event.target.files[0];
+                                    setDocument(file);
+                                }}
+                            />
+                            <AttachFileIcon /> Attachments
+                        </Button>
+                    </InputLabel>
           </Box>
 
           {/* {isFilePicked ? (

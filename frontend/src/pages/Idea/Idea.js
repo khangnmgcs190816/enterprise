@@ -16,7 +16,13 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Typography } from "@material-ui/core";
-import ThumbsCount from "../../components/Idea/Thumbs";
+// import ThumbsCount from "../../components/Idea/Thumbs";
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import IconButton from "@mui/material/IconButton";
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 const Idea = () => {
   const { categories } = useParams();
@@ -44,6 +50,9 @@ const Idea = () => {
     skip: 0,
     search: '',
   });
+  
+  const [commentscounter, setCommentsCounter] = useState(0);
+  
 
   useEffect(() => {
     if (response != null) {
@@ -63,6 +72,8 @@ const Idea = () => {
   useEffect(() => {
     const fetchIdeaList = async () => {
       try {
+        const comments = await axios.get(`http://localhost:8000/comments`);
+        setCommentsCounter(comments.data.length);
         const paramsString = queryString.stringify(filters);
         const requestUrl = `http://127.0.0.1:8000/ideas?${paramsString}`;
         const response = await axios.get(requestUrl);
@@ -201,7 +212,27 @@ const Idea = () => {
                         <br />
                         Content: {idea.content}
                       </Typography>
-                      <ThumbsCount />
+                      <Box sx={{ display: "flex" }} fullWidth>
+                      <Box sx={{ display: "flex", alignItems: 'center' }}>
+                          <IconButton color="secondary" aria-label="likes" component="span">
+                              <ThumbUpOffAltIcon />
+                          </IconButton >
+                          <Typography>(1)</Typography>
+
+                      </Box>
+                      <Box sx={{ display: "flex", alignItems: 'center' }}>
+                          <IconButton color="secondary" aria-label="dislikes" component="span">
+                              <ThumbDownOffAltIcon />
+                          </IconButton >
+                          <Typography>(3)</Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", alignItems: 'center' }}>
+                          <IconButton color="secondary" aria-label="comments" component="span">
+                              <ChatBubbleOutlineOutlinedIcon />
+                          </IconButton >
+                          <Typography>{commentscounter}</Typography>
+                      </Box>
+                  </Box>
                       <Divider variant="inset" />
                     </>
                   }
