@@ -8,11 +8,25 @@ import { Box, Divider } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import EditIcon from "@mui/icons-material/Edit";
 import useAxios from "../../services/useAxios";
+import { DataGridPro, useGridApiRef } from "@mui/x-data-grid-pro";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const baseURL = "http://localhost:8000";
-
 const pageSize = 5;
 const rowsPerPageOptions = [5];
+
+const useFakeMutation = () => {
+  return React.useCallback(
+    (user) =>
+      new Promise((resolve) =>
+        setTimeout(() => {
+          resolve(user);
+        }, 200)
+      ),
+    []
+  );
+};
 
 const EmployeeTable = () => {
   const { response, loading, error } = useAxios({
@@ -83,17 +97,41 @@ const EmployeeTable = () => {
     },
   ];
 
-  // const handleCellEditCommit = React.useCallback(
-  //     async (params) => {
-  //         try {
-  //             // setUser(with new Params)
-  //             // axios.put('', name, email, password, age)
-  //         } catch (error) {
-  //             setUsers((prev) => [...prev]);
-  //         }
-  //     },
-  //     [userRow],
-  // );
+  const mutateRow = useFakeMutation();
+  const apiRef = useGridApiRef();
+  const [snackbar, setSnackbar] = React.useState(null);
+
+  const handleCloseSnackbar = () => setSnackbar(null);
+
+  const handleRowEditCommit = React.useCallback(
+    async (userId) => {
+      const model = apiRef.current.getEditRowsModel(); // This object contains all rows that are being edited
+      const newRow = model[userId]; // The data that will be committed
+
+      // The new value entered
+      const name = newRow.name.value;
+      const email = newRow.email.value;
+      const age = newRow.age.value;
+      const role = newRow.age.value;
+
+      // Get the row old value before committing
+      const oldRow = apiRef.current.getRow(userId);
+
+      try {
+        // Make the HTTP request to save in the backend
+        await mutateRow({ userId, name, email, age, role });
+        setSnackbar({
+          children: "User successfully saved",
+          severity: "success",
+        });
+      } catch (error) {
+        setSnackbar({ children: "Error while saving user", severity: "error" });
+        // Restore the row in case of error
+        apiRef.current.updateRows([oldRow]);
+      }
+    },
+    [apiRef, mutateRow]
+  );
 
   const handleDelete = async (userId) => {
     const confirm = window.confirm(
@@ -146,9 +184,14 @@ const EmployeeTable = () => {
           columns={columns}
           pageSize={pageSize}
           rowsPerPageOptions={rowsPerPageOptions}
-          // onCellEditCommit={handleUpdate}
-          // checkboxSelection
+          editMode="row"
+          onRowEditCommit={handleRowEditCommit}
         />
+        {!!snackbar && (
+          <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={6000}>
+            <Alert {...snackbar} onClose={handleCloseSnackbar} />
+          </Snackbar>
+        )}
       </Box>
     </Box>
   );
