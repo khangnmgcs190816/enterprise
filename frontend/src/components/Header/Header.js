@@ -19,7 +19,7 @@ import loggedInUser from "../../data/login-user.json";
 import axios from "axios";
 
 const pages = ["Ideas", "Employees", "Dashboard", "Comments"];
-const userTitle = `Hi, ${window.localStorage.firstName}`;
+const userTitle = `${window.localStorage.firstName}`;
 const settings = ["Category", "Your Ideas"];
 
 const Header = (props) => {
@@ -44,14 +44,14 @@ const Header = (props) => {
 
   const handleLogout = async () => {
     try {
-      const token = window.localStorage.getItem('authToken');
+      const token = window.localStorage.getItem("authToken");
       const response = await axios({
-        method: 'post', //you can set what request you want to be
-        url: 'http://127.0.0.1:8000/users/logout',
+        method: "post", //you can set what request you want to be
+        url: "http://127.0.0.1:8000/users/logout",
         headers: {
           // Authorization: 'Bearer ' + `${loggedInUser.token}`
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.status === 200) {
@@ -62,10 +62,9 @@ const Header = (props) => {
         props.clearToken(false);
       }
     } catch (e) {
-      throw e
+      throw e;
     }
-
-  }
+  };
 
   function notificationsLabel(count) {
     if (count === 0) {
@@ -81,14 +80,6 @@ const Header = (props) => {
     <AppBar position="static" sx={{ borderRadius: "0px 0px 25px 25px" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            LOGO
-          </Typography> */}
           <Link to="/">
             <img
               src="images/Logo-Greenwich.png"
@@ -211,15 +202,17 @@ const Header = (props) => {
                 onClick={handleCloseUserMenu}
                 divider={true}
               >
-                {/* <Typography textAlign="center">{userTitle}</Typography> */}
+                <Typography color="primary">Hello,</Typography>
                 <Button
                   component={Link}
-                  sx={{ my: 1, color: "primary", display: "block" }}
-                  to={
-                    userTitle === "Hi, Username!"
-                      ? "/Hi, Username!"
-                      : `/${userTitle}`
-                  }
+                  sx={{
+                    my: 1,
+                    color: "primary",
+                    display: "block",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                  to={userTitle === "Username!" ? "/friend!" : `/${userTitle}`}
                 >
                   {userTitle}
                 </Button>
@@ -232,7 +225,6 @@ const Header = (props) => {
                 >
                   <Button
                     component={Link}
-                    textAlign="center"
                     to={setting === "Category" ? "/categories" : `/${setting}`}
                   >
                     {setting}
@@ -243,11 +235,9 @@ const Header = (props) => {
                 onClick={() => {
                   handleLogout();
                   handleCloseUserMenu();
-                }}>
-                <Typography
-                  // textAlign="center"
-                  color="error"
-                >
+                }}
+              >
+                <Typography color="error">
                   <LogoutIcon fontSize="small" /> Logout
                 </Typography>
               </MenuItem>

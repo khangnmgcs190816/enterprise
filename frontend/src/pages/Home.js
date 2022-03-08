@@ -8,7 +8,7 @@ import LoadingIndicator from "../components/Loading";
 import useAxios from "../services/useAxios";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
-
+import { Box, Divider } from "@mui/material";
 
 const Home = () => {
   const { response, loading, error } = useAxios({
@@ -29,16 +29,28 @@ const Home = () => {
   if (ideas.length === 0) return <PageNotFound />;
 
   return (
-    <div className="home">
-      <Search page="idea"></Search>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        m: 1,
+        p: 3,
+      }}
+    >
       <h1>Welcome</h1>
-
-      <section id="filters">
+      <img
+        src="images/jztr.png"
+        style={{
+          height: "20rem",
+          width: "20rem",
+        }}
+      ></img>
+      <Box id="filters">
         <label htmlFor="category">Filter by:</label>{" "}
         <select
           id="size"
           // value={category}
-          onChange={() => { }}
+          onChange={() => {}}
         >
           <option value="Latest Ideas">Latest Ideas</option>
           <option value="Latest Comments">Latest Comments</option>
@@ -49,13 +61,13 @@ const Home = () => {
           <option value="CategoryCreate">CategoryCreate</option>
         </select>
         {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
-      </section>
-      <section id="filters">
+      </Box>
+      <Box id="filters">
         <label htmlFor="category">CategoryCreate:</label>{" "}
         <select
           id="size"
           // value={category}
-          onChange={() => { }}
+          onChange={() => {}}
         >
           <option value="Teaching">Teaching</option>
           <option value="Office">Office</option>
@@ -63,19 +75,8 @@ const Home = () => {
           <option value="Red">Red</option>
           <option value="Red">Red</option>
         </select>
-        {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
-      </section>
-
-      <div>
-        <Button
-          sx={{
-            margin: "10rem 0rem 0rem 0rem",
-          }}
-        >
-          Spotlight Ideas
-        </Button>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

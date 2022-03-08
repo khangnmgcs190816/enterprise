@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Employees from "./pages/Employee/Employees";
 import EmployeeCreate from "./pages/Employee/EmployeeCreate";
 import "./App.css";
+import { Box, Divider, TextField, Button } from "@mui/material";
 import IdeaCreate from "./components/Idea/IdeaCreate";
 import Search from "./components/Search/SearchFunction";
 
@@ -66,12 +67,12 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    setIsAuthenticated(window.localStorage.getItem('isAuthenticated'));
-  }, [])
+    setIsAuthenticated(window.localStorage.getItem("isAuthenticated"));
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <Box className="App">
         <Router>
           {isAuthenticated ? <Header clearToken={setIsAuthenticated} /> : <></>}
 
@@ -197,7 +198,7 @@ function App() {
             </Routes>
           </main>
         </Router>
-      </div>
+      </Box>
     </ThemeProvider>
   );
 }

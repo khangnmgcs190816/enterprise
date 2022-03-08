@@ -8,7 +8,7 @@ import { useRef } from "react";
 
 const SearchFunction = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const {onSubmit} = props;
+  const { onSubmit } = props;
   const navigate = useNavigate();
   const typingTimeoutRef = useRef(null);
 
@@ -26,31 +26,31 @@ const SearchFunction = (props) => {
   //   setSearchTerm(e.target.value);
   // };
 
-  const handleSearchTermChange= (e) => {
+  const handleSearchTermChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
 
     if (!onSubmit) return;
 
-    if (typingTimeoutRef.current){
+    if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
-    };
+    }
 
     typingTimeoutRef.current = setTimeout(() => {
-      const formValues ={
-        searchTerm:value,
+      const formValues = {
+        searchTerm: value,
       };
       onSubmit(formValues);
     }, 300);
-  }
+  };
 
   return (
     <Box
       sx={{
         display: "flex",
         alignSelf: "center",
-        width: "30rem",
-        maxWidth: "50%",
+        width: "20rem",
+        maxWidth: "100%",
       }}
     >
       <form onSubmit={handleSubmit}>
