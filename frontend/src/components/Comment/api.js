@@ -4,13 +4,13 @@ import axios from "axios";
 export const getComments = async () => {
   return data.comment;
 };
-
+const token = window.localStorage.getItem('authToken');
 export const createComment = async (text, parentId = null, ideaId) => {
   try {
     const response = await axios.post(`http://localhost:8000/comments?ideaId=${ideaId}`, { content: text, owner: '62184aad8150e62e4251a14d' }, {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjE4NGFhZDgxNTBlNjJlNDI1MWExNGQiLCJpYXQiOjE2NDU3NTkxNzMsImV4cCI6MTY0NjM2Mzk3M30.ZF6LfiA9Pq25VHK2eGM9ogEdWNO8oBNW3kTrHHouE5k"
+        "Authorization": `Bearer ${token}`
       }
     });
 
