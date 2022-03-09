@@ -32,22 +32,23 @@ router.get('/users', async (request, response) => {
     } catch (error) {
         response.status(500).send(`${error}`);
     }
-    
+
 });
 
 router.get('/users/search', (req, res, next) => {
     const searchName = req.query.name;
     User.find({ name: { $regex: searchName, $options: "i" } })
-    .then((users) => {
-        res.send(users);
-    })
-    .catch(next);
+        .then((users) => {
+            res.send(users);
+        })
+        .catch(next);
 });
 
 router.get('/users/me', authMiddleware, async (request, response) => {
     try {
         const tasksOfUser = await Task.find({ owner: request.user._id });
-        response.status(200).send(`YOU\n${request.user}\nTasks\n${tasksOfUser}`);
+        // response.status(200).send(`YOU\n${request.user}\nTasks\n${tasksOfUser}`);
+        response.status(200).send(`${request.user._id}`);
     } catch (error) {
         response.status(500).send(`${error}`);
     }

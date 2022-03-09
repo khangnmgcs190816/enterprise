@@ -14,7 +14,6 @@ import useAxios from "../../services/useAxios";
 
 import "./styles.css";
 import axios from "axios";
-import { stepContentClasses } from "@mui/material";
 
 
 const token = window.localStorage.getItem('authToken');
@@ -25,8 +24,6 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
     const [Comments, setComments] = useState([]);
     const [activeComment, setActiveComment] = useState(null);
     const [rootComments, setRootComments] = useState([]);
-    const [content, setContent] = useState("")
-    const [parentId, setParentId] = useState(null)
 
     useEffect(() => {
         (async function () {
@@ -78,9 +75,9 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
 
     // const createComment = (content, parentId) => {
     //     console.log("Add Comment", content, parentId);
-    useCreateComment(content, parentId, ideaId).then(comment => {
-        setRootComments([comment, ...Comments])
-    });
+    // useCreateComment(text, parentId, ideaId).then(comment => {
+    //     setRootComments([comment, ...Comments])
+    // });
     // }
     // const deleteComment = (commentId) => {
     //     if (window.confirm('Ae you sure')){
@@ -90,11 +87,11 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
     //         });
     //     }
     // }
-    const updateComment = (content, commentId) => {
-        updateCommentApi(content).then(() => {
+    const updateComment = (text, commentId) => {
+        updateCommentApi(text).then(() => {
             const updatedComments = Comments.map((Comment) => {
                 if (Comment._id === commentId) {
-                    return { ...Comment, body: content };
+                    return { ...Comment, body: text };
                 }
                 return Comment;
             });
@@ -111,9 +108,8 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
             <h3 className="comments-title">Comment</h3>
             <div className="comment-form-title">Write comment</div>
             <CommentForm submitLabel="Write" handleSubmit={
-                (content, parentId) => {
-                    setContent(content);
-                    setParentId(parentId);
+                (text, parentId) => {
+                    setRootComments([text, ...Comments])
                 }
             } />
             <div className="comments-container">

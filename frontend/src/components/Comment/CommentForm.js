@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Comments from './Comments';
 
 const baseURL = "http://localhost:8000";
@@ -19,10 +20,12 @@ const CommentForm = ({
   const [createdAt, setCreateDate] = useState(date);
   const [closedDate, setCloseDate] = useState();
   const [isPending, setIsPending] = useState(false);
+  const [userId, setUserId] = useState('')
 
   const isTextareaDisable = content.length === 0;
 
   const token = window.localStorage.getItem('authToken');
+
   const onSubmit = event => {
     event.preventDefault();
     // const comment = { content, ideaId, parentId, owner, closedDate };
@@ -33,12 +36,69 @@ const CommentForm = ({
     //   body: JSON.stringify(comment),
     // }).then(() => {
     setParentId(null);
+
     // setUsername();
     // setCloseDate(   );
-    handleSubmit(content, parentId);
+    // handleSubmit(content, parentId);
     setIsPending(false);
     // });
+
+    try {
+      const userRes = axios.get(`${baseURL}/users/me`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+      });
+
+      setUserId(userRes.data);
+      setTimeout(() => {
+        const response = axios.post(`${baseURL}/comments?ideaId=${ideaId}`, {
+          content: content
+        }, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+        })
+        console.log(response.data);
+        handleSubmit(content, parentId);
+      }, 1000)
+    } catch (error) {
+      console.log(error);
+    }
+
   }
+
+  // useEffect(() => {
+  //   (async function () {
+  //     try {
+  //       const userRes = await axios.get(`${baseURL}/users/me`, {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "Authorization": `Bearer ${token}`
+  //         },
+  //       });
+
+  //       setUserId(userRes.data);
+  //       setTimeout(async () => {
+  //         const response = await axios.post(`${baseURL}/comments?ideaId=${ideaId}`, {
+  //           content: text
+  //         }, {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             "Authorization": `Bearer ${token}`
+  //           }
+  //         })
+  //         console.log(response.data);
+  //         handleSubmit(text, parentId);
+  //       }, 1000)
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })()
+  // }, [handleSubmit, ideaId, parentId, text, token])
+
   return (
     <form onSubmit={onSubmit}>
       <textarea
