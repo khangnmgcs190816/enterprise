@@ -13,7 +13,7 @@ const CommentForm = ({
   // var parId = Comment.parentId;
   const [content, setContent] = useState(initialText);
   const [ideaId, setIdeaId] = useState();
-  const [username, setUsername] = useState('');
+  // const [username, setUsername] = useState('');
   const [owner, setOwner] = useState("");
   const [parentId, setParentId] = useState(null);
   const [createdAt, setCreateDate] = useState(date);
@@ -25,23 +25,19 @@ const CommentForm = ({
   const token = window.localStorage.getItem('authToken');
   const onSubmit = event => {
     event.preventDefault();
-    const comment = { content, ideaId, parentId, owner , closedDate };
-    handleSubmit(content);
-    setContent("");
-
+    // const comment = { content, ideaId, parentId, owner, closedDate };
     setIsPending(true);
-
-
-    fetch("http://localhost:8000/comments", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: JSON.stringify(comment),
-    }).then(() => {
-      // console.log(comment);
-      // console.log(Comment.parentId);
-      console.log("new comment added");
-      setIsPending(false);
-    });
+    // fetch("http://localhost:8000/comments", {
+    //   method: "POST",
+    //   headers: { Authorization: `Bearer ${token}` },
+    //   body: JSON.stringify(comment),
+    // }).then(() => {
+    setParentId(null);
+    // setUsername();
+    // setCloseDate(   );
+    handleSubmit(content, parentId);
+    setIsPending(false);
+    // });
   }
   return (
     <form onSubmit={onSubmit}>

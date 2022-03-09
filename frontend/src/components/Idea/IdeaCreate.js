@@ -161,36 +161,38 @@ const IdeaCreate = () => {
   };
 
 
-  useEffect(async () => {
-    const categories = await axios.get(`http://localhost:8000/categories`);
-    //setCategories(categories.data);
+  useEffect(() => {
+    (async function () {
+      const categories = await axios.get(`http://localhost:8000/categories`);
+      //setCategories(categories.data);
 
-    const result = categories.data.map((category) => ({
-      value: category._id,
-      label: category.categoryName,
-    }));
-    console.log(result);
+      const result = categories.data.map((category) => ({
+        value: category._id,
+        label: category.categoryName,
+      }));
+      console.log(result);
 
-    setOptions(result);
+      setOptions(result);
 
-    setBusy(false);
-    //
-    // if (response != null) {
-    //     setBusy(true);
-    //
-    //     // setCategories(response.data);
-    //
-    //     response.map(async (item) => {
-    //         const categories = await axios.get(`http://localhost:8000/categories`);
-    //         //console.log(categories.data);
-    //
-    //         //console.log(categories.data[0].categoryName);
-    //
-    //         setCategories(categories.data);
-    //
-    //         setBusy(false);
-    //     });
-    // }
+      setBusy(false);
+      //
+      // if (response != null) {
+      //     setBusy(true);
+      //
+      //     // setCategories(response.data);
+      //
+      //     response.map(async (item) => {
+      //         const categories = await axios.get(`http://localhost:8000/categories`);
+      //         //console.log(categories.data);
+      //
+      //         //console.log(categories.data[0].categoryName);
+      //
+      //         setCategories(categories.data);
+      //
+      //         setBusy(false);
+      //     });
+      // }
+    })()
   }, []);
 
   const handleAnonymousChange = (e) => {
@@ -315,34 +317,34 @@ const IdeaCreate = () => {
             }}
           >
             <InputLabel htmlFor="icon-button-file">
-                        <Input
-                            accept="image/*"
-                            id="icon-button-file"
-                            type="file"
-                            placeholder={documents}
-                            onChange={(e) => setSelectedFile(e.target.files[0])}
-                        />
-                        <Button color={"primary"} variant="text" component="span">
-                            <PhotoCamera />
-                            Upload Photo
-                        </Button>
-                    </InputLabel>
-                    <InputLabel id="attach-label">
-                        <Button color={"primary"} variant="text" component="span">
-                            <Input
-                                type="file"
-                                accept="file/*"
-                                id="contained-button-file"
-                                color={"primary"}
-                                placeholder={documents}
-                                onChange={event => {
-                                    const file = event.target.files[0];
-                                    setDocument(file);
-                                }}
-                            />
-                            <AttachFileIcon /> Attachments
-                        </Button>
-                    </InputLabel>
+              <Input
+                accept="image/*"
+                id="icon-button-file"
+                type="file"
+                placeholder={documents}
+                onChange={(e) => setSelectedFile(e.target.files[0])}
+              />
+              <Button color={"primary"} variant="text" component="span">
+                <PhotoCamera />
+                Upload Photo
+              </Button>
+            </InputLabel>
+            <InputLabel id="attach-label">
+              <Button color={"primary"} variant="text" component="span">
+                <Input
+                  type="file"
+                  accept="file/*"
+                  id="contained-button-file"
+                  color={"primary"}
+                  placeholder={documents}
+                  onChange={event => {
+                    const file = event.target.files[0];
+                    setDocument(file);
+                  }}
+                />
+                <AttachFileIcon /> Attachments
+              </Button>
+            </InputLabel>
           </Box>
 
           {/* {isFilePicked ? (
@@ -401,8 +403,8 @@ const IdeaCreate = () => {
                 setSelectedTag(
                   Array.isArray(e)
                     ? e.map((x) => {
-                        return { categories: x.label };
-                      })
+                      return { categories: x.label };
+                    })
                     : []
                 );
               }}

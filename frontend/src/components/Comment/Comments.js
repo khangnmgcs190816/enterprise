@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {
     getComments as getCommentsApi,
-    createComment as createCommentApi,
+    useCreateComment as createCommentApi,
     updateComment as updateCommentApi
 } from "./api";
 import Comment from "./Comment";
@@ -36,9 +36,9 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
                     }
                 });
 
-                console.log("comments of this idea:",response.data);
+                console.log("comments of this idea:", response.data);
                 if (response != null) {
-                    setComments(response.data)
+                    setRootComments(response.data)
                 }
             } catch (e) {
                 throw e;
@@ -73,12 +73,12 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
         return Comments.filter(Comment => Comment.parentId === commentId).sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
     }
 
-    const createComment = (text, parentId) => {
-        console.log("Add Comment", text, parentId);
-        createCommentApi(text, parentId, ideaId).then(comment => {
-            setComments([comment, ...Comments])
-        });
-    }
+    // const createComment = (content, parentId) => {
+    //     console.log("Add Comment", content, parentId);
+    //     createCommentApi(content, parentId, ideaId).then(comment => {
+    //         setRootComments([comment, ...Comments])
+    //     });
+    // }
     // const deleteComment = (commentId) => {
     //     if (window.confirm('Ae you sure')){
     //         deleteCommentApi(commentId).then(() => {
@@ -87,11 +87,11 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
     //         });
     //     }
     // }
-    const updateComment = (text, commentId) => {
-        updateCommentApi(text).then(() => {
+    const updateComment = (content, commentId) => {
+        updateCommentApi(content).then(() => {
             const updatedComments = Comments.map((Comment) => {
                 if (Comment._id === commentId) {
-                    return { ...Comment, body: text };
+                    return { ...Comment, body: content };
                 }
                 return Comment;
             });
@@ -107,7 +107,13 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
         <div className="comments">
             <h3 className="comments-title">Comment</h3>
             <div className="comment-form-title">Write comment</div>
-            <CommentForm submitLabel="Write" handleSubmit={createComment} />
+            <CommentForm submitLabel="Write" handleSubmit={
+                (content, parentId) => {
+                    createCommentApi(content, parentId, ideaId).then(comment => {
+                        setRootComments([comment, ...Comments])
+                    });
+                }
+            } />
             <div className="comments-container">
                 {rootComments.map(rootComment => (
                     <Comment

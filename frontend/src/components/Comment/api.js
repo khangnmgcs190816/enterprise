@@ -1,33 +1,55 @@
 import data from '../../data/comments.json';
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { useEffect, useState } from 'react';
 export const getComments = async () => {
   return data.comment;
 };
 const token = window.localStorage.getItem('authToken');
-export const createComment = async (text, parentId = null, ideaId) => {
-  try {
-    const response = await axios.post(`http://localhost:8000/comments?ideaId=${ideaId}`, { content: text, owner: '62184aad8150e62e4251a14d' }, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+const baseURL = "http://localhost:8000";
+
+export const useCreateComment = async (text, parentId = null, ideaId) => {
+  const [newComment, setNewComment] = useState({})
+  const [userId, setUserId] = useState("")
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const userRes = await axios.get(
+          `${baseURL}/users/me`,
+          {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+        );
+        setUserId(userRes);
+        setTimeout(async () => {
+          const response = await axios.post(`${baseURL}/comments?ideaId=${ideaId}`, {
+            content: text
+          }, {
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            }
+          })
+          console.log(response.data);
+          setNewComment(response.data);
+        }, 1000)
+      } catch (error) {
+        console.log(error);
       }
-    });
-
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
-
+    })()
+  }, [text, ideaId])
 
   return {
-    id: Math.random().toString(36).substr(2, 9),
+    id: newComment._id,
     content: text,
+    ideaId: newComment.ideaId,
     parentId,
-    userId: "1",
-    username: "John",
+    userId: userId,
     created_at: new Date(),
-    closed_date: text
+    // username: "John",
+    // closed_date: text
   };
 };
 

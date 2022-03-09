@@ -11,6 +11,9 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { Typography } from "@material-ui/core";
 import { ReturnLink } from "./IdeaButtons";
 
+const COMMENT_URL = "http://localhost:8000/comments";
+const baseURL = "http://localhost:8000";
+
 let viewUpdated = false;
 const IdeaDetails = () => {
   const { id } = useParams();
@@ -20,7 +23,7 @@ const IdeaDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.patch(`http://localhost:8000/ideas/${id}?views=1`).then((r) => { });
+    axios.patch(`${baseURL}/ideas/${id}?views=1`).then((r) => { });
 
   }, []);
 
@@ -76,9 +79,9 @@ const IdeaDetails = () => {
       )}
       <Divider sx={{ m: 2 }}>Comments</Divider>
       {<Comments
-        commentsUrl="http://localhost:8000/comments"
+        commentsUrl={COMMENT_URL}
         ideaId={id}
-        currentUserId="1"
+        currentUserId="62184aad8150e62e4251a14d"
       />}
     </Box>
   );

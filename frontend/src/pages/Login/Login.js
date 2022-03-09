@@ -35,6 +35,7 @@ function Login(props) {
         window.localStorage.setItem("password", response.data.user.password);
         window.localStorage.setItem("age", response.data.user.age);
         window.localStorage.setItem("isAuthenticated", true);
+
       }
     } catch (error) {
       console.error(error);
