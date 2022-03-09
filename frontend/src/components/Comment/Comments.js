@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {
     getComments as getCommentsApi,
-    useCreateComment as createCommentApi,
+    useCreateComment,
     updateComment as updateCommentApi
 } from "./api";
 import Comment from "./Comment";
@@ -14,6 +14,7 @@ import useAxios from "../../services/useAxios";
 
 import "./styles.css";
 import axios from "axios";
+import { stepContentClasses } from "@mui/material";
 
 
 const token = window.localStorage.getItem('authToken');
@@ -24,6 +25,8 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
     const [Comments, setComments] = useState([]);
     const [activeComment, setActiveComment] = useState(null);
     const [rootComments, setRootComments] = useState([]);
+    const [content, setContent] = useState("")
+    const [parentId, setParentId] = useState(null)
 
     useEffect(() => {
         (async function () {
@@ -75,9 +78,9 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
 
     // const createComment = (content, parentId) => {
     //     console.log("Add Comment", content, parentId);
-    //     createCommentApi(content, parentId, ideaId).then(comment => {
-    //         setRootComments([comment, ...Comments])
-    //     });
+    useCreateComment(content, parentId, ideaId).then(comment => {
+        setRootComments([comment, ...Comments])
+    });
     // }
     // const deleteComment = (commentId) => {
     //     if (window.confirm('Ae you sure')){
@@ -109,9 +112,8 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
             <div className="comment-form-title">Write comment</div>
             <CommentForm submitLabel="Write" handleSubmit={
                 (content, parentId) => {
-                    createCommentApi(content, parentId, ideaId).then(comment => {
-                        setRootComments([comment, ...Comments])
-                    });
+                    setContent(content);
+                    setParentId(parentId);
                 }
             } />
             <div className="comments-container">
