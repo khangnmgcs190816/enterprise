@@ -16,7 +16,7 @@ const baseURL = "http://localhost:8000";
 const pageSize = 5;
 const rowsPerPageOptions = [5];
 
-const EmployeeTable = () => {
+const EmployeeTable = (props) => {
   const token = window.localStorage.getItem("authToken");
 
   const { response, loading, error } = useAxios({
@@ -60,15 +60,15 @@ const EmployeeTable = () => {
       renderCell: (params) => {
         return (
           <Box sx={{ display: "flex", m: 1 }}>
-            {/* <Button
-                            title="edit"
-                            variant="text"
-                            color="secondary"
-                            onClick={() => handleUpdate(params.row)}
-                            fontSize="small"
-                        >
-                            <EditIcon />
-                        </Button> */}
+            <Button
+              title="edit"
+              variant="text"
+              color="secondary"
+              onClick={() => handleUpdate(params.row)}
+              fontSize="small"
+            >
+              <EditIcon />
+            </Button>
 
             <Button
               title="delete"
@@ -85,51 +85,9 @@ const EmployeeTable = () => {
     },
   ];
 
-  // const [editRowsModel, setEditRowsModel] = React.useState({});
-  // // const [editRowData, setEditRowData] = React.useState({});
-
-  // const handleEditRowsModelChange = React.useCallback(
-  //   async (model) => {
-  //     // setEditRowsModel(model);
-  //     console.log(model);
-
-  //     const response = await axios.get(`${baseURL}/users/search?name=Huy`);
-
-  //     console.log(response);
-
-  //     // const modelEdited = {
-  //     //   4: {
-
-  //     //     name: { value: "Khang" },
-  //     //     email: { value: "vypnk@test.com" },
-  //     //     age: { value: 26 },
-  //     //     role: {},
-  //     //   },
-  //     // };
-
-  //     setEditRowsModel(model);
-
-  //     // try {
-  //     //   await axios.put(
-  //     //     `${baseURL}/users/${userId}`,
-  //     //     {
-  //     //       name: model.name.value,
-  //     //       email: model.email.value,
-  //     //       password: "123456",
-  //     //       age: model.age.value,
-  //     //     },
-  //     //     {
-  //     //       headers: {
-  //     //         Authorization: `Bearer ${token}`,
-  //     //       },
-  //     //     }
-  //     //   );
-  //     // } catch (err) {
-  //     //   throw err;
-  //     // }
-  //   },
-  //   [token]
-  // );
+  const handleUpdate = async () => {
+    props.history.push("/employees/edit");
+  };
 
   const handleDelete = async (userId) => {
     const confirm = window.confirm(
