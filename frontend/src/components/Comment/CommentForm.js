@@ -5,6 +5,7 @@ import Comments from './Comments';
 const baseURL = "http://localhost:8000";
 
 const CommentForm = ({
+  ideaId,
   handleSubmit,
   submitLabel,
   hasCancelButton = false,
@@ -13,7 +14,7 @@ const CommentForm = ({
   var date = new Date();
   // var parId = Comment.parentId;
   const [content, setContent] = useState(initialText);
-  const [ideaId, setIdeaId] = useState();
+  // const [ideaId, setIdeaId] = useState();
   // const [username, setUsername] = useState('');
   const [owner, setOwner] = useState("");
   const [parentId, setParentId] = useState(null);
@@ -25,6 +26,19 @@ const CommentForm = ({
   const isTextareaDisable = content.length === 0;
 
   const token = window.localStorage.getItem('authToken');
+
+  useEffect(() => {
+    (async function () {
+      const userRes = await axios.get(`${baseURL}/users/me`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+      });
+      setUserId(userRes.data);
+    })()
+  }, [token])
+
 
   const onSubmit = event => {
     event.preventDefault();
@@ -44,26 +58,18 @@ const CommentForm = ({
     // });
 
     try {
-      const userRes = axios.get(`${baseURL}/users/me`, {
+      axios.post(`${baseURL}/comments?ideaId=${ideaId}`, {
+        content: content
+      }, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
-        },
-      });
+        }
+      }).then(
+        (res) => console.log(res.data)
+      )
 
-      setUserId(userRes.data);
-      setTimeout(() => {
-        const response = axios.post(`${baseURL}/comments?ideaId=${ideaId}`, {
-          content: content
-        }, {
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          }
-        })
-        console.log(response.data);
-        handleSubmit(content, parentId);
-      }, 1000)
+      handleSubmit(content, parentId);
     } catch (error) {
       console.log(error);
     }

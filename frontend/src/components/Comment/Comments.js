@@ -21,20 +21,20 @@ const baseURL = 'http://localhost:8000'
 
 const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
     // const {data: comments, isPending, error} = useFetch('http://localhost:8081/comment');
-    const [Comments, setComments] = useState([]);
+    const [comments, setComments] = useState([]);
     const [activeComment, setActiveComment] = useState(null);
     const [rootComments, setRootComments] = useState([]);
 
     useEffect(() => {
         (async function () {
             try {
-                const response = await axios({
-                    url: `${baseURL}/comments?ideaId=${ideaId}`,
-                    method: "get",
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+                const response = await axios.get(
+                    `${baseURL}/comments?ideaId=${ideaId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
 
                 console.log("comments of this idea:", response.data);
                 if (response != null) {
@@ -70,7 +70,7 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
 
 
     const getReplies = commentId => {
-        return Comments.filter(Comment => Comment.parentId === commentId).sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        return comments.filter(Comment => Comment.parentId === commentId).sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
     }
 
     // const createComment = (content, parentId) => {
@@ -89,7 +89,7 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
     // }
     const updateComment = (text, commentId) => {
         updateCommentApi(text).then(() => {
-            const updatedComments = Comments.map((Comment) => {
+            const updatedComments = comments.map((Comment) => {
                 if (Comment._id === commentId) {
                     return { ...Comment, body: text };
                 }
@@ -107,9 +107,9 @@ const Comments = ({ commentsUrl, ideaId, currentUserId }) => {
         <div className="comments">
             <h3 className="comments-title">Comment</h3>
             <div className="comment-form-title">Write comment</div>
-            <CommentForm submitLabel="Write" handleSubmit={
+            <CommentForm submitLabel="Write" ideaId={ideaId} handleSubmit={
                 (text, parentId) => {
-                    setRootComments([text, ...Comments])
+                    setRootComments([text, ...comments]);
                 }
             } />
             <div className="comments-container">
