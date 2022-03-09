@@ -6,11 +6,12 @@ import { Paper } from "@mui/material";
 
 const styles = {
   paperContainer: {
-    backgroundImage: "url(images/bgLoginExtra.png)",
+    backgroundImage: "url(images/bg.png)",
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundAttachment: "fixed",
-    height: 820,
+    maxHeight: "100%",
+    height: 625,
     flexGrow: 1,
     overflow: "hidden",
   },
@@ -24,7 +25,12 @@ function LoginForm({ Login, error }) {
   };
   return (
     <Paper style={styles.paperContainer}>
-      <Box component="form" onSubmit={submitHandler} sx={loginBoxStyle}>
+      <Box
+        component="form"
+        onSubmit={submitHandler}
+        sx={loginBoxStyle}
+        backgroundColor="white"
+      >
         <Typography
           variant="h6"
           component="h6"

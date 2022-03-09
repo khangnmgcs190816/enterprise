@@ -17,12 +17,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Typography } from "@material-ui/core";
 // import ThumbsCount from "../../components/Idea/Thumbs";
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import IconButton from "@mui/material/IconButton";
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 
 const Idea = () => {
   const { categories } = useParams();
@@ -50,9 +50,8 @@ const Idea = () => {
     skip: 0,
     search: "",
   });
-  
+
   const [commentscounter, setCommentsCounter] = useState(0);
-  
 
   useEffect(() => {
     if (response != null) {
@@ -141,8 +140,8 @@ const Idea = () => {
 
       <Box
         sx={{
-          margin: "2rem 0rem 2rem 0rem",
-          padding: "1rem 2rem 2rem 2rem",
+          margin: "2rem 5rem 2rem 5rem",
+          padding: "2rem 3rem 3rem 3rem",
           border: 1,
           borderRadius: "25px",
           borderColor: "white",
@@ -194,27 +193,38 @@ const Idea = () => {
                         Content: {idea.content}
                       </Typography>
                       <Box sx={{ display: "flex" }} fullWidth>
-                      <Box sx={{ display: "flex", alignItems: 'center' }}>
-                          <IconButton color="secondary" aria-label="likes" component="span">
-                              <ThumbUpOffAltIcon />
-                          </IconButton >
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <IconButton
+                            color="secondary"
+                            aria-label="likes"
+                            component="span"
+                          >
+                            <ThumbUpOffAltIcon />
+                          </IconButton>
                           <Typography>(1)</Typography>
-
-                      </Box>
-                      <Box sx={{ display: "flex", alignItems: 'center' }}>
-                          <IconButton color="secondary" aria-label="dislikes" component="span">
-                              <ThumbDownOffAltIcon />
-                          </IconButton >
+                        </Box>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <IconButton
+                            color="secondary"
+                            aria-label="dislikes"
+                            component="span"
+                          >
+                            <ThumbDownOffAltIcon />
+                          </IconButton>
                           <Typography>(3)</Typography>
-                      </Box>
-                      <Box sx={{ display: "flex", alignItems: 'center' }}>
-                          <IconButton color="secondary" aria-label="comments" component="span">
-                              <ChatBubbleOutlineOutlinedIcon />
-                          </IconButton >
+                        </Box>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <IconButton
+                            color="secondary"
+                            aria-label="comments"
+                            component="span"
+                          >
+                            <ChatBubbleOutlineOutlinedIcon />
+                          </IconButton>
                           <Typography>{commentscounter}</Typography>
+                        </Box>
                       </Box>
-                  </Box>
-                      <Divider variant="inset" />
+                      <Divider />
                     </>
                   }
                   // secondary={

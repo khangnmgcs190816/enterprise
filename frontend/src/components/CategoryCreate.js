@@ -12,6 +12,9 @@ import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 // import Category from "./Category/Category";
@@ -168,8 +171,8 @@ const CategoryCreate = () => {
         }}
       >
         <TitleFrame>Category/Tags List</TitleFrame>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer sx={{ width: "60%", marginLeft: "3rem" }}>
+          <Table aria-label="simple table">
             <TableBody>{display}</TableBody>
           </Table>
         </TableContainer>
