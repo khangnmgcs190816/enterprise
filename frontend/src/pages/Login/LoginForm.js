@@ -4,14 +4,15 @@ import Typography from "@mui/material/Typography";
 import { loginBoxStyle } from "../../styles/boxStyles";
 import { Paper } from "@mui/material";
 
-// TODO1: Checkbox chưa có value để remember me
-
 const styles = {
   paperContainer: {
-    backgroundImage: "url(images/bgLogin.png)",
-    backgroundSize: "cover",
+    backgroundImage: "url(images/bgLoginExtra.png)",
     backgroundPosition: "center",
-    height: 625,
+    backgroundSize: "cover",
+    backgroundAttachment: "fixed",
+    height: 820,
+    flexGrow: 1,
+    overflow: "hidden",
   },
 };
 

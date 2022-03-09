@@ -18,7 +18,6 @@ axios.defaults.baseURL = "http://localhost:8000/";
 
 const TitleFrame = styled("div")({
   color: lightBlue[600],
-  // textAlign: "center",
   fontSize: 30,
   fontWeight: "bold",
   marginBottom: "1rem",

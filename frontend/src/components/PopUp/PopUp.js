@@ -1,5 +1,5 @@
 import React from "react";
-import "./PopUp.css";
+// import "./PopUp.css";
 // import Popup from "reactjs-popup";
 // import "reactjs-popup/dist/index.css";
 

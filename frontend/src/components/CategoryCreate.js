@@ -12,9 +12,9 @@ import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-// import Category from "./Category/Category";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
-// LINK CATEGORY NẰM Ở DROPDOWN USER NHÁ!!!!!!
+// import Category from "./Category/Category";
 
 const TitleFrame = styled("div")({
   color: lightBlue[600],
@@ -27,11 +27,10 @@ const TitleFrame = styled("div")({
 const CategoryCreate = () => {
   var date = new Date();
 
-  const [categoryName, setCategoryName] = useState("Unknown category"); 
+  const [categoryName, setCategoryName] = useState("Unknown category");
   const [created_at, setCreateDate] = useState(date);
   const [updated_at, setUpdateDate] = useState();
   const [isPending, setIsPending] = useState(false);
-
 
   //H thêm
   useEffect(() => {
@@ -53,9 +52,9 @@ const CategoryCreate = () => {
       {/* <td>{item.created_at}</td>
       <td>{item.updated_at}</td> */}
       <td>
-        <button onClick={() => remove(item._id)} className="btn btn-danger">
-          Delete
-        </button>
+        <Button variant="text" color="error" onClick={() => remove(item._id)}>
+          <HighlightOffIcon />
+        </Button>
       </td>
     </tr>
   ));
@@ -135,7 +134,6 @@ const CategoryCreate = () => {
               }}
             />
             <Box>
-
               <Button
                 type="submit"
                 variant="contained"

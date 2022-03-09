@@ -4,37 +4,25 @@ import axios from "axios";
 import LoadingIndicator from "../../components/Loading";
 import PageNotFound from "../../components/errorHandling/PageNotFound";
 import Button from "@mui/material/Button";
-import { Box, Divider } from "@mui/material";
+import { Box } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import EditIcon from "@mui/icons-material/Edit";
 import useAxios from "../../services/useAxios";
-import { DataGridPro, useGridApiRef } from "@mui/x-data-grid-pro";
-import Snackbar from "@mui/material/Snackbar";
+// import { DataGridPro, useGridApiRef } from "@mui/x-data-grid-pro";
+// import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
 const baseURL = "http://localhost:8000";
 const pageSize = 5;
 const rowsPerPageOptions = [5];
 
-const useFakeMutation = () => {
-  return React.useCallback(
-    (user) =>
-      new Promise((resolve) =>
-        setTimeout(() => {
-          resolve(user);
-        }, 200)
-      ),
-    []
-  );
-};
-
 const EmployeeTable = () => {
+  const token = window.localStorage.getItem("authToken");
+
   const { response, loading, error } = useAxios({
     url: "users",
     method: "get",
   });
-
-  const token = window.localStorage.getItem("authToken");
 
   useEffect(() => {
     if (response != null) {
@@ -54,7 +42,7 @@ const EmployeeTable = () => {
   const [users, setUsers] = useState({});
 
   const columns = [
-    { field: "id", headerName: "ID", width: 70, editable: true },
+    { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 280, editable: true },
     { field: "email", headerName: "Email", width: 300, editable: true },
     {
@@ -97,41 +85,51 @@ const EmployeeTable = () => {
     },
   ];
 
-  const mutateRow = useFakeMutation();
-  const apiRef = useGridApiRef();
-  const [snackbar, setSnackbar] = React.useState(null);
+  // const [editRowsModel, setEditRowsModel] = React.useState({});
+  // // const [editRowData, setEditRowData] = React.useState({});
 
-  const handleCloseSnackbar = () => setSnackbar(null);
+  // const handleEditRowsModelChange = React.useCallback(
+  //   async (model) => {
+  //     // setEditRowsModel(model);
+  //     console.log(model);
 
-  const handleRowEditCommit = React.useCallback(
-    async (userId) => {
-      const model = apiRef.current.getEditRowsModel(); // This object contains all rows that are being edited
-      const newRow = model[userId]; // The data that will be committed
+  //     const response = await axios.get(`${baseURL}/users/search?name=Huy`);
 
-      // The new value entered
-      const name = newRow.name.value;
-      const email = newRow.email.value;
-      const age = newRow.age.value;
-      const role = newRow.age.value;
+  //     console.log(response);
 
-      // Get the row old value before committing
-      const oldRow = apiRef.current.getRow(userId);
+  //     // const modelEdited = {
+  //     //   4: {
 
-      try {
-        // Make the HTTP request to save in the backend
-        await mutateRow({ userId, name, email, age, role });
-        setSnackbar({
-          children: "User successfully saved",
-          severity: "success",
-        });
-      } catch (error) {
-        setSnackbar({ children: "Error while saving user", severity: "error" });
-        // Restore the row in case of error
-        apiRef.current.updateRows([oldRow]);
-      }
-    },
-    [apiRef, mutateRow]
-  );
+  //     //     name: { value: "Khang" },
+  //     //     email: { value: "vypnk@test.com" },
+  //     //     age: { value: 26 },
+  //     //     role: {},
+  //     //   },
+  //     // };
+
+  //     setEditRowsModel(model);
+
+  //     // try {
+  //     //   await axios.put(
+  //     //     `${baseURL}/users/${userId}`,
+  //     //     {
+  //     //       name: model.name.value,
+  //     //       email: model.email.value,
+  //     //       password: "123456",
+  //     //       age: model.age.value,
+  //     //     },
+  //     //     {
+  //     //       headers: {
+  //     //         Authorization: `Bearer ${token}`,
+  //     //       },
+  //     //     }
+  //     //   );
+  //     // } catch (err) {
+  //     //   throw err;
+  //     // }
+  //   },
+  //   [token]
+  // );
 
   const handleDelete = async (userId) => {
     const confirm = window.confirm(
@@ -185,13 +183,12 @@ const EmployeeTable = () => {
           pageSize={pageSize}
           rowsPerPageOptions={rowsPerPageOptions}
           editMode="row"
-          onRowEditCommit={handleRowEditCommit}
+          // editRowsModel={editRowsModel}
+          // onEditRowsModelChange={handleEditRowsModelChange}
         />
-        {!!snackbar && (
-          <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={6000}>
-            <Alert {...snackbar} onClose={handleCloseSnackbar} />
-          </Snackbar>
-        )}
+        {/* <Alert severity="info" style={{ marginBottom: 8 }}>
+          <code>editRowsModel: {JSON.stringify(editRowsModel)}</code>
+        </Alert> */}
       </Box>
     </Box>
   );

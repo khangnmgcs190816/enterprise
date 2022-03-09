@@ -51,6 +51,8 @@ const SearchFunction = (props) => {
         alignSelf: "center",
         width: "20rem",
         maxWidth: "100%",
+        ml: "1rem",
+        mr: "5rem",
       }}
     >
       <form onSubmit={handleSubmit}>

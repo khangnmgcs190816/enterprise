@@ -42,13 +42,13 @@ const Idea = () => {
   //const selectedIdeas = ideas.slice(startIndex, startIndex+limit);
   const [pagination, setPagination] = useState({
     limit: 5,
-    skip: 0
-  })
+    skip: 0,
+  });
   const [totalPages, setTotalPages] = useState(0);
   const [filters, setFilters] = useState({
     limit: 5,
     skip: 0,
-    search: '',
+    search: "",
   });
   
   const [commentscounter, setCommentsCounter] = useState(0);
@@ -77,25 +77,24 @@ const Idea = () => {
         const paramsString = queryString.stringify(filters);
         const requestUrl = `http://127.0.0.1:8000/ideas?${paramsString}`;
         const response = await axios.get(requestUrl);
-        const re = await axios.get(`http://127.0.0.1:8000/ideas`)
+        const re = await axios.get(`http://127.0.0.1:8000/ideas`);
         setTotalPages(Math.ceil(re.data.length / limit));
         setIdeas(response.data);
         setPagination(response.data);
-
       } catch (error) {
         console.log("failed to fetch post list", error.message);
       }
-    }
+    };
     fetchIdeaList();
   }, [filters]);
 
-  const handlePageClick = num => {
+  const handlePageClick = (num) => {
     setPage(num);
     setFilters({
       ...filters,
       skip: (num - 1) * limit,
-    })
-  }
+    });
+  };
 
   const handleFiltersChange = (newFilters) => {
     console.log(newFilters);
@@ -103,8 +102,8 @@ const Idea = () => {
       ...filters,
       skip: 0,
       search: newFilters.searchTerm,
-    })
-  }
+    });
+  };
 
   // const { data: ideas, loading, error } = useFetch(
   //   "idea?category=" + category
@@ -128,30 +127,13 @@ const Idea = () => {
           p: 1,
           m: 2,
           justifyContent: "space-between",
+          alignSelf: "center",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            alignSelf: "center",
-          }}
-        >
-          <FilterIdea />
-        </Box>
+        <FilterIdea />
+        <SearchFunction onSubmit={handleFiltersChange} />
+        <NewIdeaBtn />
         {/* {category && <h2>Found {filteredProducts.length} items</h2>} */}
-
-        {/* Search + Create button area */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "right",
-          }}
-        >
-
-          <SearchFunction onSubmit={handleFiltersChange} />
-
-          <NewIdeaBtn />
-        </Box>
       </Box>
       <Divider />
 
@@ -187,7 +169,6 @@ const Idea = () => {
                         variant="h6"
                         color="text.primary"
                         data-testid="idea-title"
-
                       >
                         <Link
                           to={`/ideas/${idea._id}`}
@@ -236,20 +217,20 @@ const Idea = () => {
                       <Divider variant="inset" />
                     </>
                   }
-                // secondary={
-                //   <>
-                //     <Typography
-                //       sx={{ display: "inline" }}
-                //       component="span"
-                //       variant="body2"
-                //       color="text.primary"
-                //     >
-                //       Views: {idea.views}
-                //     </Typography>
-                //     <ThumbsCount />
-                //     <Divider variant="inset" />
-                //   </>
-                // }
+                  // secondary={
+                  //   <>
+                  //     <Typography
+                  //       sx={{ display: "inline" }}
+                  //       component="span"
+                  //       variant="body2"
+                  //       color="text.primary"
+                  //     >
+                  //       Views: {idea.views}
+                  //     </Typography>
+                  //     <ThumbsCount />
+                  //     <Divider variant="inset" />
+                  //   </>
+                  // }
                 />
               </ListItem>
             </List>
@@ -265,7 +246,11 @@ const Idea = () => {
         >
           {/* <Pagination count={10} variant="outlined" color="primary"/> */}
 
-          <Paging pagination={pagination} totalPages={totalPages} handlePageClick={handlePageClick} />
+          <Paging
+            pagination={pagination}
+            totalPages={totalPages}
+            handlePageClick={handlePageClick}
+          />
         </Box>
       </Box>
     </Box>
