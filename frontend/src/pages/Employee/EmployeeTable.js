@@ -12,11 +12,15 @@ import useAxios from "../../services/useAxios";
 // import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
+import { useNavigate } from "react-router-dom";
+import { textAlign } from "@mui/system";
+
 const baseURL = "http://localhost:8000";
 const pageSize = 5;
 const rowsPerPageOptions = [5];
 
 const EmployeeTable = (props) => {
+  const navigate = useNavigate();
   const token = window.localStorage.getItem("authToken");
 
   const { response, loading, error } = useAxios({
@@ -56,7 +60,7 @@ const EmployeeTable = (props) => {
     {
       field: "action",
       headerName: "Action",
-      width: 100,
+      width: 150,
       renderCell: (params) => {
         return (
           <Box sx={{ display: "flex", m: 1 }}>
@@ -69,7 +73,6 @@ const EmployeeTable = (props) => {
             >
               <EditIcon />
             </Button>
-
             <Button
               title="delete"
               variant="text"
@@ -86,7 +89,7 @@ const EmployeeTable = (props) => {
   ];
 
   const handleUpdate = async () => {
-    props.history.push("/employees/edit");
+    navigate("/employees/edit");
   };
 
   const handleDelete = async (userId) => {
