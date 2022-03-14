@@ -260,7 +260,7 @@ const Idea = () => {
             const requestUrl = `http://127.0.0.1:8000/comments?ideaId=${idea._id}`;
             const response = await axios.get(requestUrl);
             console.log(response.data.length)
-            setCommentsCounter(response.data.length);
+            // setCommentsCounter(response.data.length);
             // const comments = await axios.get(`http://localhost:8000/comments?ideaId=${ideaId}`);
 
             //resonse.data.ideaId
