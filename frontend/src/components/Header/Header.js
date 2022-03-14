@@ -18,7 +18,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import loggedInUser from "../../data/login-user.json";
 import axios from "axios";
 
-const pages = ["Ideas", "Employees", "Dashboard", "Comments"];
+const pages = ["Ideas", "Employees", "Dashboard"];
 const userTitle = `${window.localStorage.firstName}`;
 const settings = ["Category", "Your Ideas"];
 
@@ -135,19 +135,9 @@ const Header = (props) => {
               ))}
             </Menu>
           </Box>
-          {/* <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            LOGO
-          </Typography> */}
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              // <Link to={page === "Home" ? "/" : `/${page}`} sx={{}}>
-              // <NavLink>
               <Button
                 component={Link}
                 key={page}

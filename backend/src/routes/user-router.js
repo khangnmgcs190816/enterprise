@@ -24,14 +24,14 @@ router.post('/users', async (request, response) => {
 
 /* ============================================ READ ============================================ */
 
-router.get('/users', (req, res, next) => {
-    const searchName = req.query.name;
-    User.find({name:{ $regex: searchName, $options: "i" }})
-        .then((users) => {
-            res.json(users);
-        })
-        .catch(next);
-});
+// router.get('/users', (req, res, next) => {
+//     const searchName = req.query.name;
+//     User.find({ name: { $regex: searchName, $options: "i" } })
+//         .then((users) => {
+//             res.json(users);
+//         })
+//         .catch(next);
+// });
 
 router.get('/users', async (request, response) => {
     try {
@@ -41,7 +41,7 @@ router.get('/users', async (request, response) => {
     } catch (error) {
         response.status(500).send(`${error}`);
     }
-    
+
 });
 
 router.get('/users/me', authMiddleware, async (request, response) => {
@@ -108,7 +108,8 @@ router.patch('/users/me', authMiddleware, async (request, response) => {
 router.patch('/users/:id', authMiddleware, async (request, response) => {
 
     const fieldsUpdated = Object.keys(request.body);
-    const fieldAllowUpdate = ['name', 'email', 'password', 'age'];
+    // const fieldAllowUpdate = ['name', 'email', 'password', 'age'];
+    const fieldAllowUpdate = ['name', 'email', 'age'];
 
     const isValidField = fieldsUpdated.every(field => fieldAllowUpdate.includes(field));
 
@@ -117,12 +118,18 @@ router.patch('/users/:id', authMiddleware, async (request, response) => {
         return;
     }
 
-
     const _idParam = request.params.id;
 
     try {
-
         const updatedUser = await User.findOne({ _id: new ObjectId(_idParam) });
+
+        // const updatedUser = await User.updateOne({ _id: _idParam }, {
+        //     $set: {
+        //         name: request.body.name,
+        //         email: request.body.email,
+        //         age: request.body.age
+        //     }
+        // });
 
         if (updatedUser == null) {
             response.status(404).send("User not found");

@@ -14,7 +14,7 @@ const SearchFunction = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // navigate(`/${page}/?search=${searchTerm}`);
+    // navigate(`/${page}?search=${searchTerm}`);
     const value = e.target.value;
     setSearchTerm(value);
 

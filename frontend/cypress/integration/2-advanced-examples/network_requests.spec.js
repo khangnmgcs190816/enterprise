@@ -20,15 +20,15 @@ context('Network Requests', () => {
       })
   })
 
-  it('cy.request() - verify response using BDD syntax', () => {
-    cy.request('https://jsonplaceholder.cypress.io/comments')
-    .then((response) => {
-      // https://on.cypress.io/assertions
-      expect(response).property('status').to.equal(200)
-      expect(response).property('body').to.have.property('length').and.be.oneOf([500, 501])
-      expect(response).to.include.keys('headers', 'duration')
-    })
-  })
+  // it('cy.request() - verify response using BDD syntax', () => {
+  //   cy.request('https://jsonplaceholder.cypress.io/comments')
+  //   .then((response) => {
+  //     // https://on.cypress.io/assertions
+  //     expect(response).property('status').to.equal(200)
+  //     expect(response).property('body').to.have.property('length').and.be.oneOf([500, 501])
+  //     expect(response).to.include.keys('headers', 'duration')
+  //   })
+  // })
 
   it('cy.request() with query parameters', () => {
     // will execute request

@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { Box, Divider } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { boxCreate } from "../../styles/boxStyles";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate, useParams, useSearchParams } from "react-router-dom";
 // import useAxios from "../../services/useAxios";
 // import LoadingIndicator from "../../components/Loading";
 // import PageNotFound from "../../components/errorHandling/PageNotFound";
@@ -24,50 +24,41 @@ const TitleFrame = styled("div")({
 });
 
 export default function EmployeeUpdate(props) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  let { userId } = useParams();
+
+  let name = searchParams.get('name')
+  let email = searchParams.get('email')
+  let age = searchParams.get('age')
+
   let navigate = useNavigate();
-  // const token = window.localStorage.getItem('authToken');
-  // const [result, setResult] = useState(null);
-  const [user, setUser] = useState(null);
-  // const { response, loading, error } = useAxios({
-  //     url: "users",
-  //     method: "post",
-  //     body: user,
-  //     // headers: { token: token }
-  // });
+  const [user, setUser] = useState({
+    name,
+    email,
+    age,
+  });
 
-  const updateUser = () => {
-    if (user != null) {
-      axios({
-        method: "put",
-        url: "http://localhost:8000/users",
-        data: user,
-      }).then((response) => {
-        if (response.status === 500) {
-          // console.log('Khang')
-          // console.log('Khang')
-          // console.log('Khang')
-          // console.log('Khang')
-          // console.log('Khang')
-          // console.log(response);
-          // setResult(response);
-          navigate("/employees");
-        } else {
-          console.log(response.status === 404);
-        }
-      });
+  useEffect(() => {
+    setUser({
+      name,
+      email,
+      age,
+    })
+    console.log(user)
+  }, [name, email, age])
 
-      // if (response.status === 201) {
-      // }
-    }
-  };
-
-  // if (error) throw error;
-  // if (loading) return <LoadingIndicator />;
-  // if (result.length === 0) return <PageNotFound />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateUser();
+    if (user != null) {
+      axios({
+        method: "put",
+        url: `http://localhost:8000/${userId}`,
+        data: JSON.stringify(user),
+      }).then((response) => {
+        console.log(response)
+      });
+    }
   };
 
   return (
@@ -85,50 +76,45 @@ export default function EmployeeUpdate(props) {
           <TextField
             id="outlined-basic"
             type="text"
-            label="Name"
+            // placeholder={user?.name}
             variant="outlined"
             name="name"
-            placeholder="Name"
             onChange={(e) => setUser({ ...user, name: e.target.value })}
             size="small"
-            required
+            value={user?.name}
           />
           <br />
           <TextField
             id="outlined-basic"
             type="text"
-            label="Email"
+            value={user?.email}
             variant="outlined"
             name="email"
             placeholder="Email"
             onChange={(e) => setUser({ ...user, email: e.target.value })}
             size="small"
-            required
           />
           <br />
           <TextField
             id="outlined-basic"
             type="number"
-            label="Age"
+            value={user?.age}
             variant="outlined"
             name="age"
             placeholder="Age"
             onChange={(e) => setUser({ ...user, age: e.target.value })}
             size="small"
-            required
           />
-          <br />
+          {/* <br />
           <TextField
             id="outlined-basic"
-            type="text"
-            label="Role"
+            type="number"
+            value={user?.password}
             variant="outlined"
-            name="role"
-            placeholder="Role"
-            onChange={(e) => setUser({ ...user, role: e.target.value })}
+            name="password"
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
             size="small"
-            required
-          />
+          /> */}
           <br />
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button
@@ -150,9 +136,6 @@ export default function EmployeeUpdate(props) {
               <ReplayRoundedIcon />
             </Button>
           </Box>
-          {/* <p>
-                        {result !== null ? result : 'Invalid'}
-                    </p> */}
         </Box>
       </form>
     </Box>

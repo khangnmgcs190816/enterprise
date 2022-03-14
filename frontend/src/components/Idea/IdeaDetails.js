@@ -27,6 +27,7 @@ const IdeaDetails = () => {
 
   }, []);
 
+
   const handleClick = () => {
     fetch("http://localhost:8000/ideas/" + id, {
       method: "DELETE",
@@ -81,7 +82,7 @@ const IdeaDetails = () => {
       {<Comments
         commentsUrl={COMMENT_URL}
         ideaId={id}
-        currentUserId="62184aad8150e62e4251a14d"
+        currentUserId="1"
       />}
     </Box>
   );

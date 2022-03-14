@@ -138,7 +138,7 @@ function App() {
                 }
               />
               <Route
-                path="/employees/edit"
+                path="/employees/edit/:userId"
                 element={
                   isAuthenticated ? (
                     <EmployeeUpdate authenticate={setIsAuthenticated} />

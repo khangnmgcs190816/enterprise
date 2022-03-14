@@ -22,6 +22,7 @@ const rowsPerPageOptions = [5];
 const EmployeeTable = (props) => {
   const navigate = useNavigate();
   const token = window.localStorage.getItem("authToken");
+  const [users, setUsers] = useState({});
 
   const { response, loading, error } = useAxios({
     url: "users",
@@ -43,7 +44,7 @@ const EmployeeTable = (props) => {
     }
   }, [response]);
 
-  const [users, setUsers] = useState({});
+
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
@@ -56,7 +57,7 @@ const EmployeeTable = (props) => {
       width: 80,
       editable: true,
     },
-    { field: "role", headerName: "Role", width: 180, editable: true },
+    // { field: "role", headerName: "Role", width: 180, editable: true },
     {
       field: "action",
       headerName: "Action",
@@ -88,9 +89,19 @@ const EmployeeTable = (props) => {
     },
   ];
 
-  const handleUpdate = async () => {
-    navigate("/employees/edit");
+  const handleUpdate = async (params) => {
+    navigate(`/employees/edit/${params.userId}?name=${params.name}&email=${params.email}&age=${params.age}`);
   };
+
+  // const handleUpdate = async (user) => {
+  // this.navigate({
+  //     url: `/employees/edit/${userId}
+    //   id: userId,
+    //   name: user.name,
+    //   age: user.age,
+    // });
+  // };
+
 
   const handleDelete = async (userId) => {
     const confirm = window.confirm(
@@ -144,8 +155,8 @@ const EmployeeTable = (props) => {
           pageSize={pageSize}
           rowsPerPageOptions={rowsPerPageOptions}
           editMode="row"
-          // editRowsModel={editRowsModel}
-          // onEditRowsModelChange={handleEditRowsModelChange}
+        // editRowsModel={editRowsModel}
+        // onEditRowsModelChange={handleEditRowsModelChange}
         />
         {/* <Alert severity="info" style={{ marginBottom: 8 }}>
           <code>editRowsModel: {JSON.stringify(editRowsModel)}</code>
