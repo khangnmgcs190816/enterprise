@@ -21,7 +21,7 @@ Runs local json server with port 8080
 ### BACKEND
 in the Backend directory, run:
 
-### node src/app.js
+### npm run dev or npm start ( with nodemon debug)
 
 Server user **PORT 8000**
 

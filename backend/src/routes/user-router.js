@@ -24,6 +24,15 @@ router.post('/users', async (request, response) => {
 
 /* ============================================ READ ============================================ */
 
+router.get('/users', (req, res, next) => {
+    const searchName = req.query.name;
+    User.find({name:{ $regex: searchName, $options: "i" }})
+        .then((users) => {
+            res.json(users);
+        })
+        .catch(next);
+});
+
 router.get('/users', async (request, response) => {
     try {
         console.log(request.user);
@@ -32,16 +41,7 @@ router.get('/users', async (request, response) => {
     } catch (error) {
         response.status(500).send(`${error}`);
     }
-
-});
-
-router.get('/users/search', (req, res, next) => {
-    const searchName = req.query.name;
-    User.find({ name: { $regex: searchName, $options: "i" } })
-        .then((users) => {
-            res.send(users);
-        })
-        .catch(next);
+    
 });
 
 router.get('/users/me', authMiddleware, async (request, response) => {

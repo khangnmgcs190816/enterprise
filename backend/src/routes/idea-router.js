@@ -195,7 +195,7 @@ router.get('/ideas', (req, res, next) => {
         res.json(ideads);
     })
     .catch(next);
-})
+});
 
 router.get('/ideas/:id', async (request, response) => {
     const _idParam = request.params.id;
