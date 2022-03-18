@@ -31,7 +31,7 @@ router.get('/users', async (request, response) => {
     }
     try {
         const foundUsers = await User.find(filter);
-        console.log(request.user);
+        // console.log(request.name);
         if (foundUsers == null) {
             repose.status(404).send('USERS NOT FOUND');
         } else {
@@ -42,14 +42,14 @@ router.get('/users', async (request, response) => {
     }
 });
 
-router.get('/users', (req, res, next) => {
-    const searchName = req.query.name;
-    User.find({ search: { $regex: searchName, $options: "i" } })
-        .then((users) => {
-            res.json(users);
-        })
-        .catch(next);
-});
+// router.get('/users', (req, res, next) => {
+//     const searchName = req.query.name;
+//     User.find({ search: { $regex: searchName, $options: "i" } })
+//         .then((users) => {
+//             res.json(users);
+//         })
+//         .catch(next);
+// });
 
 router.get('/users/me', authMiddleware, async (request, response) => {
     try {
