@@ -253,7 +253,7 @@ router.get('/ideas/:id', async (request, response) => {
 
 
 
-router.patch('/ideas/:id', async (request, response) => {
+router.patch('/ideas/:id', authMiddleware, async (request, response) => {
 
     const _idParam = request.params.id;
 

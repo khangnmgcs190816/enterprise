@@ -14,6 +14,7 @@ import { lightBlue } from "@mui/material/colors";
 import styled from "@emotion/styled";
 import SaveIcon from "@mui/icons-material/Save";
 
+const token = window.localStorage.getItem('authToken');
 axios.defaults.baseURL = "http://localhost:8000/";
 
 const TitleFrame = styled("div")({
@@ -52,8 +53,12 @@ export default function EmployeeUpdate(props) {
     e.preventDefault();
     if (user != null) {
       axios({
-        method: "put",
-        url: `http://localhost:8000/${userId}`,
+        method: "patch",
+        url: `http://localhost:8000/users/${userId}`,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         data: JSON.stringify(user),
       }).then((response) => {
         console.log(response)

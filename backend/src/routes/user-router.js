@@ -24,24 +24,31 @@ router.post('/users', async (request, response) => {
 
 /* ============================================ READ ============================================ */
 
-// router.get('/users', (req, res, next) => {
-//     const searchName = req.query.name;
-//     User.find({ name: { $regex: searchName, $options: "i" } })
-//         .then((users) => {
-//             res.json(users);
-//         })
-//         .catch(next);
-// });
-
 router.get('/users', async (request, response) => {
+    const filter = {}
+    if(request.query.search) {
+        filter.name = RegExp(".*"+request.query.search+".*");
+    }
     try {
+        const foundUsers = await User.find(filter);
         console.log(request.user);
-        const foundUsers = await User.find({});
-        response.status(200).send(`${JSON.stringify(foundUsers)}`);
+        if (foundUsers == null) {
+            repose.status(404).send('USERS NOT FOUND');
+        } else {
+            response.status(200).send(`${JSON.stringify(foundUsers)}`);
+        }
     } catch (error) {
         response.status(500).send(`${error}`);
     }
+});
 
+router.get('/users', (req, res, next) => {
+    const searchName = req.query.name;
+    User.find({ search: { $regex: searchName, $options: "i" } })
+        .then((users) => {
+            res.json(users);
+        })
+        .catch(next);
 });
 
 router.get('/users/me', authMiddleware, async (request, response) => {
@@ -74,6 +81,7 @@ router.get('/users/:id', async (request, response) => {
 
 });
 
+
 /* ============================================ UPDATE ============================================ */
 
 router.patch('/users/me', authMiddleware, async (request, response) => {
@@ -105,7 +113,7 @@ router.patch('/users/me', authMiddleware, async (request, response) => {
 });
 
 
-router.patch('/users/:id', authMiddleware, async (request, response) => {
+router.patch('/users/:id', async (request, response) => {
 
     const fieldsUpdated = Object.keys(request.body);
     // const fieldAllowUpdate = ['name', 'email', 'password', 'age'];
@@ -122,14 +130,6 @@ router.patch('/users/:id', authMiddleware, async (request, response) => {
 
     try {
         const updatedUser = await User.findOne({ _id: new ObjectId(_idParam) });
-
-        // const updatedUser = await User.updateOne({ _id: _idParam }, {
-        //     $set: {
-        //         name: request.body.name,
-        //         email: request.body.email,
-        //         age: request.body.age
-        //     }
-        // });
 
         if (updatedUser == null) {
             response.status(404).send("User not found");
