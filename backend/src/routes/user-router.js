@@ -113,7 +113,7 @@ router.patch('/users/me', authMiddleware, async (request, response) => {
 });
 
 
-router.patch('/users/:id', async (request, response) => {
+router.patch('/users/:id', authMiddleware, async (request, response) => {
 
     const fieldsUpdated = Object.keys(request.body);
     // const fieldAllowUpdate = ['name', 'email', 'password', 'age'];
