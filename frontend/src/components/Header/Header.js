@@ -19,12 +19,14 @@ import loggedInUser from "../../data/login-user.json";
 import axios from "axios";
 
 const pages = ["Ideas", "Employees", "Dashboard"];
-const userTitle = `${window.localStorage.firstName}`;
+
 const settings = ["Category", "Your Ideas"];
 
 const Header = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const userTitle = `${window.localStorage.firstName}`;
+  
   let navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -55,11 +57,13 @@ const Header = (props) => {
       });
 
       if (response.status === 200) {
-        console.log(response.status);
+        // console.log(response.status);
         window.localStorage.clear();
         // window.localStorage.setItem('isAuthenticated', false);
         navigate("/login", { replace: true });
         props.clearToken(false);
+        window.location.reload(false);
+
       }
     } catch (e) {
       throw e;

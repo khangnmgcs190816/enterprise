@@ -61,7 +61,7 @@ export default function EmployeeUpdate(props) {
         },
         data: JSON.stringify(user),
       }).then((response) => {
-        console.log(response)
+        navigate('/employees')
       });
     }
   };

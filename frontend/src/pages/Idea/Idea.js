@@ -65,7 +65,6 @@ const Idea = () => {
     search: '',
   });
 
-  //thy dang lam cho nay
 
   const [commentsCounter, setCommentsCounter] = useState();
   // useEffect(() => {

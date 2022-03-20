@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Typography } from "@material-ui/core";
 import { ReturnLink } from "./IdeaButtons";
+import EditIcon from "@mui/icons-material/Edit";
 
 const COMMENT_URL = "http://localhost:8000/comments";
 const baseURL = "http://localhost:8000";
@@ -21,14 +22,26 @@ const IdeaDetails = () => {
   const { data: idea, error, isPending } = useFetch("ideas/" + id);
 
   const navigate = useNavigate();
-
+  const [content, setContent] = useState("Please input your idea");
   useEffect(() => {
-    axios.patch(`${baseURL}/ideas/${id}?views=1`).then((r) => { });
+    const idea = { content };
+    axios.patch(`${baseURL}/ideas/${id}?views=1`, JSON.stringify(idea), {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer " +
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjE4NGFhZDgxNTBlNjJlNDI1MWExNGQiLCJpYXQiOjE2NDY1Nzc4OTEsImV4cCI6MTY0NzE4MjY5MX0.-U07GGCliqt4y75uUFf50_kc0YBWsiCLO-7I8Co9pb0",
+      },
+    }).then((r) => { });
 
   }, []);
 
+  const handleUpdate = async () => {
+    
+  };
 
-  const handleClick = () => {
+
+  const handleDelete = () => {
     fetch("http://localhost:8000/ideas/" + id, {
       method: "DELETE",
     }).then(() => {
@@ -63,11 +76,20 @@ const IdeaDetails = () => {
           <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
             <Typography variant="h4" color="primary">
               {idea.title}
-              <IconButton onClick={handleClick}>
+              <IconButton onClick={handleDelete}>
                 <ClearIcon />
               </IconButton>
             </Typography>
           </Box>
+          <Button
+            title="edit"
+            variant="text"
+            color="secondary"
+            onClick={() => handleUpdate()}
+            fontSize="small"
+          >
+            <EditIcon />
+          </Button>
 
           <Typography variant="subtitle1">ID: {idea._id}</Typography>
           <Box>
@@ -76,6 +98,7 @@ const IdeaDetails = () => {
             </Typography>
             <Typography variant="body1">{idea.content}</Typography>
           </Box>
+
         </Box>
       )}
       <Divider sx={{ m: 2 }}>Comments</Divider>
