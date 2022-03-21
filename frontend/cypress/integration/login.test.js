@@ -3,7 +3,7 @@
 const BASE_URL = "http://localhost:3000";
 
 describe("User can log in", () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(`${BASE_URL}/login`);
   });
 
@@ -24,6 +24,15 @@ describe("User can log in", () => {
   });
 
   it("User logs out successfully", () => {
+    cy.get('input[name="username"]')
+      .should("be.visible")
+      .type("trong@gmail.com")
+      .get('input[name="password"]')
+      .should("be.visible")
+      .type("trongvip")
+      .get('button[type="submit"]')
+      .should("be.visible")
+      .click();
     cy.get('[data-testid="PersonIcon"]').click();
     cy.xpath('//p[text()=" Logout"]/parent::li').click();
   });

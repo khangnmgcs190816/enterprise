@@ -1,52 +1,36 @@
 /// <reference types="cypress" />
+const BASE_URL = "http://localhost:3000";
+const token = Cypress.env('authToken');
 
 context('Local Storage', () => {
   beforeEach(() => {
-    cy.visit('https://example.cypress.io/commands/local-storage')
+    cy.visit(`${BASE_URL}/login`);
   })
-  // Although local storage is automatically cleared
-  // in between tests to maintain a clean state
-  // sometimes we need to clear the local storage manually
 
   it('cy.clearLocalStorage() - clear all data in local storage', () => {
-    // https://on.cypress.io/clearlocalstorage
-    cy.get('.ls-btn').click().should(() => {
-      expect(localStorage.getItem('prop1')).to.eq('red')
-      expect(localStorage.getItem('prop2')).to.eq('blue')
-      expect(localStorage.getItem('prop3')).to.eq('magenta')
-    })
+    // log in
+    cy.get('input[name="username"]')
+      .should("be.visible")
+      .type("trong@gmail.com")
+      .get('input[name="password"]')
+      .should("be.visible")
+      .type("trongvip")
+      .get('button[type="submit"]')
+      .should("be.visible")
+      .click()
+      .should(() => {
+        assert.isDefined(localStorage.getItem('authToken'), token)
+        expect(localStorage.getItem('firstName')).to.eq('Trong')
+        expect(localStorage.getItem('email')).to.eq('trong@gmail.com')
+      });
 
-    // clearLocalStorage() yields the localStorage object
-    cy.clearLocalStorage().should((ls) => {
-      expect(ls.getItem('prop1')).to.be.null
-      expect(ls.getItem('prop2')).to.be.null
-      expect(ls.getItem('prop3')).to.be.null
-    })
-
-    cy.get('.ls-btn').click().should(() => {
-      expect(localStorage.getItem('prop1')).to.eq('red')
-      expect(localStorage.getItem('prop2')).to.eq('blue')
-      expect(localStorage.getItem('prop3')).to.eq('magenta')
-    })
-
-    // Clear key matching string in Local Storage
-    cy.clearLocalStorage('prop1').should((ls) => {
-      expect(ls.getItem('prop1')).to.be.null
-      expect(ls.getItem('prop2')).to.eq('blue')
-      expect(ls.getItem('prop3')).to.eq('magenta')
-    })
-
-    cy.get('.ls-btn').click().should(() => {
-      expect(localStorage.getItem('prop1')).to.eq('red')
-      expect(localStorage.getItem('prop2')).to.eq('blue')
-      expect(localStorage.getItem('prop3')).to.eq('magenta')
-    })
-
-    // Clear keys matching regex in Local Storage
-    cy.clearLocalStorage(/prop1|2/).should((ls) => {
-      expect(ls.getItem('prop1')).to.be.null
-      expect(ls.getItem('prop2')).to.be.null
-      expect(ls.getItem('prop3')).to.eq('magenta')
-    })
+    // log out
+    cy.get('[data-testid="PersonIcon"]').click();
+    cy.xpath('//p[text()=" Logout"]/parent::li').click()
+      .should(() => {
+        assert.isNull(localStorage.getItem('authToken'));
+        assert.isNull(localStorage.getItem('firstName'))
+        assert.isNull(localStorage.getItem('email'))
+      });
   })
 })

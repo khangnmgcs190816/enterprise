@@ -63,7 +63,6 @@ const Header = (props) => {
         navigate("/login", { replace: true });
         props.clearToken(false);
         window.location.reload(false);
-
       }
     } catch (e) {
       throw e;

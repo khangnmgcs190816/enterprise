@@ -16,10 +16,9 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Employees from "./pages/Employee/Employees";
 import EmployeeCreate from "./pages/Employee/EmployeeCreate";
 import "./App.css";
-import { Box, Divider, TextField, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import IdeaCreate from "./components/Idea/IdeaCreate";
 import Search from "./components/Search/SearchFunction";
-
 import Home from "./pages/Home";
 import Header from "./components/Header/Header";
 import CategoryCreate from "./components/CategoryCreate";
