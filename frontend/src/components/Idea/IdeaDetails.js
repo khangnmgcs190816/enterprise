@@ -36,8 +36,13 @@ const IdeaDetails = () => {
 
   }, []);
 
-  const handleUpdate = async () => {
-    
+  const handleUpdate = async (idea) => {
+    const resonse = await axios.put(`/ideas/${idea._id}`, idea);
+    const {name, content}= response.data;
+    console.log(resonse.data);
+    setIdea(ideas.map(idea=>{
+      return idea._id === id ? {...response.data} : contact;
+    }))
   };
 
 
