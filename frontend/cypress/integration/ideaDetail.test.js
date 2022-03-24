@@ -16,15 +16,9 @@ const titleName2 = "Nga vô địch";
 describe("Test existed elements", () => {
   beforeEach(() => {
     cy.visit(`${BASE_URL}/ideas`);
-    cy.get('input[name="username"]')
-      .should("be.visible")
-      .type(username)
-      .get('input[name="password"]')
-      .should("be.visible")
-      .type(password)
-      .get('button[type="submit"]')
-      .should("be.visible")
-      .click();
+    cy.get('input[name="username"]').should("be.visible").type(username);
+    cy.get('input[name="password"]').should("be.visible").type(password);
+    cy.get('button[type="submit"]').click();
   });
 
   it("should show the filter and search box", () => {
@@ -39,18 +33,15 @@ describe("Test existed elements", () => {
 
     cy.get(ideaLink1).click();
     cy.wait(2000);
-
     cy.xpath("//h4").should("have.text", titleName1);
-
+    cy.wait(2000);
     cy.xpath("//a[text()=' Back']").should("be.visible").click();
     cy.url().should("eq", `${BASE_URL}/ideas`);
-
     cy.get(ideaLink2).should("be.visible");
     cy.get(ideaLink2).click();
     cy.wait(2000);
-
     cy.xpath("//h4").should("have.text", titleName2);
-
+    cy.wait(2000);
     cy.xpath("//a[text()=' Back']").should("be.visible").click();
     cy.url().should("eq", `${BASE_URL}/ideas`);
   });
@@ -59,6 +50,7 @@ describe("Test existed elements", () => {
     cy.wait(2000);
     cy.xpath("//a[text()='New']").should("be.visible").click();
     cy.url().should("eq", `${BASE_URL}/ideas/ideacreate`);
+    cy.wait(2000);
     cy.xpath("//a[text()=' Back']").should("be.visible").click();
     cy.url().should("eq", `${BASE_URL}/ideas`);
   });
@@ -69,21 +61,16 @@ describe("Test idea dynamically", () => {
   let ideaId2;
   beforeEach(() => {
     cy.visit(`${BASE_URL}/ideas`);
-    cy.get('input[name="username"]')
-      .should("be.visible")
-      .type(username)
-      .get('input[name="password"]')
-      .should("be.visible")
-      .type(password)
-      .get('button[type="submit"]')
-      .should("be.visible")
-      .click();
+    cy.get('input[name="username"]').should("be.visible").type(username);
+    cy.get('input[name="password"]').should("be.visible").type(password);
+    cy.get('button[type="submit"]').click();
 
     cy.get(ideaLink1)
       .should("have.attr", "href")
       .then((href) => {
         ideaId1 = href.substring(7);
       });
+
     cy.get(ideaLink2)
       .should("have.attr", "href")
       .then((href) => {
