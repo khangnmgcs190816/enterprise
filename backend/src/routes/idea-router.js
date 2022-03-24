@@ -215,41 +215,41 @@ router.get('/ideas/:id', async (request, response) => {
 
 /* ======================================================= UPDATE ======================================================= */
 
-// router.patch('/ideas/:id', async (request, response) => {
-//     const fieldsUpdated = Object.keys(request.body);
-//     const fieldAllowUpdate = ['views'];
-//
-//     const isValidField = fieldsUpdated.every(field => fieldAllowUpdate.includes(field));
-//
-//     if (!isValidField) {
-//         response.status(500).send("You must update exactly fields");
-//         return;
-//     }
-//
-//     const _idParam = request.params.id;
-//
-//     try {
-//
-//         const updatedIdea = await Idea.findOne({_id: new ObjectId(_idParam)});
-//
-//         if (updatedIdea == null) {
-//             response.status(404).send("User not found");
-//         } else {
-//             /**
-//              * Đoạn code này đã bị thay đổi thay vì dùng findByIdAnUpdate( )
-//              * vì middleware chỉ được fire khi ta dùng save( )
-//              */
-//             fieldsUpdated.forEach((field) => {
-//                 updatedIdea[field] = request.body[field];
-//             })
-//             await updatedIdea.save();
-//             response.send(`UPDATED: ${updatedIdea}`);
-//         }
-//
-//     } catch (error) {
-//         response.status(400).send(`${error}`);
-//     }
-// });
+router.patch('/ideas/:id', async (request, response) => {
+    const fieldsUpdated = Object.keys(request.body);
+    const fieldAllowUpdate = ['title','content'];
+
+    const isValidField = fieldsUpdated.every(field => fieldAllowUpdate.includes(field));
+
+    if (!isValidField) {
+        response.status(500).send("You must update exactly fields");
+        return;
+    }
+
+    const _idParam = request.params.id;
+
+    try {
+
+        const updatedIdea = await Idea.findOne({_id: new ObjectId(_idParam)});
+
+        if (updatedIdea == null) {
+            response.status(404).send("User not found");
+        } else {
+            /**
+             * Đoạn code này đã bị thay đổi thay vì dùng findByIdAnUpdate( )
+             * vì middleware chỉ được fire khi ta dùng save( )
+             */
+            fieldsUpdated.forEach((field) => {
+                updatedIdea[field] = request.body[field];
+            })
+            await updatedIdea.save();
+            response.send(`UPDATED: ${updatedIdea}`);
+        }
+
+    } catch (error) {
+        response.status(400).send(`${error}`);
+    }
+});
 
 
 
@@ -260,7 +260,6 @@ router.patch('/ideas/:id', async (request, response) => {
     try {
 
         const updatedIdea = await Idea.findOne({ _id: new ObjectId(_idParam) });
-
 
         if (updatedIdea == null) {
             response.status(404).send("Idea not found");
@@ -280,3 +279,21 @@ router.patch('/ideas/:id', async (request, response) => {
 });
 
 /* ======================================================= DELETE ======================================================= */
+router.delete('/ideas/:id', async (request, response) =>{
+    const _idParam = request.params.id;
+
+    try {
+        const deletedIdea = await Idea.findOne({ _id: new ObjectId(_idParam) });
+
+        if (deletedIdea == null) {
+            response.status(404).send("Idea not found");
+        } else {
+            await deletedIdea.remove();
+            response.status(200).send(`DELETED: ${deletedIdea}`);
+        }
+
+
+    } catch (error) {
+        response.status(400).send(`${error}`);
+    }
+});

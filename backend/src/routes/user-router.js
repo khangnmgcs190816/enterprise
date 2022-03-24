@@ -42,14 +42,6 @@ router.get('/users', async (request, response) => {
     }
 });
 
-// router.get('/users', (req, res, next) => {
-//     const searchName = req.query.name;
-//     User.find({ search: { $regex: searchName, $options: "i" } })
-//         .then((users) => {
-//             res.json(users);
-//         })
-//         .catch(next);
-// });
 
 router.get('/users/me', authMiddleware, async (request, response) => {
     try {
