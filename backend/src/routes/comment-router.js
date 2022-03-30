@@ -33,7 +33,8 @@ router.get('/comments', async (request, response) => {
     const _ideaId = request.query.ideaId;
 
     try {
-        const foundComments = await Comment.find({ ideaId: new ObjectId(_ideaId) });
+        // const foundComments = await Comment.find({ ideaId: new ObjectId(_ideaId) });
+        const foundComments = await Comment.find({ _ideaId });
 
         console.log(foundComments);
         if (foundComments.length === 0) {
@@ -46,10 +47,21 @@ router.get('/comments', async (request, response) => {
     }
 });
 
-
-
 /* =============================================================== UPDATE =============================================================== */
+//  router.patch('/comments/:id', async (request, response) =>{
+//      const fieldsUpdated = Object.keys(request.body);
+//      const fieldsAllowUpdate = ['content'];
+      
+//      const isValidField = fieldsUpdated.every(field => fieldsAllowUpdate.includes(field));
 
+//      if (!isValidField) {
+//          response.status(500).send("You must update exactly fields");
+//          return;
+//      }
 
+//      try {
+         
+//      }
+
+//  })
 /* =============================================================== DELETE =============================================================== */
-

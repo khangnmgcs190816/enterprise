@@ -188,15 +188,6 @@ router.get('/ideas', async (request, response) => {
     }
 });
 
-router.get('/ideas', (req, res, next) => {
-    const searchTitle = req.query.title;
-    Idea.find({search:{$regex: searchTitle, $options: '$i'}})
-    .then((ideads) => {
-        res.json(ideads);
-    })
-    .catch(next);
-});
-
 router.get('/ideas/:id', async (request, response) => {
     const _idParam = request.params.id;
 
